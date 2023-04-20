@@ -1,11 +1,20 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource";
+import { userColumns, userRows, fetchUserRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
+
+  useEffect(() => {
+    const getData = async () => {
+      const rows = await fetchUserRows();
+      console.log("Data from rows",rows);
+      setData(Array.from(rows.data));
+    };
+    getData();
+  }, []);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -36,7 +45,7 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
+        Add New Student
         <Link to="/users/new" className="link">
           Add New
         </Link>
