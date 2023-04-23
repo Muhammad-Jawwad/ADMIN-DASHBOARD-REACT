@@ -1,15 +1,15 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, fetchUserRows } from "../../datatablesource";
+import { catagoryColumns, catagoryRows, fetchCatagoryRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Datatable = () => {
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState(catagoryRows);
 
   useEffect(() => {
     const getData = async () => {
-      const rows = await fetchUserRows();
+      const rows = await fetchCatagoryRows();
       console.log("Data from rows",rows);
       setData(Array.from(rows.data));
     };
@@ -28,7 +28,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link to="/catagories/test" style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -53,7 +53,7 @@ const Datatable = () => {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={userColumns.concat(actionColumn)}
+        columns={catagoryColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
