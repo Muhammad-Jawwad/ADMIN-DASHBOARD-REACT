@@ -1,25 +1,20 @@
 export const catagoryColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
-    field: "name",
-    headerName: "User",
+    field: "category_name",
+    headerName: "Catagory",
     width: 230,
   },
   {
-    field: "email_id",
-    headerName: "Email",
+    field: "category_picture",
+    headerName: "Picture",
     width: 230,
   },
 
   {
-    field: "gender",
-    headerName: "Gender",
-    width: 100,
-  },
-  {
-    field: "mobile_number",
-    headerName: "Contact",
-    width: 100,
+    field: "no_of_quiz",
+    headerName: "Number of Quiz",
+    width: 230,
   },
   // {
   //   field: "status",
@@ -39,7 +34,7 @@ export const catagoryColumns = [
 // Fetch the data from the API and format it for the DataGrid
 export const fetchCatagoryRows = async () => {
   try {
-    const apiUrl = "/api/admin/registeredstudents";
+    const apiUrl = "/api/admin/getcategory";
     const response = await fetch(apiUrl);
     const data = await response.json();
     console.log(data);
