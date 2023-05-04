@@ -6,10 +6,13 @@ import { useState, useEffect } from "react";
 
 const Datatable = () => {
   const [data, setData] = useState(catagoryRows);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+
     const getData = async () => {
+      setLoading(true);
       const rows = await fetchCatagoryRows();
+      setLoading(false);
       console.log("Data from rows",rows);
       setData(Array.from(rows.data));
     };
@@ -45,11 +48,12 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Student
-        <Link to="/users/new" className="link">
+        Add New Catagory
+        <Link to="/catagories/new" className="link">
           Add New
         </Link>
       </div>
+      {loading? <h1 style={{textAlign:"center", paddingTop:"20%"}}>loading...</h1>:
       <DataGrid
         className="datagrid"
         rows={data}
@@ -57,7 +61,7 @@ const Datatable = () => {
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
-      />
+      />}
     </div>
   );
 };

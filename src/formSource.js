@@ -1,44 +1,21 @@
-export const userInputs = [
+export const catagoryInputs = [
     {
       id: 1,
-      label: "Username",
+      label: "Catagory Name",
       type: "text",
-      placeholder: "john_doe",
+      placeholder: "E.g: Muhammad Jawwad",
     },
     {
       id: 2,
-      label: "Name and surname",
-      type: "text",
-      placeholder: "John Doe",
+      label: "Number of Quiz",
+      type: "int",
+      placeholder: "E.g: 10",
     },
     {
       id: 3,
-      label: "Email",
-      type: "mail",
-      placeholder: "john_doe@gmail.com",
-    },
-    {
-      id: 4,
-      label: "Phone",
-      type: "text",
-      placeholder: "+1 234 567 89",
-    },
-    {
-      id: 5,
-      label: "Password",
-      type: "password",
-    },
-    {
-      id: 6,
-      label: "Address",
-      type: "text",
-      placeholder: "Elton St. 216 NewYork",
-    },
-    {
-      id: 7,
-      label: "Country",
-      type: "text",
-      placeholder: "USA",
+      label: "Status",
+      type: "int",
+      placeholder: "E.g: 0 or 1",
     },
   ];
   
