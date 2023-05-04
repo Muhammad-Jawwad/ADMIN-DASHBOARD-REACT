@@ -8,14 +8,8 @@ export const catagoryInputs = [
     {
       id: 2,
       label: "Number of Quiz",
-      type: "int",
+      type: "number",
       placeholder: "E.g: 10",
-    },
-    {
-      id: 3,
-      label: "Status",
-      type: "int",
-      placeholder: "E.g: 0 or 1",
     },
   ];
   

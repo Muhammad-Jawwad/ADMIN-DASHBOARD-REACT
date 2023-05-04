@@ -3,9 +3,56 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
+import { catagoryInputs } from "../../formSource";
 
-const  New = ({ inputs, title }) => {
+const New = ({ title }) => {
   const [file, setFile] = useState("");
+  const [inputValues, setInputValues] = useState({});
+
+  const handleInputChange = (e) => {
+    setInputValues({
+      ...inputValues,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    const formData = {
+      category_name: inputValues.catagoryname,
+      no_of_quiz: parseInt(inputValues.numberofquiz),
+      category_picture: file ? URL.createObjectURL(file) : "",
+    };
+  
+    // Convert formData to a JSON string
+    const formDataString = JSON.stringify(formData);
+  
+    // Store formDataString in local storage
+    localStorage.setItem("formData", formDataString);
+  
+    // Send formData to the server using an HTTP request
+    fetch("/api/admin/addcategory", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: formDataString,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response from API", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  
+    // Reset the form
+    setFile("");
+    setInputValues({});
+  };  
 
   return (
     <div className="new">
@@ -27,7 +74,7 @@ const  New = ({ inputs, title }) => {
             />
           </div>
           <div className="right">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -39,14 +86,21 @@ const  New = ({ inputs, title }) => {
                   style={{ display: "none" }}
                 />
               </div>
-
-              {inputs.map((input) => (
+              {catagoryInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    name={input.label.toLowerCase().split(" ").join("")}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
               ))}
-              <button>Send</button>
+              <div style={{ clear: "both" }}>
+                <button type="submit" style={{ float: "right" }}>Send</button>
+              </div>  
             </form>
           </div>
         </div>
