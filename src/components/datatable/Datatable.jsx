@@ -1,17 +1,17 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { catagoryColumns, catagoryRows, fetchCatagoryRows } from "../../datatablesource";
+import { categoryColumns, categoryRows, fetchCategoryRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Datatable = () => {
-  const [data, setData] = useState(catagoryRows);
+  const [data, setData] = useState(categoryRows);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
 
     const getData = async () => {
       setLoading(true);
-      const rows = await fetchCatagoryRows();
+      const rows = await fetchCategoryRows();
       setLoading(false);
       console.log("Data from rows",rows);
       setData(Array.from(rows.data));
@@ -32,7 +32,7 @@ const Datatable = () => {
         // console.log(params);
         return (
           <div className="cellAction">
-            <Link to={`/catagories/${params.row.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/categories/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -49,8 +49,8 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Catagory
-        <Link to="/catagories/new" className="link">
+        Add New Category
+        <Link to="/categories/new" className="link">
           Add New
         </Link>
       </div>
@@ -58,7 +58,7 @@ const Datatable = () => {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={catagoryColumns.concat(actionColumn)}
+        columns={categoryColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

@@ -4,7 +4,7 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { productInputs, catagoryInputs } from "./formSource";
+import { productInputs, categoryInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -19,12 +19,12 @@ function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
-            <Route path="catagories">
+            <Route path="categories">
               <Route index element={<List />} />
-              <Route path=":catagoryId" element={<Single />} />
+              <Route path=":categoryId" element={<Single />} />
               <Route
                 path="new"
-                element={<New inputs={catagoryInputs} title="Add New Catagory" />}
+                element={<New inputs={categoryInputs} title="Add New Category" />}
               />
             </Route>
             <Route path="products">

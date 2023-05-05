@@ -1,9 +1,9 @@
-export const catagoryInputs = [
+export const categoryInputs = [
     {
       id: 1,
-      label: "Catagory Name",
+      label: "Category Name",
       type: "text",
-      placeholder: "E.g: Muhammad Jawwad",
+      placeholder: "E.g: Applied Mathematics",
     },
     {
       id: 2,

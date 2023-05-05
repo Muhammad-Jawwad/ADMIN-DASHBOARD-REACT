@@ -1,10 +1,42 @@
-import "./single.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
-import Chart from "../../components/chart/Chart";
-import List from "../../components/table/Table";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import './single.scss';
+import Sidebar from '../../components/sidebar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
 
 const Single = () => {
+  // const { categoryId } = match.params;
+  const location = useLocation();
+  const categoryId = location.pathname.match(/\/categories\/(\d+)/)?.[1]; // extract categoryId using regular expressions
+  console.log("categoryId",categoryId);
+  const [category, setCategory] = useState(null);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await fetch(`/api/admin/categorybyid/${categoryId}`, {
+          method: 'GET',
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch category');
+        }
+    
+        const data = await response.json();
+        setCategory(data);
+        console.log("useEffect:",data)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    if (categoryId) {
+      fetchCategory();
+    }
+  }, [categoryId]);
+  console.log("category:",category);
+
+
   return (
     <div className="single">
       <Sidebar />
@@ -12,33 +44,25 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <div className="editButton"><button>Edit</button></div>
-            <h1 className="title">Information</h1>
+            <div className="editButton">
+              <button>Edit</button>
+            </div>
+            <h1 className="title">Category Information</h1>
             <div className="item">
-              <img
-                src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                alt=""
-                className="itemImg"
-              />
+              <img src={category?.data[0].category_picture} alt="" className="itemImg" />
               <div className="details">
-                <h1 className="itemTitle">Jane Doe</h1>
+                <h1 className="itemTitle">{category?.data[0].category_name}</h1>
                 <div className="detailItem">
-                  <span className="itemKey">Email:</span>
-                  <span className="itemValue">janedoe@gmail.com</span>
+                  <span className="itemKey">Id:</span>
+                  <span className="itemValue">{category?.data[0].id}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+1 2345 67 89</span>
+                  <span className="itemKey">Number of quiz:</span>
+                  <span className="itemValue">{category?.data[0].no_of_quiz}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Address:</span>
-                  <span className="itemValue">
-                    Elton St. 234 Garden Yd. NewYork
-                  </span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">USA</span>
+                  <span className="itemKey">Status:</span>
+                  <span className="itemValue">{category?.data[0].status}</span>
                 </div>
               </div>
             </div>
@@ -48,8 +72,8 @@ const Single = () => {
           </div> */}
         </div>
         {/* <div className="bottom">
-        <h1 className="title">Last Transactions</h1>
-          <List/>
+          <h1 className="title">Last Transactions</h1>
+          <List />
         </div> */}
       </div>
     </div>

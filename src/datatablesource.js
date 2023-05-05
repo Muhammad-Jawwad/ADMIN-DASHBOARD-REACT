@@ -1,8 +1,8 @@
-export const catagoryColumns = [
+export const categoryColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
     field: "category_name",
-    headerName: "Catagory",
+    headerName: "Category",
     width: 230,
   },
   {
@@ -32,7 +32,7 @@ export const catagoryColumns = [
 
 
 // Fetch the data from the API and format it for the DataGrid
-export const fetchCatagoryRows = async () => {
+export const fetchCategoryRows = async () => {
   try {
     const apiUrl = "/api/admin/getcategory";
     const response = await fetch(apiUrl);
@@ -45,4 +45,4 @@ export const fetchCatagoryRows = async () => {
 };
 
 // Export an empty array to be used until the API data is loaded
-export const catagoryRows = [];
+export const categoryRows = [];
