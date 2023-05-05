@@ -98,7 +98,7 @@ const New = ({ title }) => {
                   />
                 </div>
               ))}
-              <div style={{ clear: "both" }}>
+              <div style={{ clear: "both" }} className="formSubmit">
                 <button type="submit" style={{ float: "right" }}>Send</button>
               </div>  
             </form>

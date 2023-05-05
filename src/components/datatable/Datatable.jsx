@@ -29,9 +29,10 @@ const Datatable = () => {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
+        // console.log(params);
         return (
           <div className="cellAction">
-            <Link to="/catagories/test" style={{ textDecoration: "none" }}>
+            <Link to={`/catagories/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
