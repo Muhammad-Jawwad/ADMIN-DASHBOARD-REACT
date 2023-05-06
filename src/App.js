@@ -3,6 +3,7 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
+import Update from "./components/update/Update";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { productInputs, categoryInputs } from "./formSource";
 import "./style/dark.scss";
@@ -22,6 +23,7 @@ function App() {
             <Route path="categories">
               <Route index element={<List />} />
               <Route path=":categoryId" element={<Single />} />
+              <Route path="update/:categoryId" element={<Update inputs={categoryInputs} title="Update Category" />}/>
               <Route
                 path="new"
                 element={<New inputs={categoryInputs} title="Add New Category" />}
