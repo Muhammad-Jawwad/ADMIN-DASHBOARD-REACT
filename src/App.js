@@ -20,6 +20,7 @@ function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
+
             <Route path="categories">
               <Route index element={<List />} />
               <Route path=":categoryId" element={<Single />} />
@@ -29,6 +30,7 @@ function App() {
                 element={<New inputs={categoryInputs} title="Add New Category" />}
               />
             </Route>
+            
             <Route path="products">
               <Route index element={<List />} />
               <Route path=":productId" element={<Single />} />

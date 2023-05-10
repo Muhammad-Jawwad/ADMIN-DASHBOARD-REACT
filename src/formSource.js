@@ -1,11 +1,13 @@
 export const categoryInputs = [
     {
+      fieldName: "category_name",
       id: 1,
       label: "Category Name",
       type: "text",
       placeholder: "E.g: Applied Mathematics",
     },
     {
+      fieldName: "no_of_quiz",
       id: 2,
       label: "Number of Quiz",
       type: "number",

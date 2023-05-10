@@ -20,7 +20,7 @@ const New = ({ title }) => {
     e.preventDefault();
   
     const formData = {
-      category_name: inputValues.categoryname,
+      category_name: inputValues.catagoryname,
       no_of_quiz: parseInt(inputValues.numberofquiz),
       category_picture: file ? URL.createObjectURL(file) : "",
     };

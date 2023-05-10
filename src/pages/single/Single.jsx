@@ -24,9 +24,11 @@ const Single = () => {
         }
 
         const data = await response.json();
+        console.log("Before setCategory:", data);
         setCategory(data);
         localStorage.setItem("categoryData", JSON.stringify(data));
         console.log("useEffect:", data)
+        
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +38,7 @@ const Single = () => {
       fetchCategory();
     }
   }, [categoryId]);
-  console.log("category:", category);
+  console.log("category in a state:", category);
 
   return (
     <div className="single">
@@ -45,9 +47,6 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            {/* <div className="editButton">
-              <button onClick={<Update />}>Edit</button>
-            </div> */}
             <div className="editButton">
               <Link to={`/categories/update/${categoryId}`} className=" link">
                 Edit

@@ -3,50 +3,36 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { categoryInputs } from "../../formSource";
-import axios from "axios";
-import { useLocation } from 'react-router-dom';
+
 
 const Update = ({ title }) => {
   const location = useLocation();
   const categoryId = location.pathname.match(/\/categories\/update\/(\d+)/)?.[1]; // extract categoryId using regular expressions
-  console.log("categoryId", categoryId);
-  const [file, setFile] = useState(null);
-  const [category, setCategory] = useState({});
+
+  const [category, setCategory] = useState(null);
+  const [file, setFile] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // fetch category data from server
-    axios.get(`/api/admin/categorybyid/${categoryId}`).then((response) => {
-      setCategory(response.data);
-    });
-  }, [categoryId]);
+    const dataFromSingle = localStorage.getItem('categoryData');
+
+    if (dataFromSingle) {
+      const storedData = JSON.parse(dataFromSingle)
+      setCategory(storedData);
+      console.log("Stored Data:",storedData);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
-    setCategory({ ...category, [e.target.name]: e.target.value });
+
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("category_name", category.category_name);
-    formData.append("no_of_quiz", parseInt(category.no_of_quiz));
-    if (category.category_picture) {
-      formData.append("category_picture", category.category_picture);
-    }
+  const handleUpdate = async (e) => {
 
-    try {
-      const updatedFormData = formData.category_id = categoryId;
-      const response = await axios.patch("/api/admin/updatecategory", updatedFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
-      console.log(response.data);
-      setCategory(response.data);
-    } catch (error) {
-      console.log(error);
-    }
   };
+
 
   return (
     <div className="update">
@@ -60,17 +46,13 @@ const Update = ({ title }) => {
           <div className="left">
             <img
               src={
-                file
-                  ? URL.createObjectURL(file)
-                  : category.category_picture
-                    ? category.category_picture
-                    : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                category?.data[0].category_picture
               }
               alt=""
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleUpdate}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -78,12 +60,7 @@ const Update = ({ title }) => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e) =>
-                    setCategory({
-                      ...category,
-                      category_picture: e.target.files[0],
-                    })
-                  }
+                  onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -94,15 +71,22 @@ const Update = ({ title }) => {
                     type={input.type}
                     placeholder={input.placeholder}
                     name={input.label.toLowerCase().split(" ").join("")}
-                    value={category[input.label.toLowerCase().split(" ").join("")] || ""}
+                    value={category && category.data[0][input.fieldName]}
                     onChange={handleInputChange}
                     required
                   />
                 </div>
               ))}
-              <div style={{ clear: "both" }} className="formSubmit">
-                <button type="submit" style={{ float: "right" }}>
-                  Update
+              <div style={{ clear: "both" }} className="formUpdate">
+                <button type="update" style={{ float: "right" }}>Update</button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  style={{ float: "right" }}
+                  onClick={() => navigate(`/categories/${categoryId}`)}
+                >
+                  Cancel
                 </button>
               </div>
             </form>
@@ -112,5 +96,6 @@ const Update = ({ title }) => {
     </div>
   );
 };
+
 
 export default Update;
