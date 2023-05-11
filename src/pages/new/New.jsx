@@ -18,7 +18,7 @@ const New = ({ title }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const formData = {
       category_name: inputValues.catagoryname,
       no_of_quiz: parseInt(inputValues.numberofquiz),

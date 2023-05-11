@@ -30,14 +30,12 @@ export const categoryColumns = [
   },
 ];
 
-
 // Fetch the data from the API and format it for the DataGrid
 export const fetchCategoryRows = async () => {
   try {
     const apiUrl = "/api/admin/getcategory";
     const response = await fetch(apiUrl);
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

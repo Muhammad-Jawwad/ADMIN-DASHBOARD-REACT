@@ -8,29 +8,87 @@ import { categoryInputs } from "../../formSource";
 
 
 const Update = ({ title }) => {
-  const location = useLocation();
-  const categoryId = location.pathname.match(/\/categories\/update\/(\d+)/)?.[1]; // extract categoryId using regular expressions
 
-  const [category, setCategory] = useState(null);
-  const [file, setFile] = useState("");
+  // Extracting categoryId using regular expressions
+  const location = useLocation();
+  const categoryId = location.pathname.match(/\/categories\/update\/(\d+)/)?.[1]; 
+
+  // Initializing state
+  const [file, setFile] = useState(null); 
+  const [inputValues, setInputValues] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const dataFromSingle = localStorage.getItem('categoryData');
+    const fetchCategory = async () => {
+      try {
+        const response = await fetch(`/api/admin/categorybyid/${categoryId}`, {
+          method: 'GET',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch category');
+        }
+        const data = await response.json();
+        setInputValues(data.data[0]);
+        setFile(data.data[0].category_picture);
+        localStorage.setItem("categoryData", JSON.stringify(data));
 
-    if (dataFromSingle) {
-      const storedData = JSON.parse(dataFromSingle)
-      setCategory(storedData);
-      console.log("Stored Data:",storedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (categoryId) {
+      fetchCategory();
     }
-  }, []);
-
+  }, [categoryId]);
+  console.log("category in a state:", file);
+  
   const handleInputChange = (e) => {
+    // console.log("before handleInputChange", inputValues);
 
+    // console.log(e.target.name,"sajdainnnnnn",e.target.value);
+    setInputValues({
+      ...inputValues,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleUpdate = async (e) => {
+    e.preventDefault();
 
+    const formData = {
+      category_id: categoryId,
+      category_name: inputValues.category_name,
+      no_of_quiz: parseInt(inputValues.no_of_quiz),
+      category_picture: file ? URL.createObjectURL(file) : "",
+    };
+
+    // Convert formData to a JSON string
+    const formDataString = JSON.stringify(formData);
+
+    // Store formDataString in local storage
+    localStorage.setItem("formData", formDataString);
+
+    // Send formData to the server using an HTTP request to update
+    fetch("/api/admin/updatecategory", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: formDataString,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response from API", data);
+        // Navigate to the desired page after API response
+        navigate(`/categories/${categoryId}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
 
@@ -46,9 +104,10 @@ const Update = ({ title }) => {
           <div className="left">
             <img
               src={
-                category?.data[0].category_picture
+                file
               }
               alt=""
+              className="itemImg"
             />
           </div>
           <div className="right">
@@ -70,15 +129,21 @@ const Update = ({ title }) => {
                   <input
                     type={input.type}
                     placeholder={input.placeholder}
-                    name={input.label.toLowerCase().split(" ").join("")}
-                    value={category && category.data[0][input.fieldName]}
+                    name={input.fieldName}
+                    value={inputValues[input.fieldName] || ''}
                     onChange={handleInputChange}
                     required
+                    inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
                   />
                 </div>
               ))}
               <div style={{ clear: "both" }} className="formUpdate">
-                <button type="update" style={{ float: "right" }}>Update</button>
+                <button 
+                style={{ float: "right" }}
+                // onClick={() => navigate(`/categories/${categoryId}`)}
+                >
+                  Update
+                </button>
               </div>
               <div>
                 <button
@@ -96,6 +161,5 @@ const Update = ({ title }) => {
     </div>
   );
 };
-
 
 export default Update;

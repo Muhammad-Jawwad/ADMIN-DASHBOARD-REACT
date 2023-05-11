@@ -7,13 +7,13 @@ import { useState, useEffect } from "react";
 const Datatable = () => {
   const [data, setData] = useState(categoryRows);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
 
+  useEffect(() => {
     const getData = async () => {
       setLoading(true);
       const rows = await fetchCategoryRows();
+
       setLoading(false);
-      console.log("Data from rows",rows);
       setData(Array.from(rows.data));
     };
     getData();
@@ -29,7 +29,6 @@ const Datatable = () => {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        // console.log(params);
         return (
           <div className="cellAction">
             <Link to={`/categories/${params.row.id}`} style={{ textDecoration: "none" }}>

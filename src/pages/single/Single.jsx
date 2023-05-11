@@ -6,10 +6,10 @@ import Navbar from '../../components/navbar/Navbar';
 import { Link } from "react-router-dom";
 
 const Single = () => {
-  // const { categoryId } = match.params;
+  // Extracting categoryId using regular expressions
   const location = useLocation();
-  const categoryId = location.pathname.match(/\/categories\/(\d+)/)?.[1]; // extract categoryId using regular expressions
-  console.log("categoryId", categoryId);
+  const categoryId = location.pathname.match(/\/categories\/(\d+)/)?.[1]; 
+  
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
@@ -18,27 +18,20 @@ const Single = () => {
         const response = await fetch(`/api/admin/categorybyid/${categoryId}`, {
           method: 'GET',
         });
-
         if (!response.ok) {
           throw new Error('Failed to fetch category');
         }
-
         const data = await response.json();
-        console.log("Before setCategory:", data);
         setCategory(data);
         localStorage.setItem("categoryData", JSON.stringify(data));
-        console.log("useEffect:", data)
-        
       } catch (error) {
         console.error(error);
       }
     };
-
     if (categoryId) {
       fetchCategory();
     }
   }, [categoryId]);
-  console.log("category in a state:", category);
 
   return (
     <div className="single">
@@ -54,7 +47,12 @@ const Single = () => {
             </div>
           <h1 className="title">Category Information</h1>
           <div className="item">
-            <img src={category?.data[0].category_picture} alt="" className="itemImg" />
+            <img src={
+              category?.data[0].category_picture
+              } 
+              alt="" 
+              className="itemImg" 
+            />
             <div className="details">
               <h1 className="itemTitle">{category?.data[0].category_name}</h1>
               <div className="detailItem">

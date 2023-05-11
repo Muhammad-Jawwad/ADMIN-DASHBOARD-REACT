@@ -12,12 +12,12 @@ import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
-
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
+
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
 
@@ -39,6 +39,7 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
+
           </Route>
         </Routes>
       </BrowserRouter>
