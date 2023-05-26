@@ -15,7 +15,7 @@ export const categoryInputs = [
     },
   ];
   
-  export const productInputs = [
+  export const quizInputs = [
     {
       id: 1,
       label: "Title",

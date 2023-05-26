@@ -45,9 +45,6 @@ const Update = ({ title }) => {
   console.log("category in a state:", file);
   
   const handleInputChange = (e) => {
-    // console.log("before handleInputChange", inputValues);
-
-    // console.log(e.target.name,"sajdainnnnnn",e.target.value);
     setInputValues({
       ...inputValues,
       [e.target.name]: e.target.value
@@ -61,14 +58,9 @@ const Update = ({ title }) => {
       category_id: categoryId,
       category_name: inputValues.category_name,
       no_of_quiz: parseInt(inputValues.no_of_quiz),
-      category_picture: file ? URL.createObjectURL(file) : "",
+      // category_picture: file ? URL.createObjectURL(file) : "",
+      category_picture: file || "",
     };
-
-    // Convert formData to a JSON string
-    const formDataString = JSON.stringify(formData);
-
-    // Store formDataString in local storage
-    localStorage.setItem("formData", formDataString);
 
     // Send formData to the server using an HTTP request to update
     fetch("/api/admin/updatecategory", {
@@ -76,7 +68,7 @@ const Update = ({ title }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: formDataString,
+      body: JSON.stringify(formData), // Pass the object as the body
     })
       .then((response) => {
         return response.json();
