@@ -12,9 +12,15 @@ import QuizSingle from "./pages/single/QuizSingle";
 import QuestionSingle from "./pages/single/QuestionSingle";
 
 import New from "./pages/new/New";
+import QuizNew from "./pages/new/QuizNew";
+import QuestionNew from "./pages/new/QuestionNew";
+
 import Update from "./components/update/Update";
+import QuizUpdate from "./components/update/QuizUpdate";
+import QuestionUpdate from "./components/update/QuestionUpdate";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { quizInputs, categoryInputs } from "./formSource";
+import { quizInputs, categoryInputs, questionInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -53,20 +59,20 @@ function App() {
             <Route path="quiz">
               <Route index element={<QuizList />} />
               <Route path=":quizId" element={<QuizSingle />} />
-              <Route path="update/:quizId" element={<Update inputs={categoryInputs} title="Update Quiz" />} />
+              <Route path="update/:quizId" element={<QuizUpdate inputs={quizInputs} title="Update Quiz" />} />
               <Route
                 path="new"
-                element={<New inputs={quizInputs} title="Add New Quiz" />}
+                element={<QuizNew inputs={quizInputs} title="Add New Quiz" />}
               />
             </Route>
             
             <Route path="question">
               <Route index element={<QuestionList />} />
               <Route path=":questionId" element={<QuestionSingle />} />
-              <Route path="update/:questionId" element={<Update inputs={categoryInputs} title="Update Question" />} />
+              <Route path="update/:questionId" element={<QuestionUpdate inputs={questionInputs} title="Update Question" />} />
               <Route
                 path="new"
-                element={<New inputs={quizInputs} title="Add New Question" />}
+                element={<QuestionNew inputs={quizInputs} title="Add New Question" />}
               />
             </Route>
 
