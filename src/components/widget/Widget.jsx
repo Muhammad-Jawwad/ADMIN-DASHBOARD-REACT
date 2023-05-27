@@ -29,9 +29,9 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "order":
+    case "categories":
       data = {
-        title: "ORDERS",
+        title: "CATEGORIES",
         isMoney: false,
         link: "View all orders",
         icon: (
@@ -45,9 +45,9 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "earning":
+    case "quiz":
       data = {
-        title: "EARNINGS",
+        title: "QUIZES",
         isMoney: true,
         link: "View net earnings",
         icon: (
@@ -58,9 +58,9 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "balance":
+    case "question":
       data = {
-        title: "BALANCE",
+        title: "QUESTIONS",
         isMoney: true,
         link: "See details",
         icon: (
