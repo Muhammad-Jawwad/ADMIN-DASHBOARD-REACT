@@ -48,9 +48,18 @@ const Login = () => {
       })
       .then((data) => {
         console.log('Response from API', data);
-
+        
         if (data.status === true) {
           // Redirect to "home" page
+          localStorage.setItem("token", JSON.stringify(true));
+          // Storing adminData in localStorage
+          localStorage.setItem("adminData", JSON.stringify(data.data));
+
+          // Schedule the removal of "token" after one hour (3600000 milliseconds)
+          // setTimeout(() => {
+          //   localStorage.removeItem("token");
+          // }, 5000);
+
           window.location.href = '/home';
         } else {
           // Set error message and clear username/password

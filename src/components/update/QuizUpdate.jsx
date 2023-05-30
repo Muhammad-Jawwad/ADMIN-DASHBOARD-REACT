@@ -16,6 +16,12 @@ const QuizUpdate = ({ title }) => {
     // Initializing state
     const [file, setFile] = useState(null);
     const [inputValues, setInputValues] = useState("");
+    let [token] = useState(localStorage.getItem("token"));
+
+    const redirectToLogin = () => {
+        alert("Plaese Login first then you can access this page...");
+        window.location.href = '/'; // Replace "/login" with the actual login page path
+    };
 
     const navigate = useNavigate();
 
@@ -88,72 +94,78 @@ const QuizUpdate = ({ title }) => {
 
 
     return (
-        <div className="update">
-            <Sidebar />
-            <div className="updateContainer">
-                <Navbar />
-                <div className="top">
-                    <h1>{title}</h1>
-                </div>
-                <div className="bottom">
-                    <div className="left">
-                        <img
-                            src={
-                                file
-                            }
-                            alt=""
-                            className="itemImg"
-                        />
-                    </div>
-                    <div className="right">
-                        <form onSubmit={handleUpdate}>
-                            <div className="formInput">
-                                <label htmlFor="file">
-                                    Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                                </label>
-                                <input
-                                    type="file"
-                                    id="file"
-                                    onChange={(e) => setFile(e.target.files[0])}
-                                    style={{ display: "none" }}
+        <>
+            {!token && redirectToLogin()}
+            {token && (
+                <div className="update">
+                    <Sidebar />
+                    <div className="updateContainer">
+                        <Navbar />
+                        <div className="top">
+                            <h1>{title}</h1>
+                        </div>
+                        <div className="bottom">
+                            <div className="left">
+                                <img
+                                    src={
+                                        file
+                                    }
+                                    alt=""
+                                    className="itemImg"
                                 />
                             </div>
-                            {quizInputs.map((input) => (
-                                <div className="formInput" key={input.id}>
-                                    <label>{input.label}</label>
-                                    <input
-                                        type={input.type}
-                                        placeholder={input.placeholder}
-                                        name={input.fieldName}
-                                        value={inputValues[input.fieldName] || ''}
-                                        onChange={handleInputChange}
-                                        required
-                                        // inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
-                                    />
-                                </div>
-                            ))}
-                            <div style={{ clear: "both" }} className="formUpdate">
-                                <button
-                                    style={{ float: "right" }}
-                                // onClick={() => navigate(`/categories/${quizId}`)}
-                                >
-                                    Update
-                                </button>
+                            <div className="right">
+                                <form onSubmit={handleUpdate}>
+                                    <div className="formInput">
+                                        <label htmlFor="file">
+                                            Image: <DriveFolderUploadOutlinedIcon className="icon" />
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="file"
+                                            onChange={(e) => setFile(e.target.files[0])}
+                                            style={{ display: "none" }}
+                                        />
+                                    </div>
+                                    {quizInputs.map((input) => (
+                                        <div className="formInput" key={input.id}>
+                                            <label>{input.label}</label>
+                                            <input
+                                                type={input.type}
+                                                placeholder={input.placeholder}
+                                                name={input.fieldName}
+                                                value={inputValues[input.fieldName] || ''}
+                                                onChange={handleInputChange}
+                                                required
+                                                // inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
+                                            />
+                                        </div>
+                                    ))}
+                                    <div style={{ clear: "both" }} className="formUpdate">
+                                        <button
+                                            style={{ float: "right" }}
+                                        // onClick={() => navigate(`/categories/${quizId}`)}
+                                        >
+                                            Update
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button
+                                            type="button"
+                                            style={{ float: "right" }}
+                                            onClick={() => navigate(`/quiz/${quizId}`)}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div>
-                                <button
-                                    type="button"
-                                    style={{ float: "right" }}
-                                    onClick={() => navigate(`/quiz/${quizId}`)}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                )
+            }
+        </>
     );
 };
 

@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 const Navbar = () => {
   const { darkMode, dispatch } = useContext(DarkModeContext);
   const [fullscreen, setFullscreen] = useState(false);
+  let [data] = useState(JSON.parse(localStorage.getItem("adminData"))); // Parse the data string into an object
 
   const toggleFullscreen = () => {
     console.log(fullscreen);
@@ -49,12 +50,12 @@ const Navbar = () => {
           <div className="item">
             <FullscreenExitOutlinedIcon className="icon" onClick={toggleFullscreen} />
           </div>
-          <div className="item">
-            Admin
+          <div className="logo">
+            {data.name}
           </div>
           <div className="item">
             <img
-              src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={data.profile_picture}
               alt=""
               className="avatar"
             />

@@ -1,5 +1,6 @@
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -39,11 +40,6 @@ function App() {
             <Route path="user">
               <Route index element={<UserList />} />
               <Route path=":userId" element={<UserSingle />} />
-              {/* <Route path="update/:userId" element={<Update inputs={categoryInputs} title="Update User" />}/> */}
-              {/* <Route
-                path="new"
-                element={<New inputs={categoryInputs} title="Add New Category" />}
-              /> */}
             </Route>
 
             <Route path="categories">
@@ -74,6 +70,10 @@ function App() {
                 path="new"
                 element={<QuestionNew inputs={quizInputs} title="Add New Question" />}
               />
+            </Route>
+
+            <Route path="profile">
+              <Route index element={<Profile />} />
             </Route>
 
           </Route>

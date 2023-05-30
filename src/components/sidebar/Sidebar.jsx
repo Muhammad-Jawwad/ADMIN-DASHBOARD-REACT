@@ -55,16 +55,18 @@ const Sidebar = () => {
             </li>
           </Link>
           <p className="title">USER</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
             <li>
-              <ExitToAppIcon className="icon" />
-              <span>Logout</span>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
             </li>
           </Link>
+          <li onClick={() => { localStorage.removeItem("token") }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <ExitToAppIcon className="icon" />
+              <span>Logout</span>
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="bottom">

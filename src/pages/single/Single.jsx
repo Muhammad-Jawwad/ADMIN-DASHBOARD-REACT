@@ -11,6 +11,12 @@ const Single = () => {
   const categoryId = location.pathname.match(/\/categories\/(\d+)/)?.[1]; 
   
   const [category, setCategory] = useState(null);
+  let [token] = useState(localStorage.getItem("token"));
+
+  const redirectToLogin = () => {
+    alert("Plaese Login first then you can access this page...");
+    window.location.href = '/'; // Replace "/login" with the actual login page path
+  };
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -34,52 +40,51 @@ const Single = () => {
   }, [categoryId]);
 
   return (
-    <div className="single">
-      <Sidebar />
-      <div className="singleContainer">
-        <Navbar />
-        <div className="top">
-          <div className="left">
-            <div className="editButton">
-              <Link to={`/categories/update/${categoryId}`} className=" link">
-                Edit
-              </Link>
+    <>
+      {!token && redirectToLogin()}
+      {token && (
+        <div className="single">
+          <Sidebar />
+          <div className="singleContainer">
+            <Navbar />
+            <div className="top">
+              <div className="left">
+                <div className="editButton">
+                  <Link to={`/categories/update/${categoryId}`} className=" link">
+                    Edit
+                  </Link>
+                </div>
+                <h1 className="title">Category Information</h1>
+                <div className="item">
+                  <img src={
+                    category?.data[0].category_picture
+                    } 
+                    alt="" 
+                    className="itemImg" 
+                  />
+                  <div className="details">
+                    <h1 className="itemTitle">{category?.data[0].category_name}</h1>
+                    <div className="detailItem">
+                      <span className="itemKey">Id:</span>
+                      <span className="itemValue">{category?.data[0].id}</span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Number of quiz:</span>
+                      <span className="itemValue">{category?.data[0].no_of_quiz}</span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Status:</span>
+                      <span className="itemValue">{category?.data[0].status}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          <h1 className="title">Category Information</h1>
-          <div className="item">
-            <img src={
-              category?.data[0].category_picture
-              } 
-              alt="" 
-              className="itemImg" 
-            />
-            <div className="details">
-              <h1 className="itemTitle">{category?.data[0].category_name}</h1>
-              <div className="detailItem">
-                <span className="itemKey">Id:</span>
-                <span className="itemValue">{category?.data[0].id}</span>
-              </div>
-              <div className="detailItem">
-                <span className="itemKey">Number of quiz:</span>
-                <span className="itemValue">{category?.data[0].no_of_quiz}</span>
-              </div>
-              <div className="detailItem">
-                <span className="itemKey">Status:</span>
-                <span className="itemValue">{category?.data[0].status}</span>
-              </div>
-            </div>
-          </div>
+          </div >
         </div>
-        {/* <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div> */}
-      </div>
-      {/* <div className="bottom">
-          <h1 className="title">Last Transactions</h1>
-          <List />
-        </div> */}
-    </div >
-  </div>
+        )
+      }
+    </>
   );
 };
 

@@ -11,6 +11,12 @@ const QuizSingle = () => {
     const quizId = location.pathname.match(/\/quiz\/(\d+)/)?.[1];
 
     const [quiz, setQuiz] = useState(null);
+    let [token] = useState(localStorage.getItem("token"));
+
+    const redirectToLogin = () => {
+        alert("Plaese Login first then you can access this page...");
+        window.location.href = '/'; // Replace "/login" with the actual login page path
+    };
 
     useEffect(() => {
         const fetchQuiz = async () => {
@@ -34,68 +40,74 @@ const QuizSingle = () => {
     }, [quizId]);
 
     return (
-        <div className="single">
-            <Sidebar />
-            <div className="singleContainer">
-                <Navbar />
-                <div className="top">
-                    <div className="left">
-                        <div className="editButton">
-                            <Link to={`/quiz/update/${quizId}`} className=" link">
-                                Edit
-                            </Link>
-                        </div>
-                        <h1 className="title">Quiz Information</h1>
-                        <div className="item">
-                            <img src={
-                                quiz?.data[0].picture
-                            }
-                                alt=""
-                                className="itemImg"
-                            />
-                            <div className="details">
-                                <h1 className="itemTitle">{quiz?.data[0].quiz_name}</h1>
-                                <div className="detailItem">
-                                    <span className="itemKey">Id: </span>
-                                    <span className="itemValue">{quiz?.data[0].id}</span>
+        <>
+            {!token && redirectToLogin()}
+            {token && (
+                <div className="single">
+                    <Sidebar />
+                    <div className="singleContainer">
+                        <Navbar />
+                        <div className="top">
+                            <div className="left">
+                                <div className="editButton">
+                                    <Link to={`/quiz/update/${quizId}`} className=" link">
+                                        Edit
+                                    </Link>
                                 </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Quiz Number: </span>
-                                    <span className="itemValue">{quiz?.data[0].quiz_no}</span>
-                                </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Category Id: </span>
-                                    <span className="itemValue">{quiz?.data[0].category_id}</span>
-                                </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Number of Questions: </span>
-                                    <span className="itemValue">{quiz?.data[0].no_of_questions}</span>
-                                </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Description: </span>
-                                    <span className="itemValue">{quiz?.data[0].description}</span>
-                                </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Number of Questions: </span>
-                                    <span className="itemValue">{quiz?.data[0].no_of_questions}</span>
-                                </div>
-                                <div className="detailItem">
-                                    <span className="itemKey">Status: </span>
-                                    <span className="itemValue">{quiz?.data[0].status}</span>
+                                <h1 className="title">Quiz Information</h1>
+                                <div className="item">
+                                    <img src={
+                                        quiz?.data[0].picture
+                                    }
+                                        alt=""
+                                        className="itemImg"
+                                    />
+                                    <div className="details">
+                                        <h1 className="itemTitle">{quiz?.data[0].quiz_name}</h1>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Id: </span>
+                                            <span className="itemValue">{quiz?.data[0].id}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Quiz Number: </span>
+                                            <span className="itemValue">{quiz?.data[0].quiz_no}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Category Id: </span>
+                                            <span className="itemValue">{quiz?.data[0].category_id}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Number of Questions: </span>
+                                            <span className="itemValue">{quiz?.data[0].no_of_questions}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Description: </span>
+                                            <span className="itemValue">{quiz?.data[0].description}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Number of Questions: </span>
+                                            <span className="itemValue">{quiz?.data[0].no_of_questions}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Status: </span>
+                                            <span className="itemValue">{quiz?.data[0].status}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            {/* <div className="right">
+                    <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
+                </div> */}
                         </div>
-                    </div>
-                    {/* <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div> */}
+                        {/* <div className="bottom">
+                <h1 className="title">Last Transactions</h1>
+                <List />
+                </div> */}
+                    </div >
                 </div>
-                {/* <div className="bottom">
-          <h1 className="title">Last Transactions</h1>
-          <List />
-        </div> */}
-            </div >
-        </div>
+                )
+            }
+        </>
     );
 };
 
