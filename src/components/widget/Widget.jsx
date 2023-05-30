@@ -16,8 +16,6 @@ const Widget = ({ type }) => {
     case "user":
       data = {
         title: "USERS",
-        isMoney: false,
-        link: "See all users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -32,8 +30,6 @@ const Widget = ({ type }) => {
     case "categories":
       data = {
         title: "CATEGORIES",
-        isMoney: false,
-        link: "View all orders",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -48,8 +44,6 @@ const Widget = ({ type }) => {
     case "quiz":
       data = {
         title: "QUIZES",
-        isMoney: true,
-        link: "View net earnings",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -61,8 +55,6 @@ const Widget = ({ type }) => {
     case "question":
       data = {
         title: "QUESTIONS",
-        isMoney: true,
-        link: "See details",
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -88,10 +80,10 @@ const Widget = ({ type }) => {
         <span className="link">{data.link}</span>
       </div>
       <div className="right">
-        <div className="percentage positive">
+        {/* <div className="percentage positive">
           <KeyboardArrowUpIcon />
           {diff} %
-        </div>
+        </div> */}
         {data.icon}
       </div>
     </div>
