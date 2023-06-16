@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './login.scss';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -124,6 +125,11 @@ const Login = () => {
           <button type="submit">Log In</button>
         </form>
       </div>
+      <footer className="footer">
+        <Link to="/testLogin" style={{ textDecoration: "none" }}>
+              Do you want to login as a student?
+        </Link>
+      </footer>
     </div>
   );
 };
