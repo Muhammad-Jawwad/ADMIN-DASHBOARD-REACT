@@ -3,6 +3,8 @@ import TestHome from "./pages/home/TestHome";
 import Login from "./pages/login/Login";
 import TestLogin from "./pages/login/TestLogin";
 import Profile from "./pages/profile/Profile";
+import Instruction from "./pages/instruction/Instruction";
+import TestQuestion from "./pages/questions/TestQuestion";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -39,7 +41,12 @@ function App() {
             <Route index element={<Login />} />
             <Route path="testLogin" element={<TestLogin />} />
             <Route path="home" element={<Home />} />
-            <Route path="testHome" element={<TestHome />} />
+
+            <Route path="testHome">  
+              <Route index element={<TestHome />} />
+              <Route path="instruction" element={<Instruction />} />
+              <Route path="testQuestion" element={<TestQuestion />} />
+            </Route>
 
             <Route path="user">
               <Route index element={<UserList />} />
