@@ -52,6 +52,10 @@ const TestLogin = () => {
                 if (data.status === true) {
                     // Redirect to "home" page
                     localStorage.setItem("token", JSON.stringify(true));
+
+                    // Storing adminData in localStorage
+                    localStorage.setItem("userId", JSON.stringify(data.data.id));
+
                     // Storing adminData in localStorage
                     localStorage.setItem("adminData", JSON.stringify(data.data));
 

@@ -15,7 +15,7 @@ const TestWidget = ({ type }) => {
                 </div>
             </div>
             <div className="quiz-image">
-                <img src={type.picture} alt="Quiz" />
+                <img src={`https://api.dicebear.com/6.x/initials/svg?seed=${type.quiz_name}`} alt="Quiz" />
             </div>
             <div className="bottom">
                 <span className="no-of-questions">{type.no_of_questions} Questions</span>

@@ -30,11 +30,11 @@ const Navbar = () => {
           {/* <SearchOutlinedIcon /> */}
         </div>
         <div className="items">
-          <div className="item">
+          {/* <div className="item">
             <LanguageOutlinedIcon className="icon" />
             English
-          </div>
-          <div className="item">
+          </div> */}
+          {/* <div className="item">
             {darkMode ? (
               <LightModeOutlinedIcon
                 className="icon"
@@ -46,7 +46,7 @@ const Navbar = () => {
                 onClick={() => dispatch({ type: "TOGGLE" })}
               />
             )}
-          </div>
+          </div> */}
           <div className="item">
             <FullscreenExitOutlinedIcon className="icon" onClick={toggleFullscreen} />
           </div>

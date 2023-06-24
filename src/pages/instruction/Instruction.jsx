@@ -13,6 +13,25 @@ const Instruction = () => {
         window.location.href = "/"; // Replace "/login" with the actual login page path
     };
 
+    const timeDuration = (time) => {
+        const durationInMinutes = time;
+
+        // Convert duration to milliseconds
+        const durationInMilliseconds = durationInMinutes * 60000;
+
+        // Create a new Date object with the duration in milliseconds
+        const duration = new Date(durationInMilliseconds);
+
+        // Extract minutes and seconds from the duration
+        const seconds = duration.getSeconds();
+        const minutes = duration.getMinutes();
+
+        // Format the minutes and seconds into MM:SS format
+        const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        return formattedTime;
+    };
+
     const fetchQuizData = async () => {
         try {
             const response = await axios.get(`/api/admin/quizbyid/${quizId}`, {
@@ -21,6 +40,13 @@ const Instruction = () => {
                 },
             });
             console.log("response.data", response.data);
+            console.log("duration", response.data.data[0].duration);
+
+            const formatedDuration = timeDuration(response.data.data[0].duration);
+            console.log("formatedDuration", formatedDuration);
+
+            localStorage.setItem("duration", formatedDuration);
+            
             setInstruction(response.data.data[0].description);
         } catch (error) {
             console.error("Error fetching quiz data:", error);

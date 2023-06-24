@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px;
+    padding: 25px;
     box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     border-radius: 10px;
     height: auto;
+    width: auto;
 
     .top {
         display: flex;
@@ -19,12 +20,12 @@
 
         .quiz-name {
             font-weight: normal;
-            font-size: 26px;
+            font-size: 20px;
             color: rgb(0, 0, 0);
         }
 
         .quiz-no {
-            font-size: 20px;
+            font-size: 15px;
             color: rgb(160, 160, 160);
         }
     }
@@ -33,11 +34,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
 
         img {
             width: 100%;
-            height: 200px;
+            height: 150px;
             object-fit: cover;
             border-radius: 0%;
         }
@@ -49,7 +51,7 @@
         align-items: center;
 
         .no-of-questions {
-            font-size: 20px;
+            font-size: 15px;
             margin-bottom: 10px;
             font-weight: normal;
         }
