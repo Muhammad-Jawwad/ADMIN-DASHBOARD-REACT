@@ -34,6 +34,7 @@ const QuizNew = ({ title }) => {
             quiz_name: inputValues.quiz_name,
             no_of_questions: parseInt(inputValues.no_of_questions),
             description: inputValues.description,
+            no_of_attempts: inputValues.no_of_attempts,
             status: parseInt(inputValues.status),
         };
         console.log("formData: ", formData);
@@ -100,13 +101,27 @@ const QuizNew = ({ title }) => {
                                     {quizInputs.map((input) => (
                                         <div className="formInput" key={input.id}>
                                             <label>{input.label}</label>
-                                            <input
-                                                type={input.type}
-                                                placeholder={input.placeholder}
-                                                name={input.fieldName} // Updated name attribute
-                                                onChange={handleInputChange}
-                                                required
-                                            />
+                                            {input.type === "dropdown" ? (
+                                                <select
+                                                    name={input.fieldName}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    {input.options.map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type={input.type}
+                                                    placeholder={input.placeholder}
+                                                    name={input.fieldName}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                />
+                                            )}
                                         </div>
                                     ))}
                                     <div style={{ clear: "both" }} className="formSubmit">

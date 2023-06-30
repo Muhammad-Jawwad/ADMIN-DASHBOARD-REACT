@@ -4,7 +4,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 const TestWidget = ({ type }) => {
     const handleProceedButton = () => {
         localStorage.setItem('quizId', type.id);
-        window.location.href = "/testHome/instruction";
+        window.location.href = "/quizHome/instruction";
     }
     return (
         <div className="testwidget">

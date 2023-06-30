@@ -126,7 +126,7 @@ const Login = () => {
         </form>
       </div>
       <footer className="footer">
-        <Link to="/testLogin" style={{ textDecoration: "none" }}>
+        <Link to="/quizLogin" style={{ textDecoration: "none" }}>
               Do you want to login as a student?
         </Link>
       </footer>

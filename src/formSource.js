@@ -52,8 +52,16 @@ export const categoryInputs = [
       placeholder: "E.g: Let's put your memory on our first topic to test.",
     },
     {
-      fieldName: "status",
+      fieldName: "no_of_attempts",
       id: 6,
+      label: "No of Attempts",
+      type: "dropdown",
+      options: ["one", "unlimited"],
+      placeholder: "Select",
+    },
+    {
+      fieldName: "status",
+      id: 7,
       label: "Status",
       type: "number",
       placeholder: "E.g: 1 or 0",

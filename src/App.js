@@ -5,6 +5,7 @@ import TestLogin from "./pages/login/TestLogin";
 import Profile from "./pages/profile/Profile";
 import Instruction from "./pages/instruction/Instruction";
 import TestQuestion from "./pages/questions/TestQuestion";
+import ReviewQuestions from "./pages/review/ReviewQuestions";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -39,13 +40,14 @@ function App() {
           <Route path="/">
             
             <Route index element={<Login />} />
-            <Route path="testLogin" element={<TestLogin />} />
+            <Route path="quizLogin" element={<TestLogin />} />
             <Route path="home" element={<Home />} />
 
-            <Route path="testHome">  
+            <Route path="quizHome">  
               <Route index element={<TestHome />} />
               <Route path="instruction" element={<Instruction />} />
-              <Route path="testQuestion" element={<TestQuestion />} />
+              <Route path="quizQuestion" element={<TestQuestion />} />
+              <Route path="reviewQuestion" element={<ReviewQuestions />} />
             </Route>
 
             <Route path="user">

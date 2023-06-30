@@ -63,7 +63,7 @@ const Instruction = () => {
 
     const handleBeginTest = () => {
         // Handle the action when the "Begin Test" button is clicked
-        window.location.href = "/testHome/testQuestion";
+        window.location.href = "/quizHome/quizQuestion";
     };
 
     return (

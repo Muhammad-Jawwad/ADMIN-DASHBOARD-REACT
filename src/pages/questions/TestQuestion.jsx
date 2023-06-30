@@ -5,6 +5,7 @@ import MyTimer from "../../components/timer/MyTimer";
 import "./testQuestion.scss";
 import { idID } from "@mui/material/locale";
 
+
 const useProgress = (initialValue, maxValue) => {
     const [progress, setProgress] = useState(initialValue);
 
@@ -63,16 +64,23 @@ const TestQuestion = () => {
 
     const fetchNextQuestions = async () => {
         try {
-            setProgressValue(progressValue+4);
-
             setSelectedOption(null);
             const response = await axios.post("/api/users/nextquestion", {
                 user_id: adminData.id,
                 quiz_id: quizId,
             });
-            console.log("NextQuestionAPI",response.data.data);
-            setApiQuestions(response.data.data);
-            console.log("NextQuestion", apiQuestions)
+            console.log("score", response.data.score);
+            if (response.data.score !== undefined) {
+                window.location.href = "/quizHome";
+                // window.location.href = "/quizHome/reviewQuestion";
+            }
+            else{
+                console.log("NextQuestionAPI", response.data);
+                console.log("progress", response.data.progress[0].progress);
+                setProgressValue(response.data.progress[0].progress);
+                setApiQuestions(response.data.data);
+                console.log("NextQuestion", apiQuestions);
+            }
         } catch (error) {
             console.error("Error fetching questions:", error);
         }
@@ -95,6 +103,7 @@ const TestQuestion = () => {
                 quiz_id,
                 question_id: id,
                 entered_option: userAnswer,
+                time: localStorage.getItem('timer'),
             });
 
             await fetchNextQuestions();
@@ -107,6 +116,9 @@ const TestQuestion = () => {
 
     const handleNext = () => {
         console.log("selectedOption", selectedOption);
+
+        console.log("duration", duration)
+       console.log("time",time)
 
         submitUserAnswer(selectedOption);
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
@@ -123,6 +135,19 @@ const TestQuestion = () => {
         apiQuestions.option_3,
         apiQuestions.option_4,
     ];
+    
+    const handleTimerChange = (event) => {
+        const timerValue = event.detail.value;
+        console.log("Current timer value:", timerValue);
+        // You can perform any desired logic with the timer value here
+    };
+
+    useEffect(() => {
+        window.addEventListener("timerChange", handleTimerChange); // Listen to the custom event
+        return () => {
+            window.removeEventListener("timerChange", handleTimerChange); // Clean up the event listener
+        };
+    }, []);
 
     return (
         <>

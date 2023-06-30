@@ -252,3 +252,28 @@ export const fetchQuestionRows = async () => {
 };
 // Export an empty array to be used until the API data is loaded
 export const questionRows = [];
+
+/**
+ * Review
+ */
+export const reviewColumns = [
+  { field: "id", headerName: "ID", width: 100 },
+  {
+    field: "question",
+    headerName: "Question",
+    width: 1180,
+  },
+];
+// Fetch the data from the API and format it for the DataGrid
+export const fetchReviewRows = async () => {
+  try {
+    const apiUrl = "/api/admin/getquestion";
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+// Export an empty array to be used until the API data is loaded
+export const reviewRows = [];

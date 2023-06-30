@@ -1,7 +1,11 @@
 import React from 'react';
 import { useTimer } from 'react-timer-hook';
+import $ from 'jquery';
 
 const MyTimer = ({ duration }) => {
+    
+
+
     const getExpiryTimestamp = (duration) => {
         if (typeof duration !== 'string') {
             console.error('Invalid duration:', duration);
@@ -31,7 +35,11 @@ const MyTimer = ({ duration }) => {
         pause,
         resume,
         restart,
-    } = useTimer({ expiryTimestamp: getExpiryTimestamp(duration), onExpire: () => console.warn('onExpire called') });
+    } = useTimer({ expiryTimestamp: getExpiryTimestamp(duration), onExpire: () => {
+            console.warn('onExpire called');
+            
+        } 
+    });
 
     if (duration === null) {
         // Handle the case where the duration is invalid
@@ -43,11 +51,23 @@ const MyTimer = ({ duration }) => {
     }
 
     return (
+
+        <div>
+        {(() => {
+            // Set a value in localStorage
+                localStorage.setItem('timer', minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
+        })()}
+
+        
+
         <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '35px' }}>
-                Time Remaining: <span>{minutes.toString().padStart(2, '0')}</span>:<span>{seconds.toString().padStart(2, '0')}</span>
+                Time Remaining: <div><span id="timeid" >{minutes.toString().padStart(2, '0')}</span>:<span id="secid">{seconds.toString().padStart(2, '0')}</span></div>
             </div>
+         
             {/* Rest of the component */}
+        </div>
+
         </div>
     );
 };
