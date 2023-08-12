@@ -27,6 +27,7 @@ const TestQuestion = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [progressValue, setProgressValue] = useState(0);
     const [progress, setProgress] = useProgress(0, 1);
+    const [loading, setLoading] = useState(false);
     
     const time = duration;
 
@@ -51,8 +52,18 @@ const TestQuestion = () => {
     };
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true); // Set loading to true before fetching data
+                await fetchQuestions();
+                setLoading(false); // Set loading to false after data is fetched
+            } catch (error) {
+                setLoading(false); // Set loading to false in case of error
+                redirectToLogin();
+            }
+        };
         if (token) {
-            fetchQuestions();
+            fetchData();
         } else {
             redirectToLogin();
         }
@@ -89,7 +100,7 @@ const TestQuestion = () => {
     const submitUserAnswer = async (userAnswer) => {
         const { quiz_id, id } = apiQuestions;
         if(userAnswer === null){
-            userAnswer = "Review";
+            userAnswer = "review";
         }
         console.log("quiz_id", quiz_id);
         console.log("question_id", id);
@@ -106,7 +117,9 @@ const TestQuestion = () => {
                 time: localStorage.getItem('timer'),
             });
 
+            setLoading(true);
             await fetchNextQuestions();
+            setLoading(false);
             // Handle the response if needed
             console.log(response.data);
         } catch (error) {
@@ -155,6 +168,7 @@ const TestQuestion = () => {
             {token && (
                 <div>
                     <Navbar />
+                   
                     <div className="testQuestion">
                         <div className="card">
                             <div className="timer">
@@ -169,22 +183,25 @@ const TestQuestion = () => {
                                     }}
                                     />
                             </div>
-                            <h2 className="question">{apiQuestions.question}</h2>
-                            <div>
-                                {options.map((option, index) => (
-                                    <div key={index} className="option">
-                                        <input
-                                            type="radio"
-                                            id={`option-${index + 1}`}
-                                            name="option"
-                                            value={option}
-                                            checked={selectedOption === option}
-                                            onChange={handleOptionChange}
-                                        />
-                                        <label htmlFor={`option-${index + 1}`}>{option}</label>
-                                    </div>
-                                ))}
-                            </div>
+                            {loading ? <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1> :
+                            <div>   
+                                <h2 className="question">{apiQuestions.question}</h2>
+                                <div>
+                                    {options.map((option, index) => (
+                                        <div key={index} className="option">
+                                            <input
+                                                type="radio"
+                                                id={`option-${index + 1}`}
+                                                name="option"
+                                                value={option}
+                                                checked={selectedOption === option}
+                                                onChange={handleOptionChange}
+                                            />
+                                            <label htmlFor={`option-${index + 1}`}>{option}</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>}
                             <div className="buttons">
                                 <button
                                     className="previousButton"

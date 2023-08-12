@@ -32,7 +32,7 @@ const TestLogin = () => {
         localStorage.setItem('formData', formDataString);
 
         // Send formData to the server using an HTTP request
-        fetch('/api/admin/login', {
+        fetch('/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -267,10 +267,61 @@ export const reviewColumns = [
 // Fetch the data from the API and format it for the DataGrid
 export const fetchReviewRows = async () => {
   try {
-    const apiUrl = "/api/admin/getquestion";
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    return data;
+    const quizId = localStorage.getItem("quizId");
+    const userId = localStorage.getItem("userId");
+    const body = JSON.stringify({
+      user_id: userId,
+      quiz_id: quizId
+    });
+
+    const apiUrl = "/api/users/getreviewquestion";
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: body
+    });
+
+    const responseData = await response.json();
+    console.log("responseData", responseData);
+
+    // Check if 'data' property is defined and is an array
+    if (Array.isArray(responseData.data)) {
+      let data = responseData.data;
+
+      // Fetch additional data for each item in the 'data' array
+      const questionPromises = data.map(async (item) => {
+        const questionId = item.question_id;
+        console.log("questionId", questionId)
+        const questionUrl = `/api/admin/questionbyid/${questionId}`;
+        const questionResponse = await fetch(questionUrl);
+        const questionData = await questionResponse.json();
+        console.log("questionData", questionData.data[0].question)
+
+        // Assign the 'questionDetails' object directly to the item
+        item = questionData.data[0];
+
+        // Return the modified item
+        return item;
+      });
+
+      const resolvedQuestions = await Promise.all(questionPromises);
+      console.log("resolvedQuestions", resolvedQuestions)
+
+      // Build a JSON object with the required structure
+      const jsonData = {
+        code: responseData.code,
+        status: responseData.status,
+        message: responseData.message,
+        data: resolvedQuestions
+      };
+      console.log("jsonData", jsonData)
+      return jsonData;
+    } else {
+      throw new Error("Invalid response data");
+    }
+
   } catch (error) {
     console.error(error);
   }

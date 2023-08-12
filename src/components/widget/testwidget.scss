@@ -68,10 +68,23 @@
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
+        .start-quiz::before {
+            content: "Proceed";
+        }
+
         .start-quiz:hover {
             background-color: white;
             color: #7451f8;
             border-color: #7451f8;
+        }
+
+        .start-quiz:disabled {
+            background-color: rgb(4, 183, 4);
+            cursor: not-allowed;
+        }
+
+        .start-quiz:disabled::before {
+            content: "Completed";
         }
     }
 }

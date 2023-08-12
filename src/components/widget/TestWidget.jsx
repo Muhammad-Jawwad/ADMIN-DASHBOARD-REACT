@@ -2,6 +2,7 @@ import "./testwidget.scss";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 
 const TestWidget = ({ type }) => {
+    console.log("type",type);
     const handleProceedButton = () => {
         localStorage.setItem('quizId', type.id);
         window.location.href = "/quizHome/instruction";
@@ -19,7 +20,11 @@ const TestWidget = ({ type }) => {
             </div>
             <div className="bottom">
                 <span className="no-of-questions">{type.no_of_questions} Questions</span>
-                <button className="start-quiz" onClick={handleProceedButton}>Proceed</button> 
+                <button 
+                    className="start-quiz" 
+                    onClick={handleProceedButton}
+                    disabled={type.key==="attempted"}
+                ></button> 
             </div>
         </div>
     );

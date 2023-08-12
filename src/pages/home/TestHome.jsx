@@ -7,6 +7,7 @@ import TestWidget from "../../components/widget/TestWidget";
 
 const TestHome = () => {
     const [token] = useState(localStorage.getItem("token"));
+    const [userId] = useState(localStorage.getItem("userId"));
     const [quizData, setQuizData] = useState([]);
 
     const redirectToLogin = () => {
@@ -16,18 +17,17 @@ const TestHome = () => {
 
     const fetchQuizData = async () => {
         try {
-            const response = await axios.get("/api/users/quizbycategoryId/6", {
-                headers: {
-                    "Content-Type": "application/json",
-                },
+            console.log("userId", userId)
+            const response = await axios.post("/api/users/quizbycategoryId/6", {
+                user_id: userId,
             });
-            console.log("response.data", response.data.data);
+            console.log("response.data", response);
             setQuizData(response.data.data);
             console.log("quizData", quizData);
         } catch (error) {
             console.error("Error fetching quiz data:", error);
         }
-        console.log("quizData", quizData);
+        console.log("quizData2", quizData);
     };
 
     useEffect(() => {

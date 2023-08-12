@@ -61,7 +61,7 @@ const Sidebar = () => {
               <span>Profile</span>
             </li>
           </Link>
-          <li onClick={() => { localStorage.removeItem("token") }}>
+          <li onClick={() => { localStorage.clear() }}>
             <Link to="/" style={{ textDecoration: "none" }}>
               <ExitToAppIcon className="icon" />
               <span>Logout</span>

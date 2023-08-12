@@ -7,6 +7,7 @@ const Instruction = () => {
     const [token] = useState(localStorage.getItem("token"));
     const [instruction, setInstruction] = useState("");
     const [quizId] = useState(localStorage.getItem("quizId"));
+    const [loading, setLoading] = useState(false);
 
     const redirectToLogin = () => {
         alert("Please log in first to access this page.");
@@ -54,8 +55,19 @@ const Instruction = () => {
     };
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true); // Set loading to true before fetching data
+                await fetchQuizData();
+                setLoading(false); // Set loading to false after data is fetched
+            } catch (error) {
+                setLoading(false); // Set loading to false in case of error
+                redirectToLogin();
+            }
+        };
+
         if (token) {
-            fetchQuizData();
+            fetchData(); // Fetch data when token is available
         } else {
             redirectToLogin();
         }
@@ -74,13 +86,15 @@ const Instruction = () => {
                     <div className="homeContainer">
                         <Navbar />
                         <div className="content">
+                            {loading ? <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1> :
                             <div className="card">
                                 <h2 className="heading">INSTRUCTIONS</h2>
+                                
                                 <p className="description">{instruction}</p>
                                 <button className="beginButton" onClick={handleBeginTest}>
                                     Begin Test
                                 </button>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>
