@@ -31,8 +31,13 @@ const ReviewDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/user/${params.row.id}`} style={{ textDecoration: "none" }}>
-                            <div className="viewButton">View</div>
+                        <Link to={`/quizQuestion`} style={{ textDecoration: "none" }}>
+                        <div 
+                        className="viewButton"
+                        onClick={() => handleDelete(params.row.id)}
+                        >
+                            View
+                        </div>
                         </Link>
                         {/* <div
                             className="deleteButton"

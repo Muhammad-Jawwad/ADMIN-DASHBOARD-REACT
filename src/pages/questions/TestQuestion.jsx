@@ -82,8 +82,8 @@ const TestQuestion = () => {
             });
             console.log("score", response.data.score);
             if (response.data.score !== undefined) {
-                window.location.href = "/quizHome";
-                // window.location.href = "/quizHome/reviewQuestion";
+                // window.location.href = "/quizHome";
+                window.location.href = "/quizHome/reviewQuestion";
             }
             else{
                 console.log("NextQuestionAPI", response.data);
