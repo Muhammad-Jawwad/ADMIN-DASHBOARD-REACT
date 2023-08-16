@@ -28,6 +28,8 @@ const TestQuestion = () => {
     const [progressValue, setProgressValue] = useState(0);
     const [progress, setProgress] = useProgress(0, 1);
     const [loading, setLoading] = useState(false);
+    const [attemptCode, setAttemptCode] = useState(null);
+
     
     const time = duration;
 
@@ -42,8 +44,9 @@ const TestQuestion = () => {
                 user_id: adminData.id,
                 quiz_id: quizId,
             });
-            console.log(response.data.data);
-            // console.log("time",time);
+            console.log(response.data);
+            // console.log("attemptCode", response.data.attemptCode);
+            setAttemptCode(response.data.attemptCode);
             setApiQuestions(response.data.data);
             console.log("apiQuestions", apiQuestions)
         } catch (error) {
@@ -79,17 +82,21 @@ const TestQuestion = () => {
             const response = await axios.post("/api/users/nextquestion", {
                 user_id: adminData.id,
                 quiz_id: quizId,
+                attemptCode
             });
             console.log("score", response.data.score);
             if (response.data.score !== undefined) {
+                localStorage.setItem("attemptCode", attemptCode);
                 // window.location.href = "/quizHome";
                 window.location.href = "/quizHome/reviewQuestion";
             }
             else{
                 console.log("NextQuestionAPI", response.data);
                 console.log("progress", response.data.progress[0].progress);
+                setLoading(true)
                 setProgressValue(response.data.progress[0].progress);
                 setApiQuestions(response.data.data);
+                setLoading(false)
                 console.log("NextQuestion", apiQuestions);
             }
         } catch (error) {
@@ -105,6 +112,7 @@ const TestQuestion = () => {
         console.log("quiz_id", quiz_id);
         console.log("question_id", id);
         console.log("userAnswer", userAnswer);
+        console.log("attemptCode",attemptCode);
 
         const user_id = adminData.id;
 
@@ -115,11 +123,12 @@ const TestQuestion = () => {
                 question_id: id,
                 entered_option: userAnswer,
                 time: localStorage.getItem('timer'),
+                attemptCode
             });
 
-            setLoading(true);
+            // setLoading(true);
             await fetchNextQuestions();
-            setLoading(false);
+            // setLoading(false);
             // Handle the response if needed
             console.log(response.data);
         } catch (error) {
@@ -129,7 +138,6 @@ const TestQuestion = () => {
 
     const handleNext = () => {
         console.log("selectedOption", selectedOption);
-
         console.log("duration", duration)
        console.log("time",time)
 

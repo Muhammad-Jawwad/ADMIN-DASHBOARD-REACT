@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 const ReviewDatatable = () => {
     const [data, setData] = useState(reviewRows);
     const [loading, setLoading] = useState(false);
+    
 
     useEffect(() => {
         const getData = async () => {
@@ -31,7 +32,7 @@ const ReviewDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/quizQuestion`} style={{ textDecoration: "none" }}>
+                        <Link to={`/quizHome/quizQuestion`} style={{ textDecoration: "none" }}>
                         <div 
                         className="viewButton"
                         onClick={() => handleDelete(params.row.id)}

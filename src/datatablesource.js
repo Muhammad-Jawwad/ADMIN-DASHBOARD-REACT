@@ -261,17 +261,19 @@ export const reviewColumns = [
   {
     field: "question",
     headerName: "Question",
-    width: 1180,
+    width: 1060,
   },
 ];
 // Fetch the data from the API and format it for the DataGrid
 export const fetchReviewRows = async () => {
   try {
+    const attemptCode = localStorage.getItem("attemptCode");
     const quizId = localStorage.getItem("quizId");
     const userId = localStorage.getItem("userId");
     const body = JSON.stringify({
       user_id: userId,
-      quiz_id: quizId
+      quiz_id: quizId,
+      attemptCode
     });
 
     const apiUrl = "/api/users/getreviewquestion";
