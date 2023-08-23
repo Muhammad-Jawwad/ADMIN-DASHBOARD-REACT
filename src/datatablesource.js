@@ -276,7 +276,7 @@ export const fetchReviewRows = async () => {
       attemptCode
     });
 
-    const apiUrl = "/api/users/getreviewquestion";
+    const apiUrl = "/api/users/getreviewquestionlist";
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {

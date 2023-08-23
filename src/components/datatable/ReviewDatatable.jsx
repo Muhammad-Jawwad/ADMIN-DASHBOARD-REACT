@@ -20,9 +20,9 @@ const ReviewDatatable = () => {
         getData();
     }, []);
 
-    const handleDelete = (id) => {
-        setData(data.filter((item) => item.id !== id));
-    };
+    // const handleDelete = (id) => {
+    //     setData(data.filter((item) => item.id !== id));
+    // };
 
     const actionColumn = [
         {
@@ -32,13 +32,8 @@ const ReviewDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/quizHome/quizQuestion`} style={{ textDecoration: "none" }}>
-                        <div 
-                        className="viewButton"
-                        onClick={() => handleDelete(params.row.id)}
-                        >
-                            View
-                        </div>
+                        <Link to={`/quizHome/reviewQuestion/${params.row.id}`} style={{ textDecoration: "none" }}>
+                            <div className="viewButton">View</div>
                         </Link>
                         {/* <div
                             className="deleteButton"

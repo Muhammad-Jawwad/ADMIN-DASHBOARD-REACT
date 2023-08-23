@@ -5,7 +5,8 @@ import TestLogin from "./pages/login/TestLogin";
 import Profile from "./pages/profile/Profile";
 import Instruction from "./pages/instruction/Instruction";
 import TestQuestion from "./pages/questions/TestQuestion";
-import ReviewQuestions from "./pages/review/ReviewQuestions";
+import ReviewQuestionsList from "./pages/review/ReviewQuestionsList";
+import ReviewQuestion from "./pages/questions/ReviewQuestion";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -47,7 +48,9 @@ function App() {
               <Route index element={<TestHome />} />
               <Route path="instruction" element={<Instruction />} />
               <Route path="quizQuestion" element={<TestQuestion />} />
-              <Route path="reviewQuestion" element={<ReviewQuestions />} />
+              <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
+              <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
+
             </Route>
 
             <Route path="user">

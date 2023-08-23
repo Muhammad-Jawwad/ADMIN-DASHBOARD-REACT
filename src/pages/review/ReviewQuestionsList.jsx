@@ -1,11 +1,11 @@
-import "./reviewQuestions.scss"
+import "./reviewQuestionsList.scss"
 // import Sidebar from "../../components/sidebar/Sidebar"
 import Navbar from "../../components/navbar/Navbar"
 // import QuizDatatable from "../../components/datatable/QuizDatatable"
 import ReviewDatatable from "../../components/datatable/ReviewDatatable"
 import { useState } from "react"
 
-const ReviewQuestions = () => {
+const ReviewQuestionsList = () => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
@@ -17,7 +17,7 @@ const ReviewQuestions = () => {
         <>
             {!token && redirectToLogin()}
             {token && (
-                <div className="reviewQuestions">
+                <div className="reviewQuestionsList">
                     {/* <Sidebar /> */}
                     <div className="listContainer">
                         <Navbar />
@@ -30,4 +30,4 @@ const ReviewQuestions = () => {
     )
 }
 
-export default ReviewQuestions
+export default ReviewQuestionsList
