@@ -5,21 +5,11 @@ import Navbar from "../../components/navbar/Navbar";
 import MyTimer from "../../components/timer/MyTimer";
 import "./testQuestion.scss";
 
-// const useProgress = (initialValue, maxValue) => {
-//     const [progress, setProgress] = useState(initialValue);
-
-//     useEffect(() => {
-//         const calculatedProgress = (progress / maxValue) * 100;
-//         setProgress(calculatedProgress);
-//     }, [progress, maxValue]);
-
-//     return [progress, setProgress];
-// };
-
 const ReviewQuestion = () => {
     // Extracting categoryId using regular expressions
     const location = useLocation();
     const questionId = location.pathname.match(/\/quizHome\/reviewQuestion\/(\d+)/)?.[1]; 
+    const time = localStorage.getItem("timer");
     const [adminData] = useState(JSON.parse(localStorage.getItem("adminData")));
     const [quizId] = useState(localStorage.getItem("quizId"));
     const [attemptCode] = useState(localStorage.getItem("attemptCode"));;
@@ -31,23 +21,18 @@ const ReviewQuestion = () => {
     const [isOptionSelected, setIsOptionSelected] = useState(false);
     
 
-    const time = localStorage.getItem("timer");
-
     const redirectToLogin = () => {
         return <div>Please log in first to access this page.</div>;
     };
 
     const fetchQuestions = async () => {
         try {
-            
             const response = await axios.post("/api/users/getreviewquestion", {
                 user_id: adminData.id,
                 quiz_id: quizId,
                 attemptCode,
                 question_id: questionId
             });
-            // setAttemptCode(response.data.attemptCode);
-            console.log("response.data.data",response.data.data);
             setProgressValue(response.data.progressValue[0].progress)
             setApiQuestions(response.data.data);
         } catch (error) {
@@ -74,30 +59,6 @@ const ReviewQuestion = () => {
         }
     }, []);
 
-    // const handlePrevious = () => {
-    //     setCurrentQuestion((prevQuestion) => prevQuestion - 1);
-    // };
-
-    const fetchNextQuestions = async () => {
-        try {
-            setSelectedOption(null);
-            const response = await axios.post("/api/users/nextquestion", {
-                user_id: adminData.id,
-                quiz_id: quizId,
-                attemptCode,
-            });
-            if (response.data.score !== undefined) {
-                localStorage.setItem("attemptCode", attemptCode);
-                window.location.href = "/quizHome/reviewQuestionList";
-            } else {
-                setProgressValue(response.data.progress[0].progress);
-                setApiQuestions(response.data.data);
-            }
-        } catch (error) {
-            console.error("Error fetching questions:", error);
-        }
-    };
-
     const submitUserAnswer = async (userAnswer) => {
         const { quiz_id, id } = apiQuestions;
         const user_id = adminData.id;
@@ -111,15 +72,19 @@ const ReviewQuestion = () => {
                 time: localStorage.getItem("timer"),
                 attemptCode,
             });
-            console.log("response.data",response.data);
-            
             if (response.data.status === false && response.data.code === 400) {
-                // localStorage.setItem("attemptCode", attemptCode);
                 window.location.href = "/quizHome";
             } else {
+                console.log("from reviewanswer", response.data.data.question_id);
+                const Response = await axios.post("/api/users/getreviewquestion", {
+                    user_id: adminData.id,
+                    quiz_id: quizId,
+                    attemptCode,
+                    question_id: response.data.data.question_id
+                });
                 setSelectedOption(null);
-                setProgressValue(response.data.progressValue[0].progress);
-                setApiQuestions(response.data.data);
+                setProgressValue(Response.data.progressValue[0].progress);
+                setApiQuestions(Response.data.data);
             }
         } catch (error) {
             console.error("Error submitting user answer:", error);

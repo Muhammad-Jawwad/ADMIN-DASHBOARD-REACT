@@ -7,7 +7,7 @@ const Instruction = () => {
     const [token] = useState(localStorage.getItem("token"));
     const [instruction, setInstruction] = useState("");
     const [quizId] = useState(localStorage.getItem("quizId"));
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const redirectToLogin = () => {
         alert("Please log in first to access this page.");
@@ -57,7 +57,6 @@ const Instruction = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true); // Set loading to true before fetching data
                 await fetchQuizData();
                 setLoading(false); // Set loading to false after data is fetched
             } catch (error) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTimer } from 'react-timer-hook';
+import { useTimer } from 'react-timer-hook';    
 import $ from 'jquery';
 
 const MyTimer = ({ duration }) => {
