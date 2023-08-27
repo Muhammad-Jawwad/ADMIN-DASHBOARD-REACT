@@ -17,6 +17,7 @@ const TestQuestion = () => {
     const [reviewed, setReviewed] = useState(false);
     const [questionsOrder, setQuestionsOrder] = useState([apiQuestions]);
     const [count,setCount] = useState(0);
+    const [beforePreviousQuestion, setBeforePreviousQuestion] = useState(apiQuestions);
     // const [currentQuestion, setCurrentQuestion] = useState(0); // Index of the current question
 
     
@@ -67,7 +68,8 @@ const TestQuestion = () => {
             // console.log("before previous apiQuestions", apiQuestions)
             // console.log("From previous button", currentQuestion, "and count is", count)
             if (currentQuestion === count){
-                console.log("store it!", apiQuestions)
+                const updatedQuestion = { ...apiQuestions, selected: selectedOption };
+                setBeforePreviousQuestion(updatedQuestion);
             }
             setCurrentQuestion((prevQuestion) => prevQuestion - 1);
             setCurrentQuestion(currentQuestion-1);
@@ -140,7 +142,6 @@ const TestQuestion = () => {
 
     const handleNext = async () => {
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
-        console.log("For not Next",apiQuestions)
         if (isButtonDisabled) {
             return; // If button is already disabled, do nothing
         }
@@ -154,7 +155,8 @@ const TestQuestion = () => {
         } else{
             const previousQuestion = questionsOrder[currentQuestion + 1];
             if(previousQuestion === undefined){
-                console.log("Next question is to be fetch");
+                setApiQuestions(beforePreviousQuestion)
+                setSelectedOption(beforePreviousQuestion.selected); 
             }else{
                 setApiQuestions(previousQuestion)
                 setSelectedOption(previousQuestion.selected);  
