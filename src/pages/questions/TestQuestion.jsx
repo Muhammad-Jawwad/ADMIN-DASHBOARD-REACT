@@ -18,8 +18,6 @@ const TestQuestion = () => {
     const [questionsOrder, setQuestionsOrder] = useState([apiQuestions]);
     const [count,setCount] = useState(0);
     const [beforePreviousQuestion, setBeforePreviousQuestion] = useState(apiQuestions);
-    // const [currentQuestion, setCurrentQuestion] = useState(0); // Index of the current question
-
     
     const time = localStorage.getItem("duration");
 
@@ -65,18 +63,16 @@ const TestQuestion = () => {
 
     const handlePrevious = () => {
         if (currentQuestion > 0) {
-            // console.log("before previous apiQuestions", apiQuestions)
-            // console.log("From previous button", currentQuestion, "and count is", count)
+            if(currentQuestion < count){
+                questionsOrder[currentQuestion].selected = selectedOption;
+            }
             if (currentQuestion === count){
                 const updatedQuestion = { ...apiQuestions, selected: selectedOption };
                 setBeforePreviousQuestion(updatedQuestion);
             }
             setCurrentQuestion((prevQuestion) => prevQuestion - 1);
             setCurrentQuestion(currentQuestion-1);
-            // console.log("previous questionsOrder", questionsOrder)
-            // console.log("previous currentQuestion", currentQuestion)
             const previousQuestion = questionsOrder[currentQuestion-1];
-            // console.log("previousQuestion", previousQuestion)
             setApiQuestions(previousQuestion)
             setSelectedOption(previousQuestion.selected);   
         }
@@ -125,8 +121,6 @@ const TestQuestion = () => {
                 attemptCode,
             });
 
-            console.log(response.data);
-
             await fetchNextQuestions();
         } catch (error) {
             console.error("Error submitting user answer:", error);
@@ -138,6 +132,26 @@ const TestQuestion = () => {
         newQuestionsOrder[currentQuestion] = apiQuestions; // Update the current question's state
         newQuestionsOrder[currentQuestion].selected = selectedOption; // Update the current question's state
         setQuestionsOrder(newQuestionsOrder);
+    };
+
+    const updateUserAnswer = async (userAnswer) => {
+        const { quiz_id, id } = apiQuestions;
+        console.log("quiz_id, id", quiz_id, id);
+        const user_id = adminData.id;
+
+        try {
+            const response = await axios.patch("/api/users/updateattemptedquestion", {
+                user_id,
+                quiz_id,
+                question_id: id,
+                entered_option: userAnswer,
+                time: localStorage.getItem("timer"),
+                attemptCode,
+            });
+
+        } catch (error) {
+            console.error("Error updating user answer:", error);
+        }
     };
 
     const handleNext = async () => {
@@ -153,6 +167,10 @@ const TestQuestion = () => {
             setIsButtonDisabled(false); // Re-enable the button after processing
         
         } else{
+            if(selectedOption !== questionsOrder[currentQuestion].selected){
+                questionsOrder[currentQuestion].selected = selectedOption;
+                updateUserAnswer(selectedOption);
+            }
             const previousQuestion = questionsOrder[currentQuestion + 1];
             if(previousQuestion === undefined){
                 setApiQuestions(beforePreviousQuestion)
@@ -177,7 +195,6 @@ const TestQuestion = () => {
         ],
         [apiQuestions]
     );
-
 
     return (
         <>
