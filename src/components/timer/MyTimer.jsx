@@ -1,11 +1,9 @@
 import React from 'react';
-import { useTimer } from 'react-timer-hook';    
+import { useTimer } from 'react-timer-hook';   
+import axios from "axios"; 
 import $ from 'jquery';
 
 const MyTimer = ({ duration }) => {
-    
-
-
     const getExpiryTimestamp = (duration) => {
         if (typeof duration !== 'string') {
             console.error('Invalid duration:', duration);
@@ -25,6 +23,31 @@ const MyTimer = ({ duration }) => {
         return expiry.getTime();
     };
 
+    const handleQuizEnd = async () => {
+        console.log("End quiz api...");
+        const adminData = JSON.parse(localStorage.getItem("adminData"));
+        const quiz_id = parseInt(localStorage.getItem("quizId"));
+        const attemptCode = localStorage.getItem("attemptCode");
+        const user_id = adminData.id
+
+        console.log(quiz_id);
+        console.log(attemptCode);
+        console.log(user_id);
+
+        const formData = {
+            user_id,
+            quiz_id,
+            time: "00:00",
+            attemptCode
+        };
+        console.log("formData",formData);
+        const response = await axios.post("/api/users/endquiz", formData );
+        const score = response.data.score;
+        console.log(score)
+        localStorage.setItem("score", score);
+        window.location.href = "/quizHome/endQuiz";
+    };
+
     const {
         seconds,
         minutes,
@@ -35,11 +58,7 @@ const MyTimer = ({ duration }) => {
         pause,
         resume,
         restart,
-    } = useTimer({ expiryTimestamp: getExpiryTimestamp(duration), onExpire: () => {
-            console.warn('onExpire called');
-            
-        } 
-    });
+    } = useTimer({ expiryTimestamp: getExpiryTimestamp(duration), onExpire: handleQuizEnd });
 
     if (duration === null) {
         // Handle the case where the duration is invalid

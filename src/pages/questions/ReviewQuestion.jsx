@@ -73,7 +73,8 @@ const ReviewQuestion = () => {
                 attemptCode,
             });
             if (response.data.status === false && response.data.code === 400) {
-                window.location.href = "/quizHome";
+                localStorage.setItem("score",response.data.score);
+                window.location.href = "/quizHome/endQuiz";
             } else {
                 console.log("from reviewanswer", response.data.data.question_id);
                 const Response = await axios.post("/api/users/getreviewquestion", {
@@ -117,7 +118,7 @@ const ReviewQuestion = () => {
         ],
         [apiQuestions]
     );
-
+    
     return (
         <>
             {localStorage.getItem("token") ? (

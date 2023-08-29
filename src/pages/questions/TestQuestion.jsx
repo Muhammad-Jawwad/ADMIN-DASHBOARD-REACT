@@ -59,7 +59,9 @@ const TestQuestion = () => {
 
     useEffect(() => {
         console.log("From previous button", currentQuestion, "and count is", count)
-    },[count,currentQuestion]);
+        console.log("attemptCode",attemptCode)
+        localStorage.setItem("attemptCode", attemptCode);
+    },[count,currentQuestion,attemptCode]);
 
     const handlePrevious = () => {
         if (currentQuestion > 0) {
@@ -88,10 +90,13 @@ const TestQuestion = () => {
             });
             if (response.data.score !== undefined) {
                 if(reviewed === true){
+                    console.log("attemptCode",attemptCode)
                     localStorage.setItem("attemptCode", attemptCode);
                     window.location.href = "/quizHome/reviewQuestionList";
                 } else {
-                    window.location.href = "/quizHome";
+                    localStorage.setItem("score",response.data.score);
+                    console.log("score",response.data.score)
+                    window.location.href = "/quizHome/endQuiz";
                 }
 
             } else {

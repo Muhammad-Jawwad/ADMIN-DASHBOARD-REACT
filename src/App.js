@@ -7,6 +7,7 @@ import Instruction from "./pages/instruction/Instruction";
 import TestQuestion from "./pages/questions/TestQuestion";
 import ReviewQuestionsList from "./pages/review/ReviewQuestionsList";
 import ReviewQuestion from "./pages/questions/ReviewQuestion";
+import EndQuiz from "./pages/endQuiz/EndQuiz";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -50,7 +51,8 @@ function App() {
               <Route path="quizQuestion" element={<TestQuestion />} />
               <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
               <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
-
+              <Route path="endQuiz" element={<EndQuiz />} />
+              
             </Route>
 
             <Route path="user">
