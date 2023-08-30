@@ -65,6 +65,7 @@ const TestQuestion = () => {
 
     const handlePrevious = () => {
         if (currentQuestion > 0) {
+            setLoading(true);
             if(currentQuestion < count){
                 questionsOrder[currentQuestion].selected = selectedOption;
             }
@@ -77,7 +78,9 @@ const TestQuestion = () => {
             const previousQuestion = questionsOrder[currentQuestion-1];
             setApiQuestions(previousQuestion)
             setSelectedOption(previousQuestion.selected);   
+            setLoading(false);
         }
+
     };
 
     const fetchNextQuestions = async () => {
@@ -160,6 +163,7 @@ const TestQuestion = () => {
     };
 
     const handleNext = async () => {
+        setLoading(true);
         setCurrentQuestion((prevQuestion) => prevQuestion + 1);
         if (isButtonDisabled) {
             return; // If button is already disabled, do nothing
@@ -185,6 +189,7 @@ const TestQuestion = () => {
                 setSelectedOption(previousQuestion.selected);  
             }
         }
+        setLoading(false);
     };
 
     const handleOptionChange = (event) => {
@@ -222,7 +227,8 @@ const TestQuestion = () => {
                                 />
                             </div>
                             {loading ? (
-                                <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
+                                // <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
+                                <div className="loading-message">Loading...</div>
                             ) : (
                                 <div>
                                     <h2 className="question">{apiQuestions.question}</h2>
