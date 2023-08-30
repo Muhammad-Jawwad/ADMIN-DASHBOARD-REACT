@@ -23,7 +23,7 @@ const EndQuiz = () => {
   };
 
   const handleGoToHome = () => {
-    window.location.href = "/quizHome";
+    window.location.href = "/quiz";
   };
 
   return (

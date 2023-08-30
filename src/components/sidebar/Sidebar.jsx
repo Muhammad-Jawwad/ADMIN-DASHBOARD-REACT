@@ -8,52 +8,61 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { useLocation } from 'react-router-dom';
+
 
 const Sidebar = () => {
+  // Extracting categoryId using regular expressions
+  const location = useLocation();
+  const url = location.pathname;
+  const renderSidebar = url === "/home";
   const { dispatch } = useContext(DarkModeContext);
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/home" style={{ textDecoration: "none" }}>
-          <span className="logo">Quiz Dashboard</span>
+        <Link to={renderSidebar ? "/home" : "/quiz"} style={{ textDecoration: "none" }}>
+          <span className="logo">{renderSidebar ? "Quiz Dashboard" : "Quiz Test"}</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
-          <Link to="/home" style={{ textDecoration: "none" }}>
-            <li>
-              <DashboardIcon className="icon" />
-              <span>Dashboard</span>
-            </li>
-          </Link>
-         
-          <p className="title">LISTS</p>
-          <Link to="/user" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Users</span>
-            </li> 
-          </Link>
-          <Link to="/categories" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Categories</span>
-            </li> 
-          </Link>
-          <Link to="/quiz" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Quizes</span>
-            </li>
-          </Link>
-          <Link to="/question" style={{ textDecoration: "none" }}>
-            <li>
-              <CreditCardIcon className="icon" />
-              <span>Questions</span>
-            </li>
-          </Link>
+          {renderSidebar && (
+          <>
+            <p className="title">MAIN</p>
+            <Link to="/home" style={{ textDecoration: "none" }}>
+              <li>
+                <DashboardIcon className="icon" />
+                <span>Dashboard</span>
+              </li>
+            </Link>
+            <p className="title">LISTS</p>
+            <Link to="/user" style={{ textDecoration: "none" }}>
+              <li>
+                <PersonOutlineIcon className="icon" />
+                <span>Users</span>
+              </li> 
+            </Link>
+            <Link to="/categories" style={{ textDecoration: "none" }}>
+              <li>
+                <PersonOutlineIcon className="icon" />
+                <span>Categories</span>
+              </li> 
+            </Link>
+            <Link to="/quizList" style={{ textDecoration: "none" }}>
+              <li>
+                <StoreIcon className="icon" />
+                <span>Quizes</span>
+              </li>
+            </Link>
+            <Link to="/question" style={{ textDecoration: "none" }}>
+              <li>
+                <CreditCardIcon className="icon" />
+                <span>Questions</span>
+              </li>
+            </Link>
+          </>
+          )}
           <p className="title">USER</p>
           <Link to="/profile" style={{ textDecoration: "none" }}>
             <li>

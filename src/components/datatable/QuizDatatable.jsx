@@ -31,7 +31,7 @@ const QuizDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/quiz/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        <Link to={`/quizList/${params.row.id}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
                         <div
@@ -49,7 +49,7 @@ const QuizDatatable = () => {
         <div className="datatable">
             <div className="datatableTitle">
                 Add New Quiz
-                <Link to="/quiz/new" className="link">
+                <Link to="/quizList/new" className="link">
                     Add New
                 </Link>
             </div>

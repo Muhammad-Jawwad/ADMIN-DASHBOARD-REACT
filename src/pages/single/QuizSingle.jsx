@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const QuizSingle = () => {
     // Extracting quizId using regular expressions
     const location = useLocation();
-    const quizId = location.pathname.match(/\/quiz\/(\d+)/)?.[1];
+    const quizId = location.pathname.match(/\/quizList\/(\d+)/)?.[1];
 
     const [quiz, setQuiz] = useState(null);
     let [token] = useState(localStorage.getItem("token"));
@@ -50,7 +50,7 @@ const QuizSingle = () => {
                         <div className="top">
                             <div className="left">
                                 <div className="editButton">
-                                    <Link to={`/quiz/update/${quizId}`} className=" link">
+                                    <Link to={`/quizList/update/${quizId}`} className=" link">
                                         Edit
                                     </Link>
                                 </div>

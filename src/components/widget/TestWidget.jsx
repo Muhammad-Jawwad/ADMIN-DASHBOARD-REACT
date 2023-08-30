@@ -5,7 +5,7 @@ const TestWidget = ({ type }) => {
     console.log("type",type);
     const handleProceedButton = () => {
         localStorage.setItem('quizId', type.id);
-        window.location.href = "/quizHome/instruction";
+        window.location.href = "/quiz/instruction";
     }
     return (
         <div className="testwidget">

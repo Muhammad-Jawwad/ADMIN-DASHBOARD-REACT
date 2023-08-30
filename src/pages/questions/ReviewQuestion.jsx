@@ -8,7 +8,7 @@ import "./testQuestion.scss";
 const ReviewQuestion = () => {
     // Extracting categoryId using regular expressions
     const location = useLocation();
-    const questionId = location.pathname.match(/\/quizHome\/reviewQuestion\/(\d+)/)?.[1]; 
+    const questionId = location.pathname.match(/\/quiz\/reviewQuestion\/(\d+)/)?.[1]; 
     const time = localStorage.getItem("timer");
     const [adminData] = useState(JSON.parse(localStorage.getItem("adminData")));
     const [quizId] = useState(localStorage.getItem("quizId"));
@@ -74,7 +74,7 @@ const ReviewQuestion = () => {
             });
             if (response.data.status === false && response.data.code === 400) {
                 localStorage.setItem("score",response.data.score);
-                window.location.href = "/quizHome/endQuiz";
+                window.location.href = "/quiz/endQuiz";
             } else {
                 console.log("from reviewanswer", response.data.data.question_id);
                 const Response = await axios.post("/api/users/getreviewquestion", {
@@ -124,7 +124,7 @@ const ReviewQuestion = () => {
             {localStorage.getItem("token") ? (
                 <div>
                     <Navbar />
-                    <div className="testQuestion">
+                    <div className="test-question-page">
                         <div className="card">
                             <div className="timer">
                                 <MyTimer duration={time} />

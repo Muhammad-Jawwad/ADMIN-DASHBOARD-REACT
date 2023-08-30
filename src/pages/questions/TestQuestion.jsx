@@ -92,11 +92,11 @@ const TestQuestion = () => {
                 if(reviewed === true){
                     console.log("attemptCode",attemptCode)
                     localStorage.setItem("attemptCode", attemptCode);
-                    window.location.href = "/quizHome/reviewQuestionList";
+                    window.location.href = "/quiz/reviewQuestionList";
                 } else {
                     localStorage.setItem("score",response.data.score);
                     console.log("score",response.data.score)
-                    window.location.href = "/quizHome/endQuiz";
+                    window.location.href = "/quiz/endQuiz";
                 }
 
             } else {
@@ -206,7 +206,7 @@ const TestQuestion = () => {
             {localStorage.getItem("token") ? (
                 <div>
                     <Navbar />
-                    <div className="testQuestion">
+                    <div className="test-question-page">
                         <div className="card">
                             <div className="timer">
                                 <MyTimer duration={time} />

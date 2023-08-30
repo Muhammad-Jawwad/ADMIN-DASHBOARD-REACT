@@ -45,7 +45,7 @@ function App() {
             <Route path="quizLogin" element={<TestLogin />} />
             <Route path="home" element={<Home />} />
 
-            <Route path="quizHome">  
+            <Route path="quiz">  
               <Route index element={<TestHome />} />
               <Route path="instruction" element={<Instruction />} />
               <Route path="quizQuestion" element={<TestQuestion />} />
@@ -70,7 +70,7 @@ function App() {
               />
             </Route>
             
-            <Route path="quiz">
+            <Route path="quizList">
               <Route index element={<QuizList />} />
               <Route path=":quizId" element={<QuizSingle />} />
               <Route path="update/:quizId" element={<QuizUpdate inputs={quizInputs} title="Update Quiz" />} />

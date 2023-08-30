@@ -64,7 +64,7 @@ const TestLogin = () => {
                     //   localStorage.removeItem("token");
                     // }, 5000);
 
-                    window.location.href = '/quizHome';
+                    window.location.href = '/quiz';
                 } else {
                     // Set error message and clear username/password
                     setError('Invalid username or password!');

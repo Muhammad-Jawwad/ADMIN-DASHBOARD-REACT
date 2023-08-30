@@ -11,7 +11,7 @@ const QuizUpdate = ({ title }) => {
 
     // Extracting quizId using regular expressions
     const location = useLocation();
-    const quizId = location.pathname.match(/\/quiz\/update\/(\d+)/)?.[1];
+    const quizId = location.pathname.match(/\/quizList\/update\/(\d+)/)?.[1];
 
     // Initializing state
     const [file, setFile] = useState(null);
@@ -85,7 +85,7 @@ const QuizUpdate = ({ title }) => {
             .then((data) => {
                 console.log("Response from API", data);
                 // Navigate to the desired page after API response
-                navigate(`/quiz/${quizId}`);
+                navigate(`/quizList/${quizId}`);
             })
             .catch((error) => {
                 console.log(error);
@@ -153,7 +153,7 @@ const QuizUpdate = ({ title }) => {
                                         <button
                                             type="button"
                                             style={{ float: "right" }}
-                                            onClick={() => navigate(`/quiz/${quizId}`)}
+                                            onClick={() => navigate(`/quizList/${quizId}`)}
                                         >
                                             Cancel
                                         </button>
