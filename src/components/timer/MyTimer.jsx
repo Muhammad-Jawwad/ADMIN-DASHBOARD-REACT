@@ -45,7 +45,7 @@ const MyTimer = ({ duration }) => {
         const score = response.data.score;
         console.log(score)
         localStorage.setItem("score", score);
-        window.location.href = "/quizHome/endQuiz";
+        window.location.href = "/quiz/endQuiz";
     };
 
     const {

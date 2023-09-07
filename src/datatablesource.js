@@ -53,7 +53,9 @@ export const fetchUserRows = async () => {
   try {
     const apiUrl = "/api/admin/registeredstudents";
     const response = await fetch(apiUrl);
+    console.log("Response", response);
     const data = await response.json();
+    console.log("data", data);
     return data;
   } catch (error) {
     console.error(error);

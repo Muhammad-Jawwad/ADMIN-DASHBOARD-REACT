@@ -15,19 +15,19 @@ const Sidebar = () => {
   // Extracting categoryId using regular expressions
   const location = useLocation();
   const url = location.pathname;
-  const renderSidebar = url === "/home";
+  const renderSidebar = url === "/quiz";
   const { dispatch } = useContext(DarkModeContext);
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to={renderSidebar ? "/home" : "/quiz"} style={{ textDecoration: "none" }}>
-          <span className="logo">{renderSidebar ? "Quiz Dashboard" : "Quiz Test"}</span>
+        <Link to={!renderSidebar ? "/home" : "/quiz"} style={{ textDecoration: "none" }}>
+          <span className="logo">{!renderSidebar ? "Quiz Dashboard" : "Quiz Test"}</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
-          {renderSidebar && (
+          {!renderSidebar && (
           <>
             <p className="title">MAIN</p>
             <Link to="/home" style={{ textDecoration: "none" }}>
@@ -78,7 +78,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <div
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
@@ -87,7 +87,7 @@ const Sidebar = () => {
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
         ></div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -32,7 +32,7 @@ const ReviewDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/quizHome/reviewQuestion/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        <Link to={`/quiz/reviewQuestion/${params.row.id}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
                         {/* <div
