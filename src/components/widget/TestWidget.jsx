@@ -2,7 +2,6 @@ import "./testwidget.scss";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 
 const TestWidget = ({ type }) => {
-    console.log("type",type);
     const handleProceedButton = () => {
         localStorage.setItem('quizId', type.id);
         window.location.href = "/quiz/instruction";

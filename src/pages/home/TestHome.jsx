@@ -4,11 +4,15 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./testHome.scss";
 import TestWidget from "../../components/widget/TestWidget";
+import InfiniteScroll from "react-infinite-scroll-component"; // Import InfiniteScroll
+import BeatLoader from "react-spinners/BeatLoader";
 
 const TestHome = () => {
     const [token] = useState(localStorage.getItem("token"));
     const [userId] = useState(localStorage.getItem("userId"));
     const [quizData, setQuizData] = useState([]);
+    const [hasMore, setHasMore] = useState(true); // Track if there's more data to load
+    const [page, setPage] = useState(1); // Track the current page
 
     const redirectToLogin = () => {
         alert("Please log in first to access this page.");
@@ -17,21 +21,22 @@ const TestHome = () => {
 
     const fetchQuizData = async () => {
         try {
-            console.log("userId", userId)
-            const response = await axios.post("/api/users/quizbycategoryId/6", {
+            const response = await axios.post(`/api/users/quizbycategoryId/6?page=${page}`, { // Include page in the request
                 user_id: userId,
             });
-            console.log("response.data", response);
-            setQuizData(response.data.data);
-            console.log("quizData", quizData);
+            if (response.data.data.length === 0) {
+                setHasMore(false); // No more data to load
+            } else {
+                setQuizData([...quizData, ...response.data.data]); // Append new data to the existing quizData
+                setPage(page + 1); // Increment the page
+            }
         } catch (error) {
             console.error("Error fetching quiz data:", error);
         }
-        console.log("quizData2", quizData);
     };
 
     useEffect(() => {
-        console.log("Clear local storage when the home page component mounts")
+        console.log("Clear local storage when the home page component mounts");
         localStorage.removeItem("score");
         localStorage.removeItem("attemptCode");
         localStorage.removeItem("quizId"); // Clear local storage when the home page component mounts
@@ -53,12 +58,22 @@ const TestHome = () => {
                     <Sidebar />
                     <div className="homeContainer">
                         <Navbar />
-                        <div className="widgets">
-                            {quizData.map((quiz, index) => (
-                                <div className="widgetWrapper" key={index}>
-                                    <TestWidget type={quiz} />
+                        <div>
+                            {/* Wrap the widget container with InfiniteScroll */}
+                            <InfiniteScroll
+                                dataLength={quizData.length} // This is important to prevent unnecessary loads
+                                next={fetchQuizData} // Load more data when the user scrolls
+                                hasMore={hasMore} // Whether there's more data to load
+                                loader={<div className="beatLoader"><BeatLoader color="#5a38d4" /></div>} // Loader element
+                            >
+                                <div className="widgets">
+                                    {quizData.map((quiz, index) => (
+                                        <div className="widgetWrapper" key={index}>
+                                            <TestWidget type={quiz} />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </InfiniteScroll>
                         </div>
                     </div>
                 </div>
