@@ -1,5 +1,5 @@
 import "./datatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { categoryColumns, categoryRows, fetchCategoryRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -53,15 +53,20 @@ const Datatable = () => {
           Add New
         </Link>
       </div>
-      {loading? <h1 style={{textAlign:"center", paddingTop:"20%"}}>loading...</h1>:
-      <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={categoryColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        // checkboxSelection
-      />}
+      {loading ? (
+        <h1 style={{ textAlign: "center", paddingTop: "20%" }}>Loading...</h1>
+      ) : (
+        <DataGrid
+          className="datagrid"
+          rows={data}
+          columns={categoryColumns.concat(actionColumn)}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          components={{
+            Toolbar: GridToolbar, // Include the GridToolbar in the Toolbar slot
+          }}
+        />
+      )}
     </div>
   );
 };

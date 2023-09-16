@@ -59,7 +59,51 @@
             color: #888;
             margin-left: 10px;
         }
-      }
+      }     
+    }
+    
+    /* CSS for the category dropdown */
+    .category-dropdown {
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .category-label {
+      cursor: pointer;
+    }
+
+    .category-list {
+      display: none;
+      position: absolute;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-list.show {
+      display: block;
+    }
+
+    .category-item {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .category-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    .category-item.selected {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .category-item.selected:hover {
+      background-color: #0056b3;
     }
   }
 

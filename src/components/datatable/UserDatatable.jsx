@@ -1,5 +1,5 @@
 import "./datatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { userColumns, userRows, fetchUserRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -60,6 +60,9 @@ const UserDatatable = () => {
                     columns={userColumns.concat(actionColumn)}
                     pageSize={9}
                     rowsPerPageOptions={[9]}
+                    components={{
+                        Toolbar: GridToolbar, // Include the GridToolbar in the Toolbar slot
+                    }}
 
                 />}
         </div>
