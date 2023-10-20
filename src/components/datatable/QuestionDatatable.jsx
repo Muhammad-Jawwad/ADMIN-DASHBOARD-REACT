@@ -1,17 +1,20 @@
 import "./datatable.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { questionColumns, questionRows, fetchQuestionRows } from "../../datatablesource";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const QuestionDatatable = () => {
     const [data, setData] = useState(questionRows);
     const [loading, setLoading] = useState(false);
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
 
     useEffect(() => {
         const getData = async () => {
             setLoading(true);
-            const rows = await fetchQuestionRows();
+            const rows = await fetchQuestionRows(qValue);
 
             setLoading(false);
             setData(Array.from(rows.data));

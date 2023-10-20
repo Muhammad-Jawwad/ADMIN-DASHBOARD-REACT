@@ -1,3 +1,5 @@
+import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
+
 export const categoryInputs = [
     {
       fieldName: "category_name",
@@ -12,6 +14,20 @@ export const categoryInputs = [
       label: "Number of Quiz",
       type: "number",
       placeholder: "E.g: 10",
+    },
+    {
+      fieldName: "status",
+      id: 3,
+      label: "Status",
+      type: "number",
+      placeholder: "E.g: 1 or 0",
+    },
+    {
+      fieldName: "type",
+      id: 4,
+      label: "Type",
+      type: "text",  // Change the type to "select"
+      placeholder: "E.g: ECAT, MCAT, ET",
     },
   ];
   
@@ -45,25 +61,33 @@ export const categoryInputs = [
       placeholder: "E.g: 20",
     },
     {
-      fieldName: "description",
+      fieldName: "duration",
       id: 5,
+      label: "Duration (Minutes)",
+      type: "number",
+      placeholder: "E.g: 5 (In Minutes)",
+    },
+    {
+      fieldName: "description",
+      id: 6,
       label: "Description",
       type: "text",
       placeholder: "E.g: Let's put your memory on our first topic to test.",
     },
     {
       fieldName: "no_of_attempts",
-      id: 6,
+      id: 7,
       label: "No of Attempts",
       type: "dropdown",
-      options: ["one", "unlimited"],
+      options: ["", "one", "infinite"],
       placeholder: "Select",
     },
     {
       fieldName: "status",
-      id: 7,
+      id: 8,
       label: "Status",
-      type: "number",
+      type: "dropdown",
+      options: [ 1, 0],
       placeholder: "E.g: 1 or 0",
     },
   ];
@@ -122,7 +146,8 @@ export const categoryInputs = [
       fieldName: "status",
       id: 8,
       label: "Status",
-      type: "number",
+      type: "dropdown",
+      options: [1, 0],
       placeholder: "E.g: 1 or 0",
     },
   ];

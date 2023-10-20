@@ -2,63 +2,82 @@ import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { categoryInputs } from "../../formSource";
 
 const New = ({ title }) => {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [inputValues, setInputValues] = useState({});
-  let [token] = useState(localStorage.getItem("token"));
+  const [shouldResetForm, setShouldResetForm] = useState(false);
+  const token = localStorage.getItem("token");
 
   const redirectToLogin = () => {
-    alert("Plaese Login first then you can access this page...");
-    window.location.href = '/'; // Replace "/login" with the actual login page path
+    window.location.href = "/notFound";
   };
 
   const handleInputChange = (e) => {
-    setInputValues({
-      ...inputValues,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setInputValues((prevInputValues) => ({ ...prevInputValues, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (shouldResetForm) {
+      setInputValues({});
+      setFile(null);
+      setShouldResetForm(false);
+    }
+  }, [shouldResetForm]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-      category_name: inputValues.catagoryname,
-      no_of_quiz: parseInt(inputValues.numberofquiz),
+      category_name: inputValues.categoryname,
+      no_of_quiz: parseInt(inputValues.numberofquiz, 10),
       category_picture: file ? URL.createObjectURL(file) : "",
+      type: inputValues.type
     };
-  
-    // Convert formData to a JSON string
+
     const formDataString = JSON.stringify(formData);
-  
-    // Store formDataString in local storage
-    localStorage.setItem("formData", formDataString);
-  
-    // Send formData to the server using an HTTP request
-    fetch("/api/admin/addcategory", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: formDataString,
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response from API", data);
-      })
-      .catch((error) => {
-        console.log(error);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/admin/addcategory", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: formDataString,
       });
-  
-    // Reset the form
-    setFile("");
-    setInputValues({});
-  };  
+
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.code === 401 || data.code === 498) {
+          console.error("Unauthorized: Please log in");
+          window.location.href = "/notFound";
+        } else {
+          console.error("Error:", data); // Handle other errors
+        }
+      } else {
+        const data = await response.json();
+        console.log("Response from API", data);
+      }
+
+      // Clear input values and file
+      setInputValues({});
+      setFile(null);
+      console.log("Input values after reset:", inputValues);
+      setShouldResetForm(true);
+    } catch (error) {
+      console.error("Network error:", error);
+      // Handle network errors and provide user feedback
+      if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+        console.error("Unauthorized: Please log in");
+        window.location.href = "/notFound";
+      }
+    }
+  };
+
 
   return (
      <>
@@ -93,9 +112,12 @@ const New = ({ title }) => {
                       id="file"
                       onChange={(e) => setFile(e.target.files[0])}
                       style={{ display: "none" }}
+                      required
                     />
                   </div>
-                  {categoryInputs.map((input) => (
+                  {categoryInputs
+                    .filter((input) => input.fieldName !== 'status')
+                    .map((input) => (
                     <div className="formInput" key={input.id}>
                       <label>{input.label}</label>
                       <input

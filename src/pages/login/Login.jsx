@@ -33,7 +33,7 @@ const Login = () => {
     localStorage.setItem('formData', formDataString);
 
     // Send formData to the server using an HTTP request
-    fetch('/api/admin/login', {
+    fetch('http://localhost:8000/api/admin/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,8 +51,9 @@ const Login = () => {
         console.log('Response from API', data);
         
         if (data.status === true) {
+          console.log("token",data.token);
           // Redirect to "home" page
-          localStorage.setItem("token", JSON.stringify(true));
+          localStorage.setItem("token", data.token);
           // Storing adminData in localStorage
           localStorage.setItem("adminData", JSON.stringify(data.data));
 
@@ -61,7 +62,7 @@ const Login = () => {
           //   localStorage.removeItem("token");
           // }, 5000);
 
-          window.location.href = '/home';
+          window.location.href = '/home?q=ALL';
         } else {
           // Set error message and clear username/password
           setError('Invalid username or password!');

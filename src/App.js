@@ -8,6 +8,7 @@ import TestQuestion from "./pages/questions/TestQuestion";
 import ReviewQuestionsList from "./pages/review/ReviewQuestionsList";
 import ReviewQuestion from "./pages/questions/ReviewQuestion";
 import EndQuiz from "./pages/endQuiz/EndQuiz";
+import NotFoundPage from "./pages/notFound/NotFound";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -33,73 +34,77 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { SidebarProvider } from "./context/sidebarContext";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
+  localStorage.setItem("selectedOption", "ALL");
   const { darkMode } = useContext(DarkModeContext);
   return (
     <div className={darkMode ? "app dark" : "app"}>
-      <SidebarProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" >
+            
+            <Route index element={<Login />} />
+            <Route path="quizLogin" element={<TestLogin />} />
+            <Route path="home" element={<Home />} />
+
+            <Route path="quiz">  
+              <Route index element={<TestHome />} />
+              <Route path="instruction" element={<Instruction />} />
+              <Route path="quizQuestion" element={<TestQuestion />} />
+              <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
+              <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
+              <Route path="endQuiz" element={<EndQuiz />} />
               
-              <Route index element={<Login />} />
-              <Route path="quizLogin" element={<TestLogin />} />
-              <Route path="home" element={<Home />} />
-
-              <Route path="quiz">  
-                <Route index element={<TestHome />} />
-                <Route path="instruction" element={<Instruction />} />
-                <Route path="quizQuestion" element={<TestQuestion />} />
-                <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
-                <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
-                <Route path="endQuiz" element={<EndQuiz />} />
-                
-              </Route>
-
-              <Route path="user">
-                <Route index element={<UserList />} />
-                <Route path=":userId" element={<UserSingle />} />
-              </Route>
-
-              <Route path="categories">
-                <Route index element={<List />} />
-                <Route path=":categoryId" element={<Single />} />
-                <Route path="update/:categoryId" element={<Update inputs={categoryInputs} title="Update Category" />}/>
-                <Route
-                  path="new"
-                  element={<New inputs={categoryInputs} title="Add New Category" />}
-                />
-              </Route>
-              
-              <Route path="quizList">
-                <Route index element={<QuizList />} />
-                <Route path=":quizId" element={<QuizSingle />} />
-                <Route path="update/:quizId" element={<QuizUpdate inputs={quizInputs} title="Update Quiz" />} />
-                <Route
-                  path="new"
-                  element={<QuizNew inputs={quizInputs} title="Add New Quiz" />}
-                />
-              </Route>
-              
-              <Route path="question">
-                <Route index element={<QuestionList />} />
-                <Route path=":questionId" element={<QuestionSingle />} />
-                <Route path="update/:questionId" element={<QuestionUpdate inputs={questionInputs} title="Update Question" />} />
-                <Route
-                  path="new"
-                  element={<QuestionNew inputs={quizInputs} title="Add New Question" />}
-                />
-              </Route>
-
-              <Route path="profile">
-                <Route index element={<Profile />} />
-              </Route>
-
             </Route>
-          </Routes>
-        </BrowserRouter>
-      </SidebarProvider>
+
+            <Route path="user">
+              <Route index element={<UserList />} />
+              <Route path=":userId" element={<UserSingle />} />
+            </Route>
+
+            <Route path="categories">
+              <Route index element={<List />} />
+              <Route path=":categoryId" element={<Single />} />
+              <Route path="update/:categoryId" element={<Update inputs={categoryInputs} title="Update Category" />}/>
+              <Route
+                path="new"
+                element={<New inputs={categoryInputs} title="Add New Category" />}
+              />
+            </Route>
+            
+            <Route path="quizList">
+              <Route index element={<QuizList />} />
+              <Route path=":quizId" element={<QuizSingle />} />
+              <Route path="update/:quizId" element={<QuizUpdate inputs={quizInputs} title="Update Quiz" />} />
+              <Route
+                path="new"
+                element={<QuizNew inputs={quizInputs} title="Add New Quiz" />}
+              />
+            </Route>
+            
+            <Route path="question">
+              <Route index element={<QuestionList />} />
+              <Route path=":questionId" element={<QuestionSingle />} />
+              <Route path="update/:questionId" element={<QuestionUpdate inputs={questionInputs} title="Update Question" />} />
+              <Route
+                path="new"
+                element={<QuestionNew inputs={quizInputs} title="Add New Question" />}
+              />
+            </Route>
+
+            <Route path="profile">
+              <Route index element={<Profile />} />
+            </Route>
+
+            <Route path="notFound">
+              <Route index element={<NotFoundPage />} />
+            </Route>
+
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

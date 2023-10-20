@@ -14,24 +14,42 @@ const Single = () => {
   let [token] = useState(localStorage.getItem("token"));
 
   const redirectToLogin = () => {
-    alert("Plaese Login first then you can access this page...");
-    window.location.href = '/'; // Replace "/login" with the actual login page path
+    window.location.href = "/notFound";
   };
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await fetch(`/api/admin/categorybyid/${categoryId}`, {
-          method: 'GET',
-        });
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        
+        const response = await fetch(`http://localhost:8000/api/admin/categorybyid/${categoryId}`,
+          config
+        );
+
         if (!response.ok) {
-          throw new Error('Failed to fetch category');
+          if (response.status === 401 || response.status === 498) {
+            console.error("Unauthorized: Please log in");
+            window.location.href = "/notFound";
+          } else {
+            throw new Error('Failed to fetch quiz');
+          }
         }
+
         const data = await response.json();
+        console.log("data",data);
+        
         setCategory(data);
         localStorage.setItem("categoryData", JSON.stringify(data));
       } catch (error) {
         console.error(error);
+        if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+          console.error("Unauthorized: Please log in");
+          window.location.href = "/notFound";
+        }
       }
     };
     if (categoryId) {
@@ -75,6 +93,10 @@ const Single = () => {
                     <div className="detailItem">
                       <span className="itemKey">Status:</span>
                       <span className="itemValue">{category?.data[0].status}</span>
+                    </div>
+                    <div className="detailItem">
+                      <span className="itemKey">Type:</span>
+                      <span className="itemValue">{category?.data[0].type}</span>
                     </div>
                   </div>
                 </div>

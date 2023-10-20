@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /**
  * Users
  */
@@ -49,16 +51,44 @@ export const userColumns = [
   },
 ];
 // Fetch the data from the API and format it for the DataGrid
-export const fetchUserRows = async () => {
+export const fetchUserRows = async (qValue) => {
   try {
-    const apiUrl = "/api/admin/registeredstudents";
-    const response = await fetch(apiUrl);
-    console.log("Response", response);
-    const data = await response.json();
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if (qValue==="ALL"){
+      const apiUrl = "http://localhost:8000/api/admin/registeredstudents";
+      const response = await fetch(apiUrl, config);
+      console.log("Response", response);
+      const data = await response.json();
+      console.log("data", data);
+      if (data.code === 401 || data.code === 498){
+        window.location.href = "/notFound";
+      }
+      return data;
+    }
+    console.log("qValue", qValue)
+    const response = await axios.post(`http://localhost:8000/api/admin/userByType`,
+      {
+        type: qValue,
+      },
+      config
+    );
+    const data = response.data;
     console.log("data", data);
+    if (data.code === 401 || data.code === 498) {
+      window.location.href = "/notFound";
+    }
     return data;
   } catch (error) {
     console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
   }
 };
 // Export an empty array to be used until the API data is loaded
@@ -106,14 +136,44 @@ export const categoryColumns = [
   },
 ];
 // Fetch the data from the API and format it for the DataGrid
-export const fetchCategoryRows = async () => {
+export const fetchCategoryRows = async (qValue) => {
   try {
-    const apiUrl = "/api/admin/getcategory";
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if(qValue === "ALL"){
+      const apiUrl = "http://localhost:8000/api/admin/getcategory";
+      const response = await fetch(apiUrl, config);
+      const data = await response.json();
+      console.log("data", data);
+      if (data.code === 401 || data.code === 498) {
+        window.location.href = "/notFound";
+      }
+      return data;
+    }
+    console.log("qValue", qValue)
+    const response = await axios.post(`http://localhost:8000/api/admin/categoryByType`,
+      {
+        type: qValue,
+      },
+      config
+    );
+    const data = response.data;
+    console.log("data", data);
+    if (data.code === 401 | data.code === 498) {
+      window.location.href = "/notFound";
+    }
     return data;
+    
   } catch (error) {
     console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
   }
 };
 // Export an empty array to be used until the API data is loaded
@@ -175,14 +235,44 @@ export const quizColumns = [
   },
 ];
 // Fetch the data from the API and format it for the DataGrid
-export const fetchQuizRows = async () => {
+export const fetchQuizRows = async (qValue) => {
   try {
-    const apiUrl = "/api/admin/getquiz";
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if(qValue === "ALL"){
+      console.log("config", config);
+      const apiUrl = "http://localhost:8000/api/admin/getquiz";
+      const response = await fetch(apiUrl, config);
+      const data = await response.json();
+      if (data.code === 401 || data.code === 498) {
+        window.location.href = "/notFound";
+      }
+      return data;
+    }
+    console.log("qValue", qValue)
+    const response = await axios.post(`http://localhost:8000/api/admin/quizByType`,
+      {
+        type: qValue,
+      },
+      config
+    );
+    const data = response.data;
+    console.log("data", data);
+    if (data.code === 401 || data.code === 498) {
+      window.location.href = "/notFound";
+    }
     return data;
+    
   } catch (error) {
     console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
   }
 };
 // Export an empty array to be used until the API data is loaded
@@ -242,14 +332,43 @@ export const questionColumns = [
   },
 ];
 // Fetch the data from the API and format it for the DataGrid
-export const fetchQuestionRows = async () => {
+export const fetchQuestionRows = async (qValue) => {
   try {
-    const apiUrl = "/api/admin/getquestion";
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if(qValue === "ALL"){
+      const apiUrl = "http://localhost:8000/api/admin/getquestion";
+      const response = await fetch(apiUrl, config);
+      const data = await response.json();
+      if (data.code === 401 || data.code === 498) {
+        window.location.href = "/notFound";
+      }
+      return data;
+    }
+    console.log("qValue", qValue)
+    const response = await axios.post(`http://localhost:8000/api/admin/questionByType`,
+      {
+        type: qValue,
+      },
+      config
+    );
+    const data = response.data; 
+    console.log("data", data);
+    if (data.code === 401 || data.code === 498) {
+      window.location.href = "/notFound";
+    }
     return data;
+    
   } catch (error) {
     console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
   }
 };
 // Export an empty array to be used until the API data is loaded
@@ -269,6 +388,13 @@ export const reviewColumns = [
 // Fetch the data from the API and format it for the DataGrid
 export const fetchReviewRows = async () => {
   try {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log("config", config);
     const attemptCode = localStorage.getItem("attemptCode");
     const quizId = localStorage.getItem("quizId");
     const userId = localStorage.getItem("userId");
@@ -278,8 +404,8 @@ export const fetchReviewRows = async () => {
       attemptCode
     });
 
-    const apiUrl = "/api/users/getreviewquestionlist";
-    const response = await fetch(apiUrl, {
+    const apiUrl = "http://localhost:8000/api/users/getreviewquestionlist";
+    const response = await fetch(apiUrl,{
       method: "POST",
       headers: {
         "Content-Type": "application/json"

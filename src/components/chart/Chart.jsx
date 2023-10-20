@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import "./chart.scss";
 import {
   AreaChart,
@@ -8,7 +11,32 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+
 const data = [
+  { name: "January", Total: 1200 },
+  { name: "February", Total: 2100 },
+  { name: "March", Total: 800 },
+  { name: "April", Total: 1600 },
+  { name: "May", Total: 900 },
+  { name: "June", Total: 1700 },
+  { name: "January", Total: 1200 },
+  { name: "February", Total: 2100 },
+  { name: "March", Total: 800 },
+  { name: "April", Total: 1600 },
+  { name: "May", Total: 900 },
+  { name: "June", Total: 1700 },
+  { name: "January", Total: 1200 },
+  { name: "February", Total: 2100 },
+  { name: "March", Total: 800 },
+  { name: "April", Total: 1600 },
+  { name: "May", Total: 900 },
+  { name: "June", Total: 1700 },
+  { name: "January", Total: 1200 },
+  { name: "February", Total: 2100 },
+  { name: "March", Total: 800 },
+  { name: "April", Total: 1600 },
+  { name: "May", Total: 900 },
+  { name: "June", Total: 1700 },
   { name: "January", Total: 1200 },
   { name: "February", Total: 2100 },
   { name: "March", Total: 800 },
@@ -17,7 +45,48 @@ const data = [
   { name: "June", Total: 1700 },
 ];
 
+
 const Chart = ({ aspect, title }) => {
+
+
+  const [token] = useState(localStorage.getItem("token"));
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const qValue = queryParams.get("q");
+  const [graphStats, setGraphStats] = useState([]);
+  
+  
+
+  const fetchHomeStats = async (qValue) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(`http://localhost:8000/api/admin/graphStats`,
+        {
+          type: qValue,
+        },
+        config
+      );
+      const data = response.data;
+
+      console.log("Data from Graph", data.data);
+      setGraphStats(data.data);
+    } catch (error) {
+      console.error("Error fetching quiz data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchHomeStats(qValue);
+    };
+    fetchData();
+  }, [qValue]);
+
+
   return (
     <div className="chart">
       <div className="title">{title}</div>

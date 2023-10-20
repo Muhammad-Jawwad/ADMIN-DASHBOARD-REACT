@@ -14,26 +14,43 @@ const QuizSingle = () => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await fetch(`/api/admin/quizbyid/${quizId}`, {
+                const response = await fetch(`http://localhost:8000/api/admin/quizbyid/${quizId}`, {
                     method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
                 });
+
                 if (!response.ok) {
-                    throw new Error('Failed to fetch quiz');
+                    if (response.status === 401 || response.status === 498) {
+                        console.error("Unauthorized: Please log in");
+                        window.location.href = "/notFound";
+                    } else {
+                        throw new Error('Failed to fetch quiz');
+                    }
                 }
+
                 const data = await response.json();
+                console.log(data);
+
                 setQuiz(data);
                 localStorage.setItem("quizData", JSON.stringify(data));
             } catch (error) {
                 console.error(error);
+                if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                    console.error("Unauthorized: Please log in");
+                    window.location.href = "/notFound";
+                }
             }
         };
+
         if (quizId) {
             fetchQuiz();
         }
@@ -85,12 +102,20 @@ const QuizSingle = () => {
                                             <span className="itemValue">{quiz?.data[0].description}</span>
                                         </div>
                                         <div className="detailItem">
+                                            <span className="itemKey">Duration: </span>
+                                            <span className="itemValue">{quiz?.data[0].duration}</span>
+                                        </div>
+                                        <div className="detailItem">
                                             <span className="itemKey">Number of Questions: </span>
                                             <span className="itemValue">{quiz?.data[0].no_of_questions}</span>
                                         </div>
                                         <div className="detailItem">
                                             <span className="itemKey">Status: </span>
                                             <span className="itemValue">{quiz?.data[0].status}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Number of Attempts: </span>
+                                            <span className="itemValue">{quiz?.data[0].no_of_attempts}</span>
                                         </div>
                                     </div>
                                 </div>

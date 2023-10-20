@@ -19,8 +19,7 @@ const Update = ({ title }) => {
   let [token] = useState(localStorage.getItem("token"));
 
   const redirectToLogin = () => {
-    alert("Plaese Login first then you can access this page...");
-    window.location.href = '/'; // Replace "/login" with the actual login page path
+    window.location.href = "/notFound";
   };
 
   const navigate = useNavigate();
@@ -28,19 +27,36 @@ const Update = ({ title }) => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await fetch(`/api/admin/categorybyid/${categoryId}`, {
-          method: 'GET',
-        });
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = await fetch(`http://localhost:8000/api/admin/categorybyid/${categoryId}`, 
+          config
+        );
+
         if (!response.ok) {
-          throw new Error('Failed to fetch category');
+          if (response.status === 401 || response.status === 498) {
+            console.error("Unauthorized: Please log in");
+            window.location.href = "/notFound";
+          } else {
+            throw new Error('Failed to fetch quiz');
+          }
         }
+
         const data = await response.json();
+    
         setInputValues(data.data[0]);
         setFile(data.data[0].category_picture);
         localStorage.setItem("categoryData", JSON.stringify(data));
 
       } catch (error) {
         console.error(error);
+        if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+          console.error("Unauthorized: Please log in");
+          window.location.href = "/notFound";
+        }
       }
     };
 
@@ -48,7 +64,6 @@ const Update = ({ title }) => {
       fetchCategory();
     }
   }, [categoryId]);
-  console.log("category in a state:", file);
   
   const handleInputChange = (e) => {
     setInputValues({
@@ -61,32 +76,43 @@ const Update = ({ title }) => {
     e.preventDefault();
 
     const formData = {
-      category_id: categoryId,
+      category_id: parseInt(categoryId),
       category_name: inputValues.category_name,
       no_of_quiz: parseInt(inputValues.no_of_quiz),
-      // category_picture: file ? URL.createObjectURL(file) : "",
       category_picture: file || "",
+      status: parseInt(inputValues.status),
+      type: inputValues.type,
     };
 
-    // Send formData to the server using an HTTP request to update
-    fetch("/api/admin/updatecategory", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData), // Pass the object as the body
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/admin/updatecategory", {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.code === 401 || data.code === 498) {
+          console.error("Unauthorized: Please log in");
+          window.location.href = "/notFound";
+        }
+      } else {
+        const data = await response.json();
         console.log("Response from API", data);
         // Navigate to the desired page after API response
         navigate(`/categories/${categoryId}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+        console.error("Unauthorized: Please log in");
+        window.location.href = "/notFound";
+      }
+    }
   };
 
 

@@ -1,3 +1,4 @@
+/* Inside sidebar.scss */
 .sidebar {
   flex: 1;
   border-right: 0.5px solid rgb(230, 227, 227);
@@ -24,6 +25,7 @@
 
   .center {
     padding-left: 10px;
+    margin-top: 20px;
 
     ul {
       list-style: none;
@@ -31,7 +33,7 @@
       padding: 0;
 
       .title {
-        font-size: 10px;
+        font-size: 12px;
         font-weight: bold;
         color: #999;
         margin-top: 15px;
@@ -45,90 +47,102 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #ece8ff;
+          background-color: #f0f0f0;
+          transition: background-color 0.3s ease-in-out;
         }
 
         .icon {
-          font-size: 18px;
+          font-size: 20px;
           color: #7451f8;
         }
 
-        span{
-            font-size: 13px;
-            font-weight: 600;
-            color: #888;
-            margin-left: 10px;
+        span {
+          font-size: 14px;
+          font-weight: 600;
+          color: #888;
+          margin-left: 10px;
         }
-      }     
+
+        /* Style for active menu item */
+        &.active {
+          background-color: #7451f8;
+          color: #fff;
+        }
+      }
     }
-    
-    /* CSS for the category dropdown */
-    .category-dropdown {
+
+    /* for the drop down */
+    .dropdown {
+      margin-bottom: 10px;
+      margin-right: 10px;
       position: relative;
-      margin-top: 10px;
-    }
 
-    .category-label {
-      cursor: pointer;
-    }
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #7451f8;
+        border-radius: 5px;
+        background-color: #fff;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.3s ease-in-out;
+        cursor: pointer;
 
-    .category-list {
-      display: none;
-      position: absolute;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        /* Highlight the selected option */
+        option[selected] {
+          background-color: #7451f8;
+          color: #fff;
+        }
+      }
 
-    .category-list.show {
-      display: block;
-    }
+      select:hover,
+      select:focus {
+        border-color: #9a7ff4;
+      }
 
-    .category-item {
-      padding: 8px 16px;
-      cursor: pointer;
-    }
+      /* Custom arrow */
+      &::after {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #7451f8;
+        pointer-events: none;
+        transition: color 0.3s ease-in-out;
+      }
 
-    .category-item:hover {
-      background-color: #f0f0f0;
-    }
-
-    .category-item.selected {
-      background-color: #007bff;
-      color: #fff;
-    }
-
-    .category-item.selected:hover {
-      background-color: #0056b3;
+      &:hover::after,
+      select:focus~&::after {
+        color: #9a7ff4;
+      }
     }
   }
 
-  .bottom{
-      display: flex;
-      align-items: center;
-      margin: 10px;
+  .bottom {
+    display: flex;
+    align-items: center;
+    margin: 10px;
 
-      .colorOption{
-          width: 20px;
-          height: 20px;
-          border-radius: 5px;
-          border: 1px solid #7451f8;
-          cursor: pointer;
-          margin: 5px;
+    .colorOption {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 1px solid #7451f8;
+      cursor: pointer;
+      margin-right: 10px;
 
-          &:nth-child(1){
-              background-color: whitesmoke;
-          }
-          &:nth-child(2){
-              background-color: #333;
-          }
-          &:nth-child(3){
-              background-color: darkblue;
-          }
+      &:nth-child(1) {
+        background-color: whitesmoke;
       }
+
+      &:nth-child(2) {
+        background-color: #333;
+      }
+
+      &:nth-child(3) {
+        background-color: darkblue;
+      }
+    }
   }
 }

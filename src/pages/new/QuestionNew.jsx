@@ -11,12 +11,10 @@ const QuestionNew = ({ title }) => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     const handleInputChange = (e) => {
-        // console.log(e.target.name);
         setInputValues({
             ...inputValues,
             [e.target.name]: e.target.value
@@ -39,20 +37,27 @@ const QuestionNew = ({ title }) => {
             correct_option: inputValues.correctoption,
             status: parseInt(inputValues.status),
         };
-        // console.log("formData", formData);
 
         try {
             // Send formData to the server using an HTTP request
-            const response = await fetch("/api/admin/addquestion", {
+            const response = await fetch("http://localhost:8000/api/admin/addquestion", {
                 method: "POST",
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
             });
 
+            if (!response.ok) {
+                const data = await response.json();
+                if (data.code === 401 || data.code === 498) {
+                    console.error("Unauthorized: Please log in");
+                    window.location.href = "/notFound";
+                }
+            } 
+
             const data = await response.json();
-            console.log("Response from API", data);
 
             // Store formData in local storage
             localStorage.setItem("formData", JSON.stringify(formData));

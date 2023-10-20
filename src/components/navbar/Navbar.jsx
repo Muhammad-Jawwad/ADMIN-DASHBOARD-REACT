@@ -2,6 +2,7 @@ import "./navbar.scss";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";

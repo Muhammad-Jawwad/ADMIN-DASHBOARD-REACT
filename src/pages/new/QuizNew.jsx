@@ -11,8 +11,7 @@ const QuizNew = ({ title }) => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     const handleInputChange = (e) => {
@@ -36,19 +35,29 @@ const QuizNew = ({ title }) => {
             description: inputValues.description,
             no_of_attempts: inputValues.no_of_attempts,
             status: parseInt(inputValues.status),
+            duration: parseInt(inputValues.duration)
         };
         console.log("formData: ", formData);
 
         try {
             // Send formData to the server using an HTTP request
-            const response = await fetch("/api/admin/addquiz", {
+            const response = await fetch("http://localhost:8000/api/admin/addquiz", {
                 method: "POST",
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
             });
 
+            if (!response.ok) {
+                const data = await response.json();
+                if (data.code === 401 || data.code === 498) {
+                    console.error("Unauthorized: Please log in");
+                    window.location.href = "/notFound";
+                }
+            }
+            
             const data = await response.json();
             console.log("Response from API", data);
 
@@ -58,6 +67,7 @@ const QuizNew = ({ title }) => {
             // Reset the form
             setFile("");
             setInputValues({});
+            window.location.href = '/quizList/new';
         } catch (error) {
             console.log(error);
         }
@@ -96,6 +106,7 @@ const QuizNew = ({ title }) => {
                                             id="file"
                                             onChange={(e) => setFile(e.target.files[0])}
                                             style={{ display: "none" }}
+                                            required
                                         />
                                     </div>
                                     {quizInputs.map((input) => (

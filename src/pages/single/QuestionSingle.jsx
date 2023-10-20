@@ -14,20 +14,29 @@ const QuestionSingle = () => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const response = await fetch(`/api/admin/questionbyid/${questionId}`, {
+                const response = await fetch(`http://localhost:8000/api/admin/questionbyid/${questionId}`, {
                     method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
                 });
                 if (!response.ok) {
-                    throw new Error('Failed to fetch question');
+                    if (response.status === 401 || response.status === 498) {
+                        console.error("Unauthorized: Please log in");
+                        window.location.href = "/notFound";
+                    } else {
+                        throw new Error('Failed to fetch quiz');
+                    }
                 }
                 const data = await response.json();
+                console.log("data", data)
                 setQuestion(data);
                 localStorage.setItem("questionData", JSON.stringify(data));
             } catch (error) {

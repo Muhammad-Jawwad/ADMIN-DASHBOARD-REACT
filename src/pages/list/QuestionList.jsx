@@ -8,8 +8,7 @@ const QuestionList = () => {
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     return (
