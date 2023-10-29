@@ -32,52 +32,52 @@ const TestLogin = () => {
         localStorage.setItem('formData', formDataString);
 
         // Send formData to the server using an HTTP request
-        fetch('/api/users/login', {
+        fetch('http://localhost:8000/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: formDataString,
         })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Error: ' + response.status);
-                }
-            })
-            .then((data) => {
-                console.log('Response from API', data);
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        })
+        .then((data) => {
+            console.log('Response from API', data);
 
-                if (data.status === true) {
-                    // Redirect to "home" page
-                    localStorage.setItem("token", JSON.stringify(true));
+            if (data.status === true) {
+                // Redirect to "home" page
+                localStorage.setItem("token", data.token);
 
-                    // Storing adminData in localStorage
-                    localStorage.setItem("userId", JSON.stringify(data.data.id));
+                // Storing adminData in localStorage
+                localStorage.setItem("userId", JSON.stringify(data.data.id));
 
-                    // Storing adminData in localStorage
-                    localStorage.setItem("adminData", JSON.stringify(data.data));
+                // Storing adminData in localStorage
+                localStorage.setItem("adminData", JSON.stringify(data.data));
 
-                    // Schedule the removal of "token" after one hour (3600000 milliseconds)
-                    // setTimeout(() => {
-                    //   localStorage.removeItem("token");
-                    // }, 5000);
+                // Schedule the removal of "token" after one hour (3600000 milliseconds)
+                // setTimeout(() => {
+                //   localStorage.removeItem("token");
+                // }, 5000);
 
-                    window.location.href = '/quiz';
-                } else {
-                    // Set error message and clear username/password
-                    setError('Invalid username or password!');
-                    setUsername('');
-                    setPassword('');
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                // Handle error from the server
-                // For example, you can display an error message to the user
-                setError('An error occurred. Please try again.');
-            });
+                window.location.href = '/quiz';
+            } else {
+                // Set error message and clear username/password
+                setError('Invalid username or password!');
+                setUsername('');
+                setPassword('');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            // Handle error from the server
+            // For example, you can display an error message to the user
+            setError('An error occurred. Please try again.');
+        });
     };
 
     const togglePasswordVisibility = () => {

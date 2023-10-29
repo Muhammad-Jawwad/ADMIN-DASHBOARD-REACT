@@ -392,29 +392,24 @@ export const fetchReviewRows = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       },
     };
-    console.log("config", config);
     const attemptCode = localStorage.getItem("attemptCode");
     const quizId = localStorage.getItem("quizId");
     const userId = localStorage.getItem("userId");
-    const body = JSON.stringify({
+    const body = {
       user_id: userId,
       quiz_id: quizId,
       attemptCode
-    });
+    };
 
     const apiUrl = "http://localhost:8000/api/users/getreviewquestionlist";
-    const response = await fetch(apiUrl,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: body
-    });
-
-    const responseData = await response.json();
-    console.log("responseData", responseData);
+    const response = await axios.post(apiUrl,
+      body,
+      config
+    );
+    const responseData = response.data;
 
     // Check if 'data' property is defined and is an array
     if (Array.isArray(responseData.data)) {
@@ -423,14 +418,12 @@ export const fetchReviewRows = async () => {
       // Fetch additional data for each item in the 'data' array
       const questionPromises = data.map(async (item) => {
         const questionId = item.question_id;
-        console.log("questionId", questionId)
-        const questionUrl = `/api/admin/questionbyid/${questionId}`;
-        const questionResponse = await fetch(questionUrl);
-        const questionData = await questionResponse.json();
-        console.log("questionData", questionData.data[0].question)
+        const questionUrl = `http://localhost:8000/api/users/questionbyid/${questionId}`;
+        const response = await axios.get(questionUrl, config);
+        const questionData = response.data;
 
         // Assign the 'questionDetails' object directly to the item
-        item = questionData.data[0];
+        item = questionData.data;
 
         // Return the modified item
         return item;
@@ -454,6 +447,11 @@ export const fetchReviewRows = async () => {
 
   } catch (error) {
     console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
+    window.location.href = "/notFound";
   }
 };
 // Export an empty array to be used until the API data is loaded

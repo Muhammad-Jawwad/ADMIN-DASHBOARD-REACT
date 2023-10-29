@@ -1,5 +1,4 @@
 // EndQuiz.jsx
-
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import "./endQuiz.scss";
@@ -18,8 +17,8 @@ const EndQuiz = () => {
   }, [token]);
 
   const redirectToLogin = () => {
-    alert("Please log in first to access this page.");
-    window.location.href = "/"; // Replace with actual login page path
+    console.log("Here in redirect login")
+    window.location.href = "/notFound";
   };
 
   const handleGoToHome = () => {
@@ -27,22 +26,27 @@ const EndQuiz = () => {
   };
 
   return (
-    <div className="endQuiz">
-      <Navbar />
-      <div className="content">
-        {loading ? (
-          <h1 className="loadingText">Loading...</h1>
-        ) : (
-          <div className="card">
-            <h1 className="heading">Quiz Ended</h1>
-            <h4 className="subheading">Your Score: {score}</h4>
-            <button className="beginButton" onClick={handleGoToHome}>
-              Go To Home
-            </button>
+    <>
+      {!token && redirectToLogin()}
+      {token && (
+        <div className="endQuiz">
+          <Navbar />
+          <div className="content">
+            {loading ? (
+              <h1 className="loadingText">Loading...</h1>
+            ) : (
+              <div className="card">
+                <h1 className="heading">Quiz Ended</h1>
+                <h4 className="subheading">Your Score: {score}</h4>
+                <button className="beginButton" onClick={handleGoToHome}>
+                  Go To Home
+                </button>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

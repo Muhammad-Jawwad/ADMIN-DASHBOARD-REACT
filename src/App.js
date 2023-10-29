@@ -44,19 +44,19 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" >
-            
+
             <Route index element={<Login />} />
             <Route path="quizLogin" element={<TestLogin />} />
             <Route path="home" element={<Home />} />
 
-            <Route path="quiz">  
+            <Route path="quiz">
               <Route index element={<TestHome />} />
               <Route path="instruction" element={<Instruction />} />
               <Route path="quizQuestion" element={<TestQuestion />} />
               <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
               <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
               <Route path="endQuiz" element={<EndQuiz />} />
-              
+
             </Route>
 
             <Route path="user">
@@ -67,13 +67,13 @@ function App() {
             <Route path="categories">
               <Route index element={<List />} />
               <Route path=":categoryId" element={<Single />} />
-              <Route path="update/:categoryId" element={<Update inputs={categoryInputs} title="Update Category" />}/>
+              <Route path="update/:categoryId" element={<Update inputs={categoryInputs} title="Update Category" />} />
               <Route
                 path="new"
                 element={<New inputs={categoryInputs} title="Add New Category" />}
               />
             </Route>
-            
+
             <Route path="quizList">
               <Route index element={<QuizList />} />
               <Route path=":quizId" element={<QuizSingle />} />
@@ -83,7 +83,7 @@ function App() {
                 element={<QuizNew inputs={quizInputs} title="Add New Quiz" />}
               />
             </Route>
-            
+
             <Route path="question">
               <Route index element={<QuestionList />} />
               <Route path=":questionId" element={<QuestionSingle />} />

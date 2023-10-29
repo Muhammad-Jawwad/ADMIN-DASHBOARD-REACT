@@ -10,8 +10,7 @@ const Instruction = () => {
     const [loading, setLoading] = useState(true);
 
     const redirectToLogin = () => {
-        alert("Please log in first to access this page.");
-        window.location.href = "/"; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     const timeDuration = (time) => {
@@ -28,29 +27,35 @@ const Instruction = () => {
         const minutes = duration.getMinutes();
 
         // Format the minutes and seconds into MM:SS format
-        const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        const formattedTime = `${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
         return formattedTime;
     };
 
     const fetchQuizData = async () => {
         try {
-            const response = await axios.get(`/api/admin/quizbyid/${quizId}`, {
+            const response = await axios.get(`http://localhost:8000/api/users/quizbyid/${quizId}`, {
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
             });
-            console.log("response.data", response.data);
-            console.log("duration", response.data.data[0].duration);
 
             const formatedDuration = timeDuration(response.data.data[0].duration);
             console.log("formatedDuration", formatedDuration);
 
             localStorage.setItem("duration", formatedDuration);
-            
+
             setInstruction(response.data.data[0].description);
         } catch (error) {
             console.error("Error fetching quiz data:", error);
+            if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                console.error("Unauthorized: Please log in");
+                window.location.href = "/notFound";
+            }
+            window.location.href = "/notFound";
         }
     };
 
@@ -85,15 +90,20 @@ const Instruction = () => {
                     <div className="homeContainer">
                         <Navbar />
                         <div className="content">
-                            {loading ? <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1> :
-                            <div className="card">
-                                <h2 className="heading">INSTRUCTIONS</h2>
-                                
-                                <p className="description">{instruction}</p>
-                                <button className="beginButton" onClick={handleBeginTest}>
-                                    Begin Test
-                                </button>
-                            </div>}
+                            {loading ? (
+                                <h1 style={{ textAlign: "center", paddingTop: "20%" }}>
+                                    loading...
+                                </h1>
+                            ) : (
+                                <div className="card">
+                                    <h2 className="heading">INSTRUCTIONS</h2>
+
+                                    <p className="description">{instruction}</p>
+                                    <button className="beginButton" onClick={handleBeginTest}>
+                                        Begin Test
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

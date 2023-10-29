@@ -6,9 +6,10 @@ import MyTimer from "../../components/timer/MyTimer";
 import "./testQuestion.scss";
 
 const ReviewQuestion = () => {
+    const [token] = useState(localStorage.getItem("token"));
     // Extracting categoryId using regular expressions
     const location = useLocation();
-    const questionId = location.pathname.match(/\/quiz\/reviewQuestion\/(\d+)/)?.[1]; 
+    const questionId = location.pathname.match(/\/quiz\/reviewQuestion\/(\d+)/)?.[1];
     const time = localStorage.getItem("timer");
     const [adminData] = useState(JSON.parse(localStorage.getItem("adminData")));
     const [quizId] = useState(localStorage.getItem("quizId"));
@@ -19,24 +20,38 @@ const ReviewQuestion = () => {
     const [progressValue, setProgressValue] = useState(0);
     const [loading, setLoading] = useState(false);
     const [isOptionSelected, setIsOptionSelected] = useState(false);
-    
 
     const redirectToLogin = () => {
-        return <div>Please log in first to access this page.</div>;
+        console.log("Here in redirect login")
+        window.location.href = "/notFound";
     };
 
     const fetchQuestions = async () => {
         try {
-            const response = await axios.post("/api/users/getreviewquestion", {
+            const config = {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            };
+            const response = await axios.post("http://localhost:8000/api/users/getreviewquestion", {
                 user_id: adminData.id,
                 quiz_id: quizId,
                 attemptCode,
                 question_id: questionId
-            });
+            },
+                config,
+            );
             setProgressValue(response.data.progressValue[0].progress)
             setApiQuestions(response.data.data);
         } catch (error) {
             console.error("Error fetching questions:", error);
+            if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                console.error("Unauthorized: Please log in");
+                window.location.href = "/notFound";
+            }
+            window.location.href = "/notFound";
         }
     };
 
@@ -51,44 +66,58 @@ const ReviewQuestion = () => {
                 redirectToLogin();
             }
         };
-        const token = localStorage.getItem("token");
         if (token) {
             fetchData();
         } else {
             redirectToLogin();
         }
-    }, []);
+    }, [token]);
 
     const submitUserAnswer = async (userAnswer) => {
         const { quiz_id, id } = apiQuestions;
         const user_id = adminData.id;
-
+        const config = {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        };
         try {
-            const response = await axios.post("/api/users/reviewanswer", {
+            const response = await axios.post("http://localhost:8000/api/users/reviewanswer", {
                 user_id,
                 quiz_id,
                 question_id: id,
                 entered_option: userAnswer,
                 time: localStorage.getItem("timer"),
                 attemptCode,
-            });
+            },
+                config,
+            );
             if (response.data.status === false && response.data.code === 400) {
-                localStorage.setItem("score",response.data.score);
+                localStorage.setItem("score", response.data.score);
                 window.location.href = "/quiz/endQuiz";
             } else {
                 console.log("from reviewanswer", response.data.data.question_id);
-                const Response = await axios.post("/api/users/getreviewquestion", {
+                const Response = await axios.post("http://localhost:8000/api/users/getreviewquestion", {
                     user_id: adminData.id,
                     quiz_id: quizId,
                     attemptCode,
                     question_id: response.data.data.question_id
-                });
+                },
+                    config,
+                );
                 setSelectedOption(null);
                 setProgressValue(Response.data.progressValue[0].progress);
                 setApiQuestions(Response.data.data);
             }
         } catch (error) {
             console.error("Error submitting user answer:", error);
+            if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                console.error("Unauthorized: Please log in");
+                window.location.href = "/notFound";
+            }
+            window.location.href = "/notFound";
         }
     };
 
@@ -105,10 +134,6 @@ const ReviewQuestion = () => {
         }
     };
 
-    // const handleOptionChange = (event) => {
-    //     setSelectedOption(event.target.value);
-    // };
-
     const options = useMemo(
         () => [
             apiQuestions.option_1,
@@ -118,10 +143,11 @@ const ReviewQuestion = () => {
         ],
         [apiQuestions]
     );
-    
+
     return (
         <>
-            {localStorage.getItem("token") ? (
+            {!token && redirectToLogin()}
+            {token && (
                 <div>
                     <Navbar />
                     <div className="test-question-page">
@@ -180,8 +206,6 @@ const ReviewQuestion = () => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                redirectToLogin()
             )}
         </>
     );

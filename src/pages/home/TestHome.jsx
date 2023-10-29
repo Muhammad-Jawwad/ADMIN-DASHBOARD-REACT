@@ -13,17 +13,26 @@ const TestHome = () => {
     const [quizData, setQuizData] = useState([]);
     const [hasMore, setHasMore] = useState(true); // Track if there's more data to load
     const [page, setPage] = useState(1); // Track the current page
+    const categoryId = 6;
 
     const redirectToLogin = () => {
-        alert("Please log in first to access this page.");
-        window.location.href = "/"; // Replace "/login" with the actual login page path
+        window.location.href = "/notFound";
     };
 
     const fetchQuizData = async () => {
         try {
-            const response = await axios.post(`/api/users/quizbycategoryId/6?page=${page}`, { // Include page in the request
-                user_id: userId,
-            });
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const response = await axios.post(
+                `http://localhost:8000/api/users/quizbycategoryId/${categoryId}?page=${page}`,
+                {
+                    user_id: userId,
+                },
+                config
+            );
             if (response.data.data.length === 0) {
                 setHasMore(false); // No more data to load
             } else {
@@ -32,6 +41,10 @@ const TestHome = () => {
             }
         } catch (error) {
             console.error("Error fetching quiz data:", error);
+            if (error.response && error.response.status === 401) {
+                console.error("Unauthorized: Please log in");
+                redirectToLogin(); // Redirect
+            }
         }
     };
 
@@ -64,7 +77,11 @@ const TestHome = () => {
                                 dataLength={quizData.length} // This is important to prevent unnecessary loads
                                 next={fetchQuizData} // Load more data when the user scrolls
                                 hasMore={hasMore} // Whether there's more data to load
-                                loader={<div className="beatLoader"><BeatLoader color="#5a38d4" /></div>} // Loader element
+                                loader={
+                                    <div className="beatLoader">
+                                        <BeatLoader color="#5a38d4" />
+                                    </div>
+                                } // Loader element
                             >
                                 <div className="widgets">
                                     {quizData.map((quiz, index) => (

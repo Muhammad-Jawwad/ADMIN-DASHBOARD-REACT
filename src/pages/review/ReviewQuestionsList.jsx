@@ -11,8 +11,8 @@ const ReviewQuestionsList = () => {
     const time = localStorage.getItem("timer");
 
     const redirectToLogin = () => {
-        alert("Plaese Login first then you can access this page...");
-        window.location.href = '/'; // Replace "/login" with the actual login page path
+        console.log("Here in redirect login")
+        window.location.href = "/notFound";
     };
 
     return (
@@ -29,8 +29,7 @@ const ReviewQuestionsList = () => {
                         <ReviewDatatable />
                     </div>
                 </div>
-            )
-            }
+            )}
         </>
     )
 }

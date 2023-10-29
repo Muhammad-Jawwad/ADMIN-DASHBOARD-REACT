@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 const ReviewDatatable = () => {
     const [data, setData] = useState(reviewRows);
     const [loading, setLoading] = useState(false);
-    
+
 
     useEffect(() => {
         const getData = async () => {
