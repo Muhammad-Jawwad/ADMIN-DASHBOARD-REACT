@@ -49,20 +49,25 @@ const Login = () => {
       })
       .then((data) => {
         console.log('Response from API', data);
-        
+
         if (data.status === true) {
-          console.log("token",data.token);
+          console.log("token", data.token);
           // Redirect to "home" page
           localStorage.setItem("token", data.token);
+
           // Storing adminData in localStorage
           localStorage.setItem("adminData", JSON.stringify(data.data));
 
-          // Schedule the removal of "token" after one hour (3600000 milliseconds)
-          // setTimeout(() => {
-          //   localStorage.removeItem("token");
-          // }, 5000);
+          const type = data.data.type;
+          
+          if (type === 'ADMIN') {
+            localStorage.setItem("type", "ALL");
+            window.location.href = `/home?q=ALL`;
+          } else {
+            localStorage.setItem("type", type);
+            window.location.href = `/home?q=${type}`;
+          }
 
-          window.location.href = '/home?q=ALL';
         } else {
           // Set error message and clear username/password
           setError('Invalid username or password!');
@@ -72,8 +77,6 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        // Handle error from the server
-        // For example, you can display an error message to the user
         setError('An error occurred. Please try again.');
       });
   };
@@ -128,7 +131,7 @@ const Login = () => {
       </div>
       <footer className="footer">
         <Link to="/quizLogin" style={{ textDecoration: "none" }}>
-              Do you want to login as a student?
+          Do you want to login as a student?
         </Link>
       </footer>
     </div>

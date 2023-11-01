@@ -94,18 +94,9 @@ const QuestionNew = ({ title }) => {
                             </div> */}
                             <div className="right">
                                 <form onSubmit={handleSubmit}>
-                                    {/* <div className="formInput">
-                                        <label htmlFor="file">
-                                            Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="file"
-                                            onChange={(e) => setFile(e.target.files[0])}
-                                            style={{ display: "none" }}
-                                        />
-                                    </div> */}
-                                    {questionInputs.map((input) => (
+                                    {questionInputs
+                                        .filter((input) => input.fieldName !== 'status')
+                                        .map((input) => (
                                         <div className="formInput" key={input.id}>
                                             <label>{input.label}</label>
                                             <input

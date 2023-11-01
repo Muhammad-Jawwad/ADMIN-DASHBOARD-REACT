@@ -3,6 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { categoryInputs } from "../../formSource";
 
 const New = ({ title }) => {
@@ -10,7 +11,11 @@ const New = ({ title }) => {
   const [inputValues, setInputValues] = useState({});
   const [shouldResetForm, setShouldResetForm] = useState(false);
   const token = localStorage.getItem("token");
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const qValue = queryParams.get("q");
 
+  console.log("qValue",qValue)
   const redirectToLogin = () => {
     window.location.href = "/notFound";
   };
@@ -116,17 +121,34 @@ const New = ({ title }) => {
                     />
                   </div>
                   {categoryInputs
-                    .filter((input) => input.fieldName !== 'status')
-                    .map((input) => (
+                  .filter((input) => input.fieldName !== 'status')
+                  .map((input) => (
                     <div className="formInput" key={input.id}>
                       <label>{input.label}</label>
-                      <input
-                        type={input.type}
-                        placeholder={input.placeholder}
-                        name={input.label.toLowerCase().split(" ").join("")}
-                        onChange={handleInputChange}
-                        required
-                      />
+                      {input.type === "dropdown" ? (
+                        <select
+                          name={input.fieldName}
+                          onChange={handleInputChange}
+                          required
+                          value={qValue !== "ALL" ? qValue : input.fieldName} // Set value based on the condition
+                          disabled={qValue !== "ALL"} // Disable the dropdown when qValue is not "ALL"
+
+                        >
+                          {input.options.map((option) => (
+                            <option key={option.key} value={option.value}>
+                              {option.key}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type={input.type}
+                          placeholder={input.placeholder}
+                          name={input.fieldName}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      )}
                     </div>
                   ))}
                   <div style={{ clear: "both" }} className="formSubmit">

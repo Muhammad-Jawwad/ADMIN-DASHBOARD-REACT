@@ -33,8 +33,10 @@ const Sidebar = () => {
 
   // For the dropdown
   const [selectedOption, setSelectedOption] = useState(localStorage.getItem("selectedOption"));
+  const [type] = useState(localStorage.getItem("type"));
 
   useEffect(() => {
+    console.log("type", type)
     // Extract the query parameter from the URL
     const params = new URLSearchParams(location.search);
     const selectedOptionFromQuery = params.get("q");
@@ -74,11 +76,13 @@ const Sidebar = () => {
               <select
                 value={selectedOption}
                 onChange={(e) => handleOptionChange(e.target.value)}
+                // Disable the dropdown when 'type' is one of the specified values
+                disabled={type === 'MCAT' || type === 'ECAT' || type === 'ET'}
               >
                 <option value="ALL">ALL</option>
                 <option value="MCAT">MCAT</option>
                 <option value="ECAT">ECAT</option>
-                <option value="ET">ET</option>
+                <option value="ET">Entry Test</option>
               </select>
             </div>
             <p className="title">LISTS</p>

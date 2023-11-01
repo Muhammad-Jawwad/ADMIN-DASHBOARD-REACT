@@ -19,15 +19,30 @@ export const categoryInputs = [
       fieldName: "status",
       id: 3,
       label: "Status",
-      type: "number",
+      type: "dropdown",
+      options: [1, 0],
       placeholder: "E.g: 1 or 0",
     },
     {
       fieldName: "type",
       id: 4,
       label: "Type",
-      type: "text",  // Change the type to "select"
-      placeholder: "E.g: ECAT, MCAT, ET",
+      type: "dropdown",
+      options: [
+        {
+          key:"ECAT",
+          value:"ECAT"
+        },
+        {
+          key:"MCAT",
+          value:"MCAT"
+        },
+        {
+          key:"Entry Test",
+          value:"ET"
+        }
+      ],
+      placeholder: "Select",
     },
   ];
   

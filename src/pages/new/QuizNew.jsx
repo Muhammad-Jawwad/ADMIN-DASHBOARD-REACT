@@ -109,7 +109,9 @@ const QuizNew = ({ title }) => {
                                             required
                                         />
                                     </div>
-                                    {quizInputs.map((input) => (
+                                    {quizInputs
+                                        .filter((input) => input.fieldName !== 'status')
+                                        .map((input) => (
                                         <div className="formInput" key={input.id}>
                                             <label>{input.label}</label>
                                             {input.type === "dropdown" ? (

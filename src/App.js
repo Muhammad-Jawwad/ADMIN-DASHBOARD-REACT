@@ -33,11 +33,9 @@ import { quizInputs, categoryInputs, questionInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-import { SidebarProvider } from "./context/sidebarContext";
-import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
-  localStorage.setItem("selectedOption", "ALL");
+  localStorage.setItem("selectedOption", localStorage.getItem("type"));
   const { darkMode } = useContext(DarkModeContext);
   return (
     <div className={darkMode ? "app dark" : "app"}>

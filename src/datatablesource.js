@@ -1,8 +1,7 @@
 import axios from "axios";
 
-/**
- * Users
- */
+//#region :  USERS DATATABLE SOURCE
+
 export const userColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -50,7 +49,7 @@ export const userColumns = [
     },
   },
 ];
-// Fetch the data from the API and format it for the DataGrid
+
 export const fetchUserRows = async (qValue) => {
   try {
     const token = localStorage.getItem("token");
@@ -59,13 +58,13 @@ export const fetchUserRows = async (qValue) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if (qValue==="ALL"){
+    if (qValue === "ALL") {
       const apiUrl = "http://localhost:8000/api/admin/registeredstudents";
       const response = await fetch(apiUrl, config);
       console.log("Response", response);
       const data = await response.json();
       console.log("data", data);
-      if (data.code === 401 || data.code === 498){
+      if (data.code === 401 || data.code === 498) {
         window.location.href = "/notFound";
       }
       return data;
@@ -91,12 +90,13 @@ export const fetchUserRows = async (qValue) => {
     }
   }
 };
-// Export an empty array to be used until the API data is loaded
+
 export const userRows = [];
 
-/**
- * Categories
- */
+//#endregion
+
+//#region :  CATEGORIES DATATABLE SOURCE
+
 export const categoryColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -135,7 +135,7 @@ export const categoryColumns = [
     },
   },
 ];
-// Fetch the data from the API and format it for the DataGrid
+
 export const fetchCategoryRows = async (qValue) => {
   try {
     const token = localStorage.getItem("token");
@@ -144,7 +144,7 @@ export const fetchCategoryRows = async (qValue) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if(qValue === "ALL"){
+    if (qValue === "ALL") {
       const apiUrl = "http://localhost:8000/api/admin/getcategory";
       const response = await fetch(apiUrl, config);
       const data = await response.json();
@@ -167,7 +167,7 @@ export const fetchCategoryRows = async (qValue) => {
       window.location.href = "/notFound";
     }
     return data;
-    
+
   } catch (error) {
     console.error(error);
     if (error.response && (error.response.status === 401 || error.response.status === 498)) {
@@ -176,12 +176,13 @@ export const fetchCategoryRows = async (qValue) => {
     }
   }
 };
-// Export an empty array to be used until the API data is loaded
+
 export const categoryRows = [];
 
-/**
- * Quizes
- */
+//#endregion
+
+//#region :  QUIZ DATATABLE SOURCE
+
 export const quizColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -234,7 +235,7 @@ export const quizColumns = [
     },
   },
 ];
-// Fetch the data from the API and format it for the DataGrid
+
 export const fetchQuizRows = async (qValue) => {
   try {
     const token = localStorage.getItem("token");
@@ -243,7 +244,7 @@ export const fetchQuizRows = async (qValue) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if(qValue === "ALL"){
+    if (qValue === "ALL") {
       console.log("config", config);
       const apiUrl = "http://localhost:8000/api/admin/getquiz";
       const response = await fetch(apiUrl, config);
@@ -266,7 +267,7 @@ export const fetchQuizRows = async (qValue) => {
       window.location.href = "/notFound";
     }
     return data;
-    
+
   } catch (error) {
     console.error(error);
     if (error.response && (error.response.status === 401 || error.response.status === 498)) {
@@ -275,12 +276,13 @@ export const fetchQuizRows = async (qValue) => {
     }
   }
 };
-// Export an empty array to be used until the API data is loaded
+
 export const quizRows = [];
 
-/**
- * Questions
- */
+//#endregion
+
+//#region :  QUESTIONS DATATABLE SOURCE
+
 export const questionColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -331,7 +333,7 @@ export const questionColumns = [
     },
   },
 ];
-// Fetch the data from the API and format it for the DataGrid
+
 export const fetchQuestionRows = async (qValue) => {
   try {
     const token = localStorage.getItem("token");
@@ -340,7 +342,7 @@ export const fetchQuestionRows = async (qValue) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if(qValue === "ALL"){
+    if (qValue === "ALL") {
       const apiUrl = "http://localhost:8000/api/admin/getquestion";
       const response = await fetch(apiUrl, config);
       const data = await response.json();
@@ -356,13 +358,13 @@ export const fetchQuestionRows = async (qValue) => {
       },
       config
     );
-    const data = response.data; 
+    const data = response.data;
     console.log("data", data);
     if (data.code === 401 || data.code === 498) {
       window.location.href = "/notFound";
     }
     return data;
-    
+
   } catch (error) {
     console.error(error);
     if (error.response && (error.response.status === 401 || error.response.status === 498)) {
@@ -371,12 +373,13 @@ export const fetchQuestionRows = async (qValue) => {
     }
   }
 };
-// Export an empty array to be used until the API data is loaded
+
 export const questionRows = [];
 
-/**
- * Review
- */
+//#endregion
+
+//#region :  REVIEW QUESTIONS DATATABLE SOURCE
+
 export const reviewColumns = [
   { field: "id", headerName: "ID", width: 100 },
   {
@@ -385,7 +388,7 @@ export const reviewColumns = [
     width: 1060,
   },
 ];
-// Fetch the data from the API and format it for the DataGrid
+
 export const fetchReviewRows = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -454,5 +457,7 @@ export const fetchReviewRows = async () => {
     window.location.href = "/notFound";
   }
 };
-// Export an empty array to be used until the API data is loaded
+
 export const reviewRows = [];
+
+//#endregion
