@@ -1,4 +1,5 @@
 import axios from "axios";
+import { serverURL } from "./temp";
 
 //#region :  USERS DATATABLE SOURCE
 
@@ -59,7 +60,7 @@ export const fetchUserRows = async (qValue) => {
       },
     };
     if (qValue === "ALL") {
-      const apiUrl = "http://localhost:8000/api/admin/registeredstudents";
+      const apiUrl = `${serverURL}/api/admin/registeredstudents`;
       const response = await fetch(apiUrl, config);
       console.log("Response", response);
       const data = await response.json();
@@ -70,7 +71,7 @@ export const fetchUserRows = async (qValue) => {
       return data;
     }
     console.log("qValue", qValue)
-    const response = await axios.post(`http://localhost:8000/api/admin/userByType`,
+    const response = await axios.post(`${serverURL}/api/admin/userByType`,
       {
         type: qValue,
       },
@@ -145,7 +146,7 @@ export const fetchCategoryRows = async (qValue) => {
       },
     };
     if (qValue === "ALL") {
-      const apiUrl = "http://localhost:8000/api/admin/getcategory";
+      const apiUrl = `${serverURL}/api/admin/getcategory`;
       const response = await fetch(apiUrl, config);
       const data = await response.json();
       console.log("data", data);
@@ -155,7 +156,7 @@ export const fetchCategoryRows = async (qValue) => {
       return data;
     }
     console.log("qValue", qValue)
-    const response = await axios.post(`http://localhost:8000/api/admin/categoryByType`,
+    const response = await axios.post(`${serverURL}/api/admin/categoryByType`,
       {
         type: qValue,
       },
@@ -191,8 +192,8 @@ export const quizColumns = [
     width: 230,
   },
   {
-    field: "category_id",
-    headerName: "Category Id",
+    field: "category_name",
+    headerName: "Category",
     width: 230,
   },
   {
@@ -245,8 +246,7 @@ export const fetchQuizRows = async (qValue) => {
       },
     };
     if (qValue === "ALL") {
-      console.log("config", config);
-      const apiUrl = "http://localhost:8000/api/admin/getquiz";
+      const apiUrl = `${serverURL}/api/admin/getquiz`;
       const response = await fetch(apiUrl, config);
       const data = await response.json();
       if (data.code === 401 || data.code === 498) {
@@ -255,7 +255,7 @@ export const fetchQuizRows = async (qValue) => {
       return data;
     }
     console.log("qValue", qValue)
-    const response = await axios.post(`http://localhost:8000/api/admin/quizByType`,
+    const response = await axios.post(`${serverURL}/api/admin/quizByType`,
       {
         type: qValue,
       },
@@ -263,6 +263,7 @@ export const fetchQuizRows = async (qValue) => {
     );
     const data = response.data;
     console.log("data", data);
+    console.log("category_name", data.category_name);
     if (data.code === 401 || data.code === 498) {
       window.location.href = "/notFound";
     }
@@ -286,8 +287,8 @@ export const quizRows = [];
 export const questionColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
-    field: "quiz_id",
-    headerName: "Quiz Id",
+    field: "quiz_name",
+    headerName: "Quiz",
     width: 230,
   },
   {
@@ -343,7 +344,7 @@ export const fetchQuestionRows = async (qValue) => {
       },
     };
     if (qValue === "ALL") {
-      const apiUrl = "http://localhost:8000/api/admin/getquestion";
+      const apiUrl = `${serverURL}/api/admin/getquestion`;
       const response = await fetch(apiUrl, config);
       const data = await response.json();
       if (data.code === 401 || data.code === 498) {
@@ -352,7 +353,7 @@ export const fetchQuestionRows = async (qValue) => {
       return data;
     }
     console.log("qValue", qValue)
-    const response = await axios.post(`http://localhost:8000/api/admin/questionByType`,
+    const response = await axios.post(`${serverURL}/api/admin/questionByType`,
       {
         type: qValue,
       },
@@ -407,7 +408,7 @@ export const fetchReviewRows = async () => {
       attemptCode
     };
 
-    const apiUrl = "http://localhost:8000/api/users/getreviewquestionlist";
+    const apiUrl = `${serverURL}/api/users/getreviewquestionlist`;
     const response = await axios.post(apiUrl,
       body,
       config
@@ -421,7 +422,7 @@ export const fetchReviewRows = async () => {
       // Fetch additional data for each item in the 'data' array
       const questionPromises = data.map(async (item) => {
         const questionId = item.question_id;
-        const questionUrl = `http://localhost:8000/api/users/questionbyid/${questionId}`;
+        const questionUrl = `${serverURL}/api/users/questionbyid/${questionId}`;
         const response = await axios.get(questionUrl, config);
         const questionData = response.data;
 

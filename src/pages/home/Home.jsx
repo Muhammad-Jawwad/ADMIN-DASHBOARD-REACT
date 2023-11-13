@@ -83,7 +83,7 @@ const Home = () => {
                 </div>
                 <div className="charts">
                   {/* <Featured /> */}
-                  <Chart title="Attempted Quizzes in past 6 months" aspect={2 / 1} />
+                  <Chart title="Attempted Quizzes by Distinct Users" aspect={2 / 1} />
                 </div>
               </>
             }

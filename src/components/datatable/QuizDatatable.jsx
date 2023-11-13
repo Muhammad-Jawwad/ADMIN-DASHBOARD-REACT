@@ -7,6 +7,7 @@ import axios from "axios";
 import * as XLSX from 'xlsx';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { serverURL } from "../../temp";
 
 const QuizDatatable = () => {
     const [data, setData] = useState(quizRows);
@@ -75,14 +76,14 @@ const QuizDatatable = () => {
     const handleResult = async (id) => {
         setResultAlert(false);
         setSuccessAlert(false);
-        try{
+        try {
             const token = localStorage.getItem("token");
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const response = await axios.post(`http://localhost:8000/api/admin/quizResult`,
+            const response = await axios.post(`${serverURL}/api/admin/quizResult`,
                 {
                     quiz_id: id,
                 },
@@ -99,7 +100,7 @@ const QuizDatatable = () => {
                 downloadExcel(formatedData)
             } else {
                 if (data.code === 400) {
-                    console.log("Got data",data)
+                    console.log("Got data", data)
                     setResultAlert(true);
                 }
                 console.error('Invalid data received from the API.');
@@ -120,7 +121,7 @@ const QuizDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/quizList/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        <Link to={`/quizList/${params.row.id}?q=${qValue}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
                         <div style={{ textDecoration: "none", color: "green" }}
@@ -145,7 +146,7 @@ const QuizDatatable = () => {
         <div className="datatable">
             <div className="datatableTitle">
                 Add New Quiz
-                <Link to="/quizList/new" className="link">
+                <Link to={`/quizList/new?q=${qValue}`} className="link">
                     Add New
                 </Link>
             </div>

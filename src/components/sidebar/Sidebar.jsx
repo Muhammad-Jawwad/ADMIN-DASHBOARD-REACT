@@ -22,14 +22,6 @@ const Sidebar = () => {
 
   const dropdownRef = useRef(null);
 
-  // // For the drop down 
-  // const [selectedOption, setSelectedOption] = useState('ALL'); // Default option is 'ALL'
-
-  // const handleOptionChange = (option) => {
-  //   setSelectedOption(option);
-  //   // Add logic to handle the selected option here, e.g., filtering content.
-  // };
-
 
   // For the dropdown
   const [selectedOption, setSelectedOption] = useState(localStorage.getItem("selectedOption"));
@@ -111,15 +103,15 @@ const Sidebar = () => {
                 <span>Questions</span>
               </li>
             </Link>
+            <p className="title">USER</p>
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <li>
+                <AccountCircleOutlinedIcon className="icon" />
+                <span>Profile</span>
+              </li>
+            </Link>
           </>
           )}
-          <p className="title">USER</p>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
-            <li>
-              <AccountCircleOutlinedIcon className="icon" />
-              <span>Profile</span>
-            </li>
-          </Link>
           <li onClick={() => { localStorage.clear() }}>
             <Link to="/" style={{ textDecoration: "none" }}>
               <ExitToAppIcon className="icon" />

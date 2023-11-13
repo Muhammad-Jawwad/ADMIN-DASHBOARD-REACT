@@ -5,6 +5,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { categoryInputs } from "../../formSource";
+import { serverURL } from "../../temp";
 
 const New = ({ title }) => {
   const [file, setFile] = useState(null);
@@ -21,8 +22,12 @@ const New = ({ title }) => {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues((prevInputValues) => ({ ...prevInputValues, [name]: value }));
+    console.log(e.target.name);
+    setInputValues({
+      ...inputValues,
+      [e.target.name]: e.target.value
+    });
+    console.log("inputValues", inputValues)
   };
 
   useEffect(() => {
@@ -37,22 +42,22 @@ const New = ({ title }) => {
     e.preventDefault();
 
     const formData = {
-      category_name: inputValues.categoryname,
-      no_of_quiz: parseInt(inputValues.numberofquiz, 10),
+      category_name: inputValues.category_name,
+      no_of_quiz: parseInt(inputValues.no_of_quiz, 10),
       category_picture: file ? URL.createObjectURL(file) : "",
-      type: inputValues.type
+      type: inputValues.type || "ECAT"
     };
 
-    const formDataString = JSON.stringify(formData);
+    console.log("formData", formData);
 
     try {
-      const response = await fetch("http://localhost:8000/api/admin/addcategory", {
+      const response = await fetch(`${serverURL}/api/admin/addcategory`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: formDataString,
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -60,17 +65,16 @@ const New = ({ title }) => {
         if (data.code === 401 || data.code === 498) {
           console.error("Unauthorized: Please log in");
           window.location.href = "/notFound";
-        } else {
-          console.error("Error:", data); // Handle other errors
         }
-      } else {
-        const data = await response.json();
-        console.log("Response from API", data);
       }
+      
+      const data = await response.json();
+      console.log("Response from API", data);
 
-      // Clear input values and file
+      // Reset the form
+      setFile("");
       setInputValues({});
-      setFile(null);
+      window.location.href = `/categories/new?q=${qValue}`;
       console.log("Input values after reset:", inputValues);
       setShouldResetForm(true);
     } catch (error) {
@@ -82,7 +86,6 @@ const New = ({ title }) => {
       }
     }
   };
-
 
   return (
      <>
@@ -117,7 +120,6 @@ const New = ({ title }) => {
                       id="file"
                       onChange={(e) => setFile(e.target.files[0])}
                       style={{ display: "none" }}
-                      required
                     />
                   </div>
                   {categoryInputs
