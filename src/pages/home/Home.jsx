@@ -6,6 +6,7 @@ import Chart from "../../components/chart/Chart";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { serverURL } from "../../temp";
 
 const Home = () => {
   const [ token ] = useState(localStorage.getItem("token"));
@@ -29,7 +30,7 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.post(`http://localhost:8000/api/admin/homeStats`, 
+      const response = await axios.post(`${serverURL}/api/admin/homeStats`, 
         {
           type: qValue,
         },

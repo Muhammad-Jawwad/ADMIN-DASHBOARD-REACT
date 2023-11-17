@@ -6,6 +6,7 @@ import "./testHome.scss";
 import TestWidget from "../../components/widget/TestWidget";
 import InfiniteScroll from "react-infinite-scroll-component"; // Import InfiniteScroll
 import BeatLoader from "react-spinners/BeatLoader";
+import { serverURL } from "../../temp";
 
 const TestHome = () => {
     const [token] = useState(localStorage.getItem("token"));
@@ -27,7 +28,7 @@ const TestHome = () => {
                 },
             };
             const response = await axios.post(
-                `http://localhost:8000/api/users/quizbycategoryId/${categoryId}?page=${page}`,
+                `${serverURL}/api/users/quizbycategoryId/${categoryId}?page=${page}`,
                 {
                     user_id: userId,
                 },

@@ -71,7 +71,7 @@ const Chart = ({ aspect, title }) => {
     <div className="chart">
       <div className="title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
-        <AreaChart data={data} margin={{ top: 20, right: 30, left: 30, bottom: 30 }}>
+        <AreaChart data={graphStats} margin={{ top: 20, right: 30, left: 30, bottom: 30 }}>
           <defs>
             <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#8884d8" stopOpacity={0.8} />

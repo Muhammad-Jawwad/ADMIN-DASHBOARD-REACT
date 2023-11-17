@@ -90,7 +90,7 @@ const Update = ({ title }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:8000/api/admin/updatecategory", {
+      const response = await fetch(`${serverURL}/api/admin/updatecategory`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

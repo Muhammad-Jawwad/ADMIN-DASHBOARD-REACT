@@ -2,6 +2,7 @@ import React from 'react';
 import { useTimer } from 'react-timer-hook';   
 import axios from "axios"; 
 import $ from 'jquery';
+import { serverURL } from '../../temp';
 
 const MyTimer = ({ duration }) => {
     const getExpiryTimestamp = (duration) => {
@@ -41,7 +42,7 @@ const MyTimer = ({ duration }) => {
             attemptCode
         };
         console.log("formData",formData);
-        const response = await axios.post("/api/users/endquiz", formData );
+        const response = await axios.post(`${serverURL}/api/users/endquiz`, formData );
         const score = response.data.score;
         console.log(score)
         localStorage.setItem("score", score);

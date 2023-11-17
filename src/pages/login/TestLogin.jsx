@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './login.scss';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { serverURL } from '../../temp';
 
 const TestLogin = () => {
     const [username, setUsername] = useState('');
@@ -32,7 +33,7 @@ const TestLogin = () => {
         localStorage.setItem('formData', formDataString);
 
         // Send formData to the server using an HTTP request
-        fetch('http://localhost:8000/api/users/login', {
+        fetch(`${serverURL}/api/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,12 +60,18 @@ const TestLogin = () => {
                 // Storing adminData in localStorage
                 localStorage.setItem("adminData", JSON.stringify(data.data));
 
+                const type = data.data.type;
+
+                localStorage.setItem("type", type);
+
+                window.location.href = `/quiz?q=${type}`;
+                
                 // Schedule the removal of "token" after one hour (3600000 milliseconds)
                 // setTimeout(() => {
                 //   localStorage.removeItem("token");
                 // }, 5000);
 
-                window.location.href = '/quiz';
+                // window.location.href = '/quiz';
             } else {
                 // Set error message and clear username/password
                 setError('Invalid username or password!');

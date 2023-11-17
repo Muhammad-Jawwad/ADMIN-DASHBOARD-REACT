@@ -35,7 +35,7 @@ const ReviewQuestion = () => {
                     "Content-Type": "application/json",
                 },
             };
-            const response = await axios.post("http://localhost:8000/api/users/getreviewquestion", {
+            const response = await axios.post(`http://localhost:8000/api/users/getreviewquestion`, {
                 user_id: adminData.id,
                 quiz_id: quizId,
                 attemptCode,

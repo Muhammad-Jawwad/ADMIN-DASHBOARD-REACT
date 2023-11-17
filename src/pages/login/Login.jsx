@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './login.scss';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { serverURL } from '../../temp';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -33,7 +34,7 @@ const Login = () => {
     localStorage.setItem('formData', formDataString);
 
     // Send formData to the server using an HTTP request
-    fetch('http://localhost:8000/api/admin/login', {
+    fetch(`${serverURL}/api/admin/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

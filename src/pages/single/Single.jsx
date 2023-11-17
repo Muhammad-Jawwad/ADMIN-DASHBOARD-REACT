@@ -5,6 +5,7 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link } from "react-router-dom";
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import { serverURL } from '../../temp';
 
 const Single = () => {
   // Extracting categoryId using regular expressions
@@ -30,7 +31,7 @@ const Single = () => {
           },
         };
         
-        const response = await fetch(`http://localhost:8000/api/admin/categorybyid/${categoryId}`,
+        const response = await fetch(`${serverURL}/api/admin/categorybyid/${categoryId}`,
           config
         );
 

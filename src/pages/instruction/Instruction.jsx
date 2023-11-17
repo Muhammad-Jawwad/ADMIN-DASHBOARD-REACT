@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../../components/navbar/Navbar";
 import "./instruction.scss";
+import { serverURL } from "../../temp";
 
 const Instruction = () => {
     const [token] = useState(localStorage.getItem("token"));
@@ -36,7 +37,7 @@ const Instruction = () => {
 
     const fetchQuizData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/users/quizbyid/${quizId}`, {
+            const response = await axios.get(`${serverURL}/api/users/quizbyid/${quizId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",

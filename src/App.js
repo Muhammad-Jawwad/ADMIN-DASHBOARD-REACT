@@ -3,12 +3,13 @@ import TestHome from "./pages/home/TestHome";
 import Login from "./pages/login/Login";
 import TestLogin from "./pages/login/TestLogin";
 import Profile from "./pages/profile/Profile";
+import NotFoundPage from "./pages/notFound/NotFound";
+
 import Instruction from "./pages/instruction/Instruction";
 import TestQuestion from "./pages/questions/TestQuestion";
 import ReviewQuestionsList from "./pages/review/ReviewQuestionsList";
 import ReviewQuestion from "./pages/questions/ReviewQuestion";
 import EndQuiz from "./pages/endQuiz/EndQuiz";
-import NotFoundPage from "./pages/notFound/NotFound";
 
 import List from "./pages/list/List";
 import QuizList from "./pages/list/QuizList";
@@ -21,10 +22,12 @@ import QuizSingle from "./pages/single/QuizSingle";
 import QuestionSingle from "./pages/single/QuestionSingle";
 
 import New from "./pages/new/New";
+import UserNew from "./pages/new/UserNew";
 import QuizNew from "./pages/new/QuizNew";
 import QuestionNew from "./pages/new/QuestionNew";
 
 import Update from "./components/update/Update";
+import UserUpdate from "./components/update/UserUpdate";
 import QuizUpdate from "./components/update/QuizUpdate";
 import QuestionUpdate from "./components/update/QuestionUpdate";
 
@@ -33,8 +36,6 @@ import { quizInputs, categoryInputs, questionInputs, userInputs } from "./formSo
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-import UserNew from "./pages/new/UserNew";
-import UserUpdate from "./components/update/UserUpdate";
 
 function App() {
   localStorage.setItem("selectedOption", localStorage.getItem("type"));
@@ -56,7 +57,6 @@ function App() {
               <Route path="reviewQuestionList" element={<ReviewQuestionsList />} />
               <Route path="reviewQuestion/:questionId" element={<ReviewQuestion />} />
               <Route path="endQuiz" element={<EndQuiz />} />
-
             </Route>
 
             <Route path="user">
@@ -106,7 +106,7 @@ function App() {
             <Route path="notFound">
               <Route index element={<NotFoundPage />} />
             </Route>
-
+            
           </Route>
         </Routes>
       </BrowserRouter>

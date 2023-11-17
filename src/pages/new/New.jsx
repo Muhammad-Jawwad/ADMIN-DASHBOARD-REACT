@@ -9,12 +9,12 @@ import { serverURL } from "../../temp";
 
 const New = ({ title }) => {
   const [file, setFile] = useState(null);
-  const [inputValues, setInputValues] = useState({});
   const [shouldResetForm, setShouldResetForm] = useState(false);
   const token = localStorage.getItem("token");
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const qValue = queryParams.get("q");
+  const [inputValues, setInputValues] = useState({ type: qValue === "ALL" ? "ECAT" : qValue });
 
   console.log("qValue",qValue)
   const redirectToLogin = () => {
@@ -44,8 +44,7 @@ const New = ({ title }) => {
     const formData = {
       category_name: inputValues.category_name,
       no_of_quiz: parseInt(inputValues.no_of_quiz, 10),
-      category_picture: file ? URL.createObjectURL(file) : "",
-      type: inputValues.type || "ECAT"
+      type: inputValues.type
     };
 
     console.log("formData", formData);
