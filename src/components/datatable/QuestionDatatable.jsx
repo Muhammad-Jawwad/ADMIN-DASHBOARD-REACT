@@ -34,7 +34,7 @@ const QuestionDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/question/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        <Link to={`/question/${params.row.id}?q=${qValue}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
                         <div
@@ -52,7 +52,7 @@ const QuestionDatatable = () => {
         <div className="datatable">
             <div className="datatableTitle">
                 Add New Question
-                <Link to="/question/new" className="link">
+                <Link to={`/question/new?q=${qValue}`} className="link">
                     Add New
                 </Link>
             </div>

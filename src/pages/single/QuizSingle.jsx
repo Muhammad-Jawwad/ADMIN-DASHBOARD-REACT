@@ -4,11 +4,18 @@ import './single.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link } from "react-router-dom";
+import { serverURL } from '../../temp';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const QuizSingle = () => {
     // Extracting quizId using regular expressions
     const location = useLocation();
     const quizId = location.pathname.match(/\/quizList\/(\d+)/)?.[1];
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
+
+    console.log("qValue", qValue);
 
     const [quiz, setQuiz] = useState(null);
     let [token] = useState(localStorage.getItem("token"));
@@ -20,7 +27,7 @@ const QuizSingle = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/admin/quizbyid/${quizId}`, {
+                const response = await fetch(`${serverURL}/api/admin/quizbyid/${quizId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -67,8 +74,8 @@ const QuizSingle = () => {
                         <div className="top">
                             <div className="left">
                                 <div className="editButton">
-                                    <Link to={`/quizList/update/${quizId}`} className=" link">
-                                        Edit
+                                    <Link to={`/quizList/update/${quizId}?q=${qValue}`} className=" link">
+                                        <CreateOutlinedIcon className="icon" />
                                     </Link>
                                 </div>
                                 <h1 className="title">Quiz Information</h1>
@@ -90,8 +97,8 @@ const QuizSingle = () => {
                                             <span className="itemValue">{quiz?.data[0].quiz_no}</span>
                                         </div>
                                         <div className="detailItem">
-                                            <span className="itemKey">Category Id: </span>
-                                            <span className="itemValue">{quiz?.data[0].category_id}</span>
+                                            <span className="itemKey">Category: </span>
+                                            <span className="itemValue">{quiz?.data[0].category_name}</span>
                                         </div>
                                         <div className="detailItem">
                                             <span className="itemKey">Number of Questions: </span>

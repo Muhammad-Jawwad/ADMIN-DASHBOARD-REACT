@@ -4,11 +4,15 @@ import './single.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link } from "react-router-dom";
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const Single = () => {
   // Extracting categoryId using regular expressions
   const location = useLocation();
   const categoryId = location.pathname.match(/\/categories\/(\d+)/)?.[1]; 
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const qValue = queryParams.get("q");
   
   const [category, setCategory] = useState(null);
   let [token] = useState(localStorage.getItem("token"));
@@ -68,8 +72,8 @@ const Single = () => {
             <div className="top">
               <div className="left">
                 <div className="editButton">
-                  <Link to={`/categories/update/${categoryId}`} className=" link">
-                    Edit
+                  <Link to={`/categories/update/${categoryId}?q=${qValue}`} className=" link">
+                    <CreateOutlinedIcon className="icon" />
                   </Link>
                 </div>
                 <h1 className="title">Category Information</h1>

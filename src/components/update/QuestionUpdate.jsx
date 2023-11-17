@@ -5,6 +5,8 @@ import Navbar from "../../components/navbar/Navbar";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { questionInputs } from "../../formSource";
+import { serverURL } from "../../temp";
+import axios from "axios";
 
 
 const QuestionUpdate = ({ title }) => {
@@ -12,21 +14,85 @@ const QuestionUpdate = ({ title }) => {
     // Extracting questionId using regular expressions
     const location = useLocation();
     const questionId = location.pathname.match(/\/question\/update\/(\d+)/)?.[1];
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
     let [token] = useState(localStorage.getItem("token"));
 
     // Initializing state
     const [inputValues, setInputValues] = useState("");
+    const [quizOptions, setQuizOptions] = useState([]);
 
     const navigate = useNavigate();
 
     const redirectToLogin = () => {
         window.location.href = "/notFound";
     };
+    
+
+    const callQuizByType = async () => {
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            console.log("config", config);
+            if (qValue === "ALL") {
+                const apiUrl = `${serverURL}/api/admin/getquiz`;
+                const response = await fetch(apiUrl, config);
+                const data = await response.json();
+                console.log("data", data);
+                if (data.code === 401 || data.code === 498) {
+                    console.error("Error fetching categories due to unauthorization");
+                }
+                return data.data;
+            }
+            console.log("qValue", qValue)
+            const response = await axios.post(`${serverURL}/api/admin/quizByType`,
+                {
+                    type: qValue,
+                },
+                config
+            );
+            const data = response.data;
+            console.log("data", data);
+            if (data.code === 401 | data.code === 498) {
+                console.error("Error fetching categories due to unauthorization");
+            }
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                console.error("Unauthorized: Please log in");
+                window.location.href = "/notFound";
+            }
+
+        }
+    }
+
+    const fetchQuiz = async () => {
+        try {
+            const data = await callQuizByType();
+            // Extract the category_name from the response data
+            const options = data.map((quiz) => ({
+                quiz_name: quiz.quiz_name,
+                quiz_id: quiz.id
+            }));
+            setQuizOptions(options);
+        } catch (error) {
+            console.error("Error fetching categories", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchQuiz(); // Fetch categories when the component mounts
+    }, []);
 
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/admin/questionbyid/${questionId}`, {
+                const response = await fetch(`${serverURL}/api/admin/questionbyid/${questionId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -61,6 +127,7 @@ const QuestionUpdate = ({ title }) => {
             ...inputValues,
             [e.target.name]: e.target.value
         });
+        console.log(inputValues);
     };
 
     const handleUpdate = async (e) => {
@@ -79,7 +146,7 @@ const QuestionUpdate = ({ title }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:8000/api/admin/updatequestion", {
+            const response = await fetch(`${serverURL}/api/admin/updatequestion`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -98,7 +165,7 @@ const QuestionUpdate = ({ title }) => {
                 const data = await response.json();
                 console.log("Response from API", data);
                 // Navigate to the desired page after API response
-                navigate(`/question/${questionId}`);
+                navigate(`/question/${questionId}?q=${qValue}`);
             }
         } catch (error) {
             console.error(error);
@@ -117,29 +184,53 @@ const QuestionUpdate = ({ title }) => {
                             <h1>{title}</h1>
                         </div>
                         <div className="bottom">
-                            {/* <div className="left">
-                                <img
-                                    src={
-                                        file
-                                    }
-                                    alt=""
-                                    className="itemImg"
-                                />
-                            </div> */}
                             <div className="right">
                                 <form onSubmit={handleUpdate}>
-                                    {/* <div className="formInput">
-                                        <label htmlFor="file">
-                                            Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="file"
-                                            onChange={(e) => setFile(e.target.files[0])}
-                                            style={{ display: "none" }}
-                                        />
-                                    </div> */}
                                     {questionInputs.map((input) => (
+                                        <div className="formInput" key={input.id}>
+                                            <label>{input.label}</label>
+                                            {input.fieldName === "quiz_id" ? (
+                                                <select
+                                                    name={input.fieldName}
+                                                    onChange={handleInputChange}
+                                                    value={inputValues[input.fieldName] || ''}
+                                                    required
+                                                >
+                                                    <option value="">Select</option>
+                                                    {quizOptions.map((option) => (
+                                                        <option key={option.quiz_id} value={option.quiz_id}>
+                                                            {option.quiz_name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                input.type === "dropdown" ? (
+                                                    <select
+                                                        name={input.fieldName}
+                                                        value={inputValues[input.fieldName] || ''}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    >
+                                                        {input.options.map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                ) : (
+                                                    <input
+                                                        type={input.type}
+                                                        placeholder={input.placeholder}
+                                                        value={inputValues[input.fieldName] || ''}
+                                                        name={input.label.toLowerCase().split(" ").join("")}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    ))}        
+                                    {/* {questionInputs.map((input) => (
                                         <div className="formInput" key={input.id}>
                                             <label>{input.label}</label>
                                             <input
@@ -152,7 +243,7 @@ const QuestionUpdate = ({ title }) => {
                                             // inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
                                             />
                                         </div>
-                                    ))}
+                                    ))} */}
                                     <div style={{ clear: "both" }} className="formUpdate">
                                         <button
                                             style={{ float: "right" }}

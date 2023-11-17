@@ -5,6 +5,8 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { quizInputs } from "../../formSource";
+import { serverURL } from "../../temp";
+import axios from "axios";
 
 
 const QuizUpdate = ({ title }) => {
@@ -12,6 +14,10 @@ const QuizUpdate = ({ title }) => {
     // Extracting quizId using regular expressions
     const location = useLocation();
     const quizId = location.pathname.match(/\/quizList\/update\/(\d+)/)?.[1];
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
+    const [categoryOptions, setCategoryOptions] = useState([]);
 
     // Initializing state
     const [file, setFile] = useState(null);
@@ -24,10 +30,70 @@ const QuizUpdate = ({ title }) => {
 
     const navigate = useNavigate();
 
+    const callCategoryByType = async () => {
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            console.log("config", config);
+            if (qValue === "ALL") {
+                const apiUrl = `${serverURL}/api/admin/getcategory`;
+                const response = await fetch(apiUrl, config);
+                const data = await response.json();
+                console.log("data", data);
+                if (data.code === 401 || data.code === 498) {
+                    console.error("Error fetching categories due to unauthorization");
+                }
+                return data.data;
+            }
+            console.log("qValue", qValue)
+            const response = await axios.post(`${serverURL}/api/admin/categoryByType`,
+                {
+                    type: qValue,
+                },
+                config
+            );
+            const data = response.data;
+            console.log("data", data);
+            if (data.code === 401 | data.code === 498) {
+                console.error("Error fetching categories due to unauthorization");
+            }
+            return data.data;
+        } catch (error) {
+            console.error(error);
+            if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+                console.error("Unauthorized: Please log in");
+                window.location.href = "/notFound";
+            }
+
+        }
+    }
+
+    const fetchCategories = async () => {
+        try {
+            const data = await callCategoryByType();
+            // Extract the category_name from the response data
+            const options = data.map((category) => ({
+                category_name: category.category_name,
+                category_id: category.id
+            }));
+            console.log("options", options)
+            setCategoryOptions(options);
+        } catch (error) {
+            console.error("Error fetching categories", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories(); // Fetch categories when the component mounts
+    }, []);
+
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/admin/quizbyid/${quizId}`, {
+                const response = await fetch(`${serverURL}/api/admin/quizbyid/${quizId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -85,7 +151,7 @@ const QuizUpdate = ({ title }) => {
         console.log("formData", formData);
 
         try {
-            const response = await fetch("http://localhost:8000/api/admin/updatequiz", {
+            const response = await fetch(`${serverURL}/api/admin/updatequiz`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -104,7 +170,7 @@ const QuizUpdate = ({ title }) => {
                 const data = await response.json();
                 console.log("Response from API", data);
                 // Navigate to the desired page after API response
-                navigate(`/quizList/${quizId}`);
+                navigate(`/quizList/${quizId}?q=${qValue}`);
             }
         } catch (error) {
             console.error(error);
@@ -149,6 +215,50 @@ const QuizUpdate = ({ title }) => {
                                     {quizInputs.map((input) => (
                                         <div className="formInput" key={input.id}>
                                             <label>{input.label}</label>
+                                            {input.fieldName === "category_id" ? (
+                                                <select
+                                                    name={input.fieldName}
+                                                    value={inputValues[input.fieldName] || ''}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="">Select</option>
+                                                    {categoryOptions.map((option) => (
+                                                        <option key={option.category_id} value={option.category_id}>
+                                                            {option.category_name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                input.type === "dropdown" ? (
+                                                    <select
+                                                        name={input.fieldName}
+                                                        value={inputValues[input.fieldName] || ''}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    >
+                                                        {input.options.map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                ) : (
+                                                    <input
+                                                        type={input.type}
+                                                        placeholder={input.placeholder}
+                                                        name={input.fieldName}
+                                                        value={inputValues[input.fieldName] || ''}
+                                                        onChange={handleInputChange}
+                                                        required
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    ))}
+                                    {/* {quizInputs.map((input) => (
+                                        <div className="formInput" key={input.id}>
+                                            <label>{input.label}</label>
                                             <input
                                                 type={input.type}
                                                 placeholder={input.placeholder}
@@ -159,7 +269,7 @@ const QuizUpdate = ({ title }) => {
                                                 // inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
                                             />
                                         </div>
-                                    ))}
+                                    ))} */}
                                     <div style={{ clear: "both" }} className="formUpdate">
                                         <button
                                             style={{ float: "right" }}

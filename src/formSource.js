@@ -1,4 +1,72 @@
 
+export const userInputs = [
+  {
+    fieldName: "name",
+    id: 1,
+    label: "User Name",
+    type: "text",
+    placeholder: "E.g: Jawwad",
+  },
+  {
+    fieldName: "email_id",
+    id: 2,
+    label: "Email",
+    type: "text",
+    placeholder: "E.g: muhammadjawwad417@gmail.com",
+  },
+  {
+    fieldName: "status",
+    id: 3,
+    label: "Status",
+    type: "dropdown",
+    options: [1, 0],
+    placeholder: "E.g: 1 or 0",
+  },
+  {
+    fieldName: "type",
+    id: 4,
+    label: "Type",
+    type: "dropdown",
+    options: [
+      {
+        key: "ECAT",
+        value: "ECAT"
+      },
+      {
+        key: "MCAT",
+        value: "MCAT"
+      },
+      {
+        key: "Entry Test",
+        value: "ET"
+      }
+    ],
+    placeholder: "Select",
+  },
+  {
+    fieldName: "password",
+    id: 5,
+    label: "Password",
+    type: "text",
+    placeholder: "E.g: min: 6 characters",
+  },
+  {
+    fieldName: "gender",
+    id: 6,
+    label: "Gender",
+    type: "dropdown",
+    options: ["", "Male", "Female"],
+    placeholder: "Select",
+  },
+  {
+    fieldName: "mobile_number",
+    id: 7,
+    label: "Contact",
+    type: "number",
+    placeholder: "E.g: 923.........",
+  },
+];
+
 export const categoryInputs = [
   {
     fieldName: "category_name",
@@ -110,7 +178,7 @@ export const questionInputs = [
   {
     fieldName: "quiz_id",
     id: 1,
-    label: "Quiz Id",
+    label: "Quiz",
     type: "number",
     placeholder: "E.g: 2",
   },

@@ -4,11 +4,16 @@ import './single.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { Link } from "react-router-dom";
+import { serverURL } from '../../temp';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const QuestionSingle = () => {
     // Extracting questionId using regular expressions
     const location = useLocation();
     const questionId = location.pathname.match(/\/question\/(\d+)/)?.[1];
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
 
     const [question, setQuestion] = useState(null);
     let [token] = useState(localStorage.getItem("token"));
@@ -20,7 +25,7 @@ const QuestionSingle = () => {
     useEffect(() => {
         const fetchQuestion = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/admin/questionbyid/${questionId}`, {
+                const response = await fetch(`${serverURL}/api/admin/questionbyid/${questionId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -59,8 +64,8 @@ const QuestionSingle = () => {
                         <div className="top">
                             <div className="left">
                                 <div className="editButton">
-                                    <Link to={`/question/update/${questionId}`} className=" link">
-                                        Edit
+                                    <Link to={`/question/update/${questionId}?q=${qValue}`} className=" link">
+                                        <CreateOutlinedIcon className="icon" />
                                     </Link>
                                 </div>
                                 <h1 className="title">Question Information</h1>
@@ -98,8 +103,8 @@ const QuestionSingle = () => {
                                             <span className="itemValue">{question?.data[0].id}</span>
                                         </div>
                                         <div className="detailItem">
-                                            <span className="itemKey">Quiz Id:</span>
-                                            <span className="itemValue">{question?.data[0].quiz_id}</span>
+                                            <span className="itemKey">Quiz:</span>
+                                            <span className="itemValue">{question?.data[0].quiz_name}</span>
                                         </div>
                                         <div className="detailItem">
                                             <span className="itemKey">Status:</span>

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import './single.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
+import { serverURL } from '../../temp';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const UserSingle = () => {
     // Extracting userId using regular expressions
@@ -12,6 +14,9 @@ const UserSingle = () => {
     const [user , setUser] = useState(null);
 
     let [token] = useState(localStorage.getItem("token"));
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const qValue = queryParams.get("q");
 
     const redirectToLogin = () => {
         window.location.href = "/notFound";
@@ -25,7 +30,7 @@ const UserSingle = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 };
-                const response = await fetch(`http://localhost:8000/api/admin/studentbyid/${userId}`,
+                const response = await fetch(`${serverURL}/api/admin/studentbyid/${userId}`,
                     config
                 );
                 
@@ -39,7 +44,7 @@ const UserSingle = () => {
                 }
 
                 const data = await response.json();
-                
+                console.log(data);
                 setUser(data);
                 localStorage.setItem("user Data", JSON.stringify(data));
             } catch (error) {
@@ -65,11 +70,11 @@ const UserSingle = () => {
                         <Navbar />
                         <div className="top">
                             <div className="left">
-                                {/* <div className="editButton">
-                                    <Link to={`/user/update/${userId}`} className=" link">
-                                        Edit
+                                <div className="editButton">
+                                    <Link to={`/user/update/${userId}?q=${qValue}`} className=" link">
+                                        <CreateOutlinedIcon className="icon" />
                                     </Link>
-                                </div> */}
+                                </div>
                                 <h1 className="title">User Information</h1>
                                 <div className="item">
                                     <img src={
@@ -98,6 +103,10 @@ const UserSingle = () => {
                                         <div className="detailItem">
                                             <span className="itemKey">Status: </span>
                                             <span className="itemValue">{user?.data[0].status}</span>
+                                        </div>
+                                        <div className="detailItem">
+                                            <span className="itemKey">Type: </span>
+                                            <span className="itemValue">{user?.data[0].type}</span>
                                         </div>
                                     </div>
                                 </div>

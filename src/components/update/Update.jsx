@@ -5,16 +5,21 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categoryInputs } from "../../formSource";
+import { serverURL } from "../../temp";
 
 
 const Update = ({ title }) => {
 
   // Extracting categoryId using regular expressions
   const location = useLocation();
-  const categoryId = location.pathname.match(/\/categories\/update\/(\d+)/)?.[1]; 
+  const categoryId = location.pathname.match(/\/categories\/update\/(\d+)/)?.[1];
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const qValue = queryParams.get("q");
+
 
   // Initializing state
-  const [file, setFile] = useState(null); 
+  const [file, setFile] = useState(null);
   const [inputValues, setInputValues] = useState("");
   let [token] = useState(localStorage.getItem("token"));
 
@@ -32,7 +37,7 @@ const Update = ({ title }) => {
             Authorization: `Bearer ${token}`,
           },
         };
-        const response = await fetch(`http://localhost:8000/api/admin/categorybyid/${categoryId}`, 
+        const response = await fetch(`${serverURL}/api/admin/categorybyid/${categoryId}`,
           config
         );
 
@@ -46,7 +51,7 @@ const Update = ({ title }) => {
         }
 
         const data = await response.json();
-    
+
         setInputValues(data.data[0]);
         setFile(data.data[0].category_picture);
         localStorage.setItem("categoryData", JSON.stringify(data));
@@ -64,7 +69,7 @@ const Update = ({ title }) => {
       fetchCategory();
     }
   }, [categoryId]);
-  
+
   const handleInputChange = (e) => {
     setInputValues({
       ...inputValues,
@@ -104,7 +109,7 @@ const Update = ({ title }) => {
         const data = await response.json();
         console.log("Response from API", data);
         // Navigate to the desired page after API response
-        navigate(`/categories/${categoryId}`);
+        navigate(`/categories/${categoryId}?q=${qValue}`);
       }
     } catch (error) {
       console.error(error);
@@ -117,7 +122,7 @@ const Update = ({ title }) => {
 
 
   return (
-     <>
+    <>
       {!token && redirectToLogin()}
       {token && (
         <div className="update">
@@ -153,6 +158,50 @@ const Update = ({ title }) => {
                   {categoryInputs.map((input) => (
                     <div className="formInput" key={input.id}>
                       <label>{input.label}</label>
+                      {input.type === "dropdown" && input.fieldName === "type" ? (
+                        <select
+                          name={input.fieldName}
+                          onChange={handleInputChange}
+                          required
+                          value={qValue !== "ALL" ? qValue : inputValues[input.fieldName]}
+                          disabled={qValue !== "ALL"}
+                        >
+                          {input.options.map((option) => (
+                            <option key={option.key} value={option.value}>
+                              {option.key}
+                            </option>
+                          ))}
+                        </select>
+                      ) : input.type === "dropdown" && input.fieldName === "status" ? (
+                        <select
+                          name={input.fieldName}
+                          value={inputValues[input.fieldName] || ''}
+                          onChange={handleInputChange}
+                          required
+                        >
+                          {input.options.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type={input.type}
+                          placeholder={input.placeholder}
+                          value={inputValues[input.fieldName] || ''}
+                          name={input.fieldName}
+                          onChange={handleInputChange}
+                          required
+                          inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
+                        />
+                      )}
+                    </div>
+                  ))}
+
+                  {/* {categoryInputs.map((input) => (
+                    <div className="formInput" key={input.id}>
+                      <label>{input.label}</label>
                       <input
                         type={input.type}
                         placeholder={input.placeholder}
@@ -163,11 +212,10 @@ const Update = ({ title }) => {
                         inputMode={input.fieldName === 'no_of_quiz' ? 'numeric' : undefined}
                       />
                     </div>
-                  ))}
+                  ))} */}
                   <div style={{ clear: "both" }} className="formUpdate">
-                    <button 
-                    style={{ float: "right" }}
-                    // onClick={() => navigate(`/categories/${categoryId}`)}
+                    <button
+                      style={{ float: "right" }}
                     >
                       Update
                     </button>
@@ -176,7 +224,7 @@ const Update = ({ title }) => {
                     <button
                       type="button"
                       style={{ float: "right" }}
-                      onClick={() => navigate(`/categories/${categoryId}`)}
+                      onClick={() => navigate(`/categories/${categoryId}?q=${qValue}`)}
                     >
                       Cancel
                     </button>
@@ -186,7 +234,7 @@ const Update = ({ title }) => {
             </div>
           </div>
         </div>
-        )
+      )
       }
     </>
   );

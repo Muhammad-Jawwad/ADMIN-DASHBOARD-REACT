@@ -9,6 +9,7 @@ import axios from "axios";
 import * as XLSX from 'xlsx';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { serverURL } from "../../temp";
 
 const UserDatatable = () => {
     const [data, setData] = useState(userRows);
@@ -108,7 +109,7 @@ const UserDatatable = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const response = await axios.post(`http://localhost:8000/api/admin/userResult`,
+            const response = await axios.post(`${serverURL}/api/admin/userResult`,
                 {
                     user_id: id,
                 },
@@ -146,7 +147,7 @@ const UserDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/user/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        <Link to={`/user/${params.row.id}?q=${qValue}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
                         <div style={{ textDecoration: "none", color: "green" }}
@@ -168,12 +169,12 @@ const UserDatatable = () => {
     ];
     return (
         <div className="datatable">
-            {/* <div className="datatableTitle">
+            <div className="datatableTitle">
                 Add New User
-                <Link to="/user/new" className="link">
+                <Link to={`/user/new?q=${qValue}`} className="link">
                     Add New
                 </Link>
-            </div> */}
+            </div>
             <>
                 {resultAlert === true ? (
                     <Stack sx={{ width: '100%' }} spacing={2}>

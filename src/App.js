@@ -29,10 +29,12 @@ import QuizUpdate from "./components/update/QuizUpdate";
 import QuestionUpdate from "./components/update/QuestionUpdate";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { quizInputs, categoryInputs, questionInputs } from "./formSource";
+import { quizInputs, categoryInputs, questionInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import UserNew from "./pages/new/UserNew";
+import UserUpdate from "./components/update/UserUpdate";
 
 function App() {
   localStorage.setItem("selectedOption", localStorage.getItem("type"));
@@ -60,6 +62,11 @@ function App() {
             <Route path="user">
               <Route index element={<UserList />} />
               <Route path=":userId" element={<UserSingle />} />
+              <Route path="update/:userId" element={<UserUpdate inputs={userInputs} title="Update User" />} />
+              <Route
+                path="new"
+                element={<UserNew inputs={userInputs} title="Add New User" />}
+              />
             </Route>
 
             <Route path="categories">

@@ -256,7 +256,7 @@ const QuizNew = ({ title }) => {
                                             </div>
                                         ))} */}
                                     <div style={{ clear: "both" }} className="formSubmit">
-                                        <button type="submit" style={{ float: "right" }}>Send</button>
+                                        <button type="submit" style={{ float: "right" }}>Submit</button>
                                     </div>
                                 </form>
                             </div>

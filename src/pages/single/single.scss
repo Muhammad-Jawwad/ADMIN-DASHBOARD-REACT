@@ -1,6 +1,7 @@
 .single {
   display: flex;
   width: 100%;
+
   .singleContainer {
     flex: 6;
 
@@ -11,10 +12,13 @@
 
       .left {
         flex: 1;
-        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-        padding: 20px;
         position: relative;
+        padding: 20px;
+        box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+
+        .icon {
+          color: #7451f8;
+        }
 
         .editButton {
           position: absolute;
@@ -22,17 +26,19 @@
           right: 0;
           padding: 5px;
           font-size: 12px;
-          color: darkblue;
-          background-color: #7551f818;
+          color: #7451f8;
+          font-weight: bold;
+          background-color: #f7f6f918;
           cursor: pointer;
           border-radius: 0px 0px 0px 5px;
-          padding: 2px 5px;
-          border: 1px dotted rgba(0, 0, 139, 0.596);
+          border: 1px dotted #7451f8;
+
+          &:hover {
+            background-color: rgb(181, 181, 250);
+            color: #fff;
+          }
         }
-        .editButton:hover {
-        background-color: rgb(101, 101, 249);
-        color: #fff;
-      }
+
         .item {
           display: flex;
           gap: 20px;
@@ -74,10 +80,9 @@
     }
 
     .bottom {
-      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-      padding: 20px;
       margin: 10px 20px;
+      padding: 20px;
+      box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     }
 
     .title {
