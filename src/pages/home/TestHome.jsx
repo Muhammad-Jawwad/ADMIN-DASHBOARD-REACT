@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./testHome.scss";
 import TestWidget from "../../components/widget/TestWidget";
-import InfiniteScroll from "react-infinite-scroll-component"; // Import InfiniteScroll
 import BeatLoader from "react-spinners/BeatLoader";
 import { serverURL } from "../../temp";
+import { useLocation } from 'react-router-dom';
 
 const TestHome = () => {
     const [token] = useState(localStorage.getItem("token"));
     const [userId] = useState(localStorage.getItem("userId"));
     const [quizData, setQuizData] = useState([]);
-    const [hasMore, setHasMore] = useState(true); // Track if there's more data to load
-    const [page, setPage] = useState(1); // Track the current page
-    const categoryId = 6;
+    const [loading, setLoading] = useState(true);
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
+    const categoryId = queryParams.get("id");
+    console.log("id", categoryId);
 
     const redirectToLogin = () => {
         window.location.href = "/notFound";
@@ -28,41 +30,29 @@ const TestHome = () => {
                 },
             };
             const response = await axios.post(
-                `${serverURL}/api/users/quizbycategoryId/${categoryId}?page=${page}`,
+                `${serverURL}/api/users/quizbycategoryId/${categoryId}`,
                 {
                     user_id: userId,
                 },
                 config
             );
-            if (response.data.data.length === 0) {
-                setHasMore(false); // No more data to load
-            } else {
-                setQuizData([...quizData, ...response.data.data]); // Append new data to the existing quizData
-                setPage(page + 1); // Increment the page
-            }
+            setQuizData(response.data.data);
         } catch (error) {
             console.error("Error fetching quiz data:", error);
-            if (error.response && error.response.status === 401) {
-                console.error("Unauthorized: Please log in");
-                redirectToLogin(); // Redirect
-            }
+            // Handle errors, e.g., unauthorized or redirect to login
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        console.log("Clear local storage when the home page component mounts");
-        localStorage.removeItem("score");
-        localStorage.removeItem("attemptCode");
-        localStorage.removeItem("quizId"); // Clear local storage when the home page component mounts
-    }, []);
-
-    useEffect(() => {
-        if (token) {
+        if (token && categoryId) {
             fetchQuizData();
         } else {
-            redirectToLogin();
+            setLoading(false);
         }
-    }, [token]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token, categoryId]);
 
     return (
         <>
@@ -73,25 +63,33 @@ const TestHome = () => {
                     <div className="homeContainer">
                         <Navbar />
                         <div>
-                            {/* Wrap the widget container with InfiniteScroll */}
-                            <InfiniteScroll
-                                dataLength={quizData.length} // This is important to prevent unnecessary loads
-                                next={fetchQuizData} // Load more data when the user scrolls
-                                hasMore={hasMore} // Whether there's more data to load
-                                loader={
+                            {categoryId ? (
+                                loading ? (
                                     <div className="beatLoader">
                                         <BeatLoader color="#5a38d4" />
                                     </div>
-                                } // Loader element
-                            >
-                                <div className="widgets">
-                                    {quizData.map((quiz, index) => (
-                                        <div className="widgetWrapper" key={index}>
-                                            <TestWidget type={quiz} />
-                                        </div>
-                                    ))}
+                                ) : (
+                                    <>
+                                        {quizData.length > 0 ? (
+                                            <div className="widgets">
+                                                {quizData.map((quiz, index) => (
+                                                    <div className="widgetWrapper" key={index}>
+                                                        <TestWidget type={quiz} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="noDataFoundMessage">
+                                                No Data Found.
+                                            </div>
+                                        )}
+                                    </>
+                                )
+                            ) : (
+                                <div className="categoryNotSelectedMessage">
+                                    Select the Category first.
                                 </div>
-                            </InfiniteScroll>
+                            )}
                         </div>
                     </div>
                 </div>
