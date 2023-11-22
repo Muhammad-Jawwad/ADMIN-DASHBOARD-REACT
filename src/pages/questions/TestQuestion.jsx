@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../../components/navbar/Navbar";
 import MyTimer from "../../components/timer/MyTimer";
 import "./testQuestion.scss";
+import { serverURL } from "../../temp";
 
 const TestQuestion = () => {
     const [token] = useState(localStorage.getItem("token"));
@@ -36,7 +37,7 @@ const TestQuestion = () => {
                     "Content-Type": "application/json",
                 },
             };
-            const response = await axios.post("http://localhost:8000/api/users/getquestion",
+            const response = await axios.post(`${serverURL}/api/users/getquestion`,
                 {
                     user_id: adminData.id,
                     quiz_id: quizId,
@@ -120,7 +121,7 @@ const TestQuestion = () => {
                 time: localStorage.getItem("timer"),
             };
             console.log("body", body)
-            const response = await axios.post("http://localhost:8000/api/users/nextquestion",
+            const response = await axios.post(`${serverURL}/api/users/nextquestion`,
                 body,
                 config,
             );
@@ -166,7 +167,7 @@ const TestQuestion = () => {
                     "Content-Type": "application/json",
                 },
             };
-            const response = await axios.post("http://localhost:8000/api/users/useranswer", {
+            const response = await axios.post(`${serverURL}/api/users/useranswer`, {
                 user_id,
                 quiz_id,
                 question_id: id,
@@ -209,7 +210,7 @@ const TestQuestion = () => {
                     "Content-Type": "application/json",
                 },
             };
-            const response = await axios.patch("http://localhost:8000/api/users/updateattemptedquestion", {
+            const response = await axios.patch(`${serverURL}/api/users/updateattemptedquestion`, {
                 user_id,
                 quiz_id,
                 question_id: id,

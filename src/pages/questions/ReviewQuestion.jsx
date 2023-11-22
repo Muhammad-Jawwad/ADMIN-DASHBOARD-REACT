@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../../components/navbar/Navbar";
 import MyTimer from "../../components/timer/MyTimer";
 import "./testQuestion.scss";
+import { serverURL } from "../../temp";
 
 const ReviewQuestion = () => {
     const [token] = useState(localStorage.getItem("token"));
@@ -35,7 +36,7 @@ const ReviewQuestion = () => {
                     "Content-Type": "application/json",
                 },
             };
-            const response = await axios.post(`http://localhost:8000/api/users/getreviewquestion`, {
+            const response = await axios.post(`${serverURL}/api/users/getreviewquestion`, {
                 user_id: adminData.id,
                 quiz_id: quizId,
                 attemptCode,
@@ -84,7 +85,7 @@ const ReviewQuestion = () => {
             },
         };
         try {
-            const response = await axios.post("http://localhost:8000/api/users/reviewanswer", {
+            const response = await axios.post(`${serverURL}/api/users/reviewanswer`, {
                 user_id,
                 quiz_id,
                 question_id: id,
@@ -99,7 +100,7 @@ const ReviewQuestion = () => {
                 window.location.href = "/quiz/endQuiz";
             } else {
                 console.log("from reviewanswer", response.data.data.question_id);
-                const Response = await axios.post("http://localhost:8000/api/users/getreviewquestion", {
+                const Response = await axios.post(`${serverURL}/api/users/getreviewquestion`, {
                     user_id: adminData.id,
                     quiz_id: quizId,
                     attemptCode,

@@ -139,7 +139,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to={!renderSidebar ? `/home?q=${selectedOption}` : "/quiz"} style={{ textDecoration: "none" }}>
-          <span className="logo">{!renderSidebar ? "Quiz Dashboard" : "Quiz Test"}</span>
+          <span className="logo">{!renderSidebar ? "Quiz Dashboard" : "Quiz"}</span>
         </Link>
       </div>
       <hr />

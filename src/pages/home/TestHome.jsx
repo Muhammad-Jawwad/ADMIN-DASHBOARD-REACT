@@ -46,6 +46,13 @@ const TestHome = () => {
     };
 
     useEffect(() => {
+        console.log("Clear local storage when the home page component mounts");
+        localStorage.removeItem("score");
+        localStorage.removeItem("attemptCode");
+        localStorage.removeItem("quizId"); // Clear local storage when the home page component mounts
+    }, []);
+    
+    useEffect(() => {
         if (token && categoryId) {
             fetchQuizData();
         } else {

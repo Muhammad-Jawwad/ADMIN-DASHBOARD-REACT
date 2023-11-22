@@ -5,8 +5,12 @@ import "./endQuiz.scss";
 
 const EndQuiz = () => {
   const [token] = useState(localStorage.getItem("token"));
+  const [type] = useState(localStorage.getItem("type"));
+  const [selectedCategory] = useState(localStorage.getItem("selectedCategory"));
   const [score] = useState(localStorage.getItem("score") || "N/A");
   const [loading, setLoading] = useState(false);
+
+  console.log(selectedCategory, type);
 
   useEffect(() => {
     if (!token) {
@@ -22,7 +26,7 @@ const EndQuiz = () => {
   };
 
   const handleGoToHome = () => {
-    window.location.href = "/quiz";
+    window.location.href = `/quiz?q=${type}&&id=${selectedCategory}`;
   };
 
   return (

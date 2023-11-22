@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTimer } from 'react-timer-hook';   
 import axios from "axios"; 
 import $ from 'jquery';
@@ -29,6 +29,7 @@ const MyTimer = ({ duration }) => {
         const adminData = JSON.parse(localStorage.getItem("adminData"));
         const quiz_id = parseInt(localStorage.getItem("quizId"));
         const attemptCode = localStorage.getItem("attemptCode");
+        const token = localStorage.getItem("token");
         const user_id = adminData.id
 
         console.log(quiz_id);
@@ -41,10 +42,18 @@ const MyTimer = ({ duration }) => {
             time: "00:00",
             attemptCode
         };
+        const config = {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        };
         console.log("formData",formData);
-        const response = await axios.post(`${serverURL}/api/users/endquiz`, formData );
+        console.log("config",config);
+        const response = await axios.post(`${serverURL}/api/users/endquiz`, formData, config);
         const score = response.data.score;
-        console.log(score)
+        console.log(score);
         localStorage.setItem("score", score);
         window.location.href = "/quiz/endQuiz";
     };
