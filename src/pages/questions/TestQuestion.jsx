@@ -282,60 +282,66 @@ const TestQuestion = () => {
                 <div>
                     <Navbar />
                     <div className="test-question-page">
-                        <div className="card">
-                            <div className="timer">
-                                <MyTimer duration={time} />
+                        {apiQuestions.length === 0 ? (
+                            <div className="card">
+                                <h2 className="no-question-message">No question found</h2>
                             </div>
-                            <div className="progress-div">
-                                <progress
-                                    className="progress"
-                                    value={progressValue}
-                                    max={100}
-                                    style={{
-                                        background: "white",
-                                    }}
-                                />
-                            </div>
-                            {loading ? (
-                                // <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
-                                <div className="loading-message">Loading...</div>
-                            ) : (
-                                <div>
-                                    <h2 className="question">{apiQuestions.question}</h2>
-                                    <div>
-                                        {options.map((option, index) => (
-                                            <div key={index} className="option">
-                                                <input
-                                                    type="radio"
-                                                    id={`option-${index + 1}`}
-                                                    name="option"
-                                                    value={option}
-                                                    checked={selectedOption === option}
-                                                    onChange={handleOptionChange}
-                                                />
-                                                <label htmlFor={`option-${index + 1}`}>{option}</label>
-                                            </div>
-                                        ))}
-                                    </div>
+                        ) : (
+                            <div className="card">
+                                <div className="timer">
+                                    <MyTimer duration={time} />
                                 </div>
-                            )}
-                            <div className="buttons">
-                                <button
-                                    className="previousButton"
-                                    onClick={handlePrevious}
-                                    disabled={currentQuestion === 0}
-                                >
-                                    Previous
-                                </button>
-                                <button
-                                    className="nextButton"
-                                    onClick={handleNext}
-                                    disabled={currentQuestion === apiQuestions.length - 1 || isButtonDisabled}
-                                >
-                                    Next
-                                </button>
+                                <div className="progress-div">
+                                    <progress
+                                        className="progress"
+                                        value={progressValue}
+                                        max={100}
+                                        style={{
+                                            background: "white",
+                                        }}
+                                    />
+                                </div>
+                                {loading ? (
+                                    // <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
+                                    <div className="loading-message">Loading...</div>
+                                ) : (
+                                    <div>
+                                        <h2 className="question">{apiQuestions.question}</h2>
+                                        <div>
+                                            {options.map((option, index) => (
+                                                <div key={index} className="option">
+                                                    <input
+                                                        type="radio"
+                                                        id={`option-${index + 1}`}
+                                                        name="option"
+                                                        value={option}
+                                                        checked={selectedOption === option}
+                                                        onChange={handleOptionChange}
+                                                    />
+                                                    <label htmlFor={`option-${index + 1}`}>{option}</label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="buttons">
+                                    <button
+                                        className="previousButton"
+                                        onClick={handlePrevious}
+                                        disabled={currentQuestion === 0}
+                                    >
+                                        Previous
+                                    </button>
+                                    <button
+                                        className="nextButton"
+                                        onClick={handleNext}
+                                        disabled={currentQuestion === apiQuestions.length - 1 || isButtonDisabled}
+                                    >
+                                        Next
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             )}

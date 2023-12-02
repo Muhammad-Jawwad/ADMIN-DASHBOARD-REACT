@@ -87,7 +87,7 @@ const TestHome = () => {
                                             </div>
                                         ) : (
                                             <div className="noDataFoundMessage">
-                                                No Data Found.
+                                                No Quiz Found.
                                             </div>
                                         )}
                                     </>
