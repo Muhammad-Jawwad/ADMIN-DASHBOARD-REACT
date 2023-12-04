@@ -7,6 +7,7 @@ import { questionInputs } from "../../formSource";
 import { Link, useLocation } from "react-router-dom";
 import { serverURL } from "../../temp";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const QuestionNew = ({ title }) => {
     // const [file, setFile] = useState("");
@@ -132,6 +133,9 @@ const QuestionNew = ({ title }) => {
             window.location.href = `/question/new?q=${qValue}`;
 
         } catch (error) {
+            if (error.response.data.errors.length !== 0) {
+                toast.error(error.response.data.errors[0].msg);
+            }
             console.log(error);
         }
     };

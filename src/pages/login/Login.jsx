@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { serverURL } from '../../temp';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -52,6 +54,7 @@ const Login = () => {
         console.log('Response from API', data);
 
         if (data.status === true) {
+          toast.success('Successfully Login!');
           console.log("token", data.token);
           // Redirect to "home" page
           localStorage.setItem("token", data.token);
@@ -63,15 +66,16 @@ const Login = () => {
           
           if (type === 'ADMIN') {
             localStorage.setItem("type", "ALL");
-            window.location.href = `/home?q=ALL`;
+            navigate(`/home?q=ALL`);
           } else {
             localStorage.setItem("type", type);
-            window.location.href = `/home?q=${type}`;
+            navigate(`/home?q=${type}`);
           }
 
         } else {
           // Set error message and clear username/password
           setError('Invalid username or password!');
+          toast.error(`${data.message}`);
           setUsername('');
           setPassword('');
         }
@@ -79,6 +83,7 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setError('An error occurred. Please try again.');
+        toast.error('This is an error!');
       });
   };
 

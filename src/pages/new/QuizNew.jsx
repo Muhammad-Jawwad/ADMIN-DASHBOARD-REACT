@@ -7,6 +7,7 @@ import { quizInputs } from "../../formSource";
 import { Link, useLocation } from "react-router-dom";
 import { serverURL } from "../../temp";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const QuizNew = ({ title }) => {
     const [file, setFile] = useState("");
@@ -135,6 +136,9 @@ const QuizNew = ({ title }) => {
             setInputValues({});
             window.location.href = `/quizList/new?q=${qValue}`;
         } catch (error) {
+            if (error.response.data.errors.length !== 0) {
+                toast.error(error.response.data.errors[0].msg);
+            }
             console.log(error);
         }
     };

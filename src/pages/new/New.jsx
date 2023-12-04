@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { categoryInputs } from "../../formSource";
 import { serverURL } from "../../temp";
+import toast from "react-hot-toast";
 
 const New = ({ title }) => {
   const [file, setFile] = useState(null);
@@ -77,6 +78,9 @@ const New = ({ title }) => {
       console.log("Input values after reset:", inputValues);
       setShouldResetForm(true);
     } catch (error) {
+      if (error.response.data.errors.length !== 0) {
+        toast.error(error.response.data.errors[0].msg);
+      }
       console.error("Network error:", error);
       // Handle network errors and provide user feedback
       if (error.response && (error.response.status === 401 || error.response.status === 498)) {

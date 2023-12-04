@@ -36,6 +36,7 @@ import { quizInputs, categoryInputs, questionInputs, userInputs } from "./formSo
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import ToastContainer from "./components/toast/ToastContainer";
 
 function App() {
   localStorage.setItem("selectedOption", localStorage.getItem("type"));
@@ -110,6 +111,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

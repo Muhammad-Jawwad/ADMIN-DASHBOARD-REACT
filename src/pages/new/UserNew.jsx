@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { categoryInputs, userInputs } from "../../formSource";
 import { serverURL } from "../../temp";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const UserNew = ({ title }) => {
     // const [file, setFile] = useState(null);
@@ -60,8 +61,9 @@ const UserNew = ({ title }) => {
                 },
             }
             const response = await axios.post(`${serverURL}/api/admin/createuser`, formData, config);
-
+            console.log("Response from API", response);
             const data = response.data;
+            console.log("Data from API", data);
 
             if (!response.status === 200) {
                 if (data.code === 401 || data.code === 498) {
@@ -70,7 +72,7 @@ const UserNew = ({ title }) => {
                 }
             }
 
-            console.log("Response from API", data);
+            // console.log("Response from API", data);
 
             // Reset the form
             // setFile("");
@@ -79,7 +81,9 @@ const UserNew = ({ title }) => {
             console.log("Input values after reset:", inputValues);
             setShouldResetForm(true);
         } catch (error) {
-            console.error("Network error:", error);
+            if(error.response.data.errors.length !== 0){
+                toast.error(error.response.data.errors[0].msg);
+            }
             // Handle network errors and provide user feedback
             if (error.response && (error.response.status === 401 || error.response.status === 498)) {
                 console.error("Unauthorized: Please log in");
