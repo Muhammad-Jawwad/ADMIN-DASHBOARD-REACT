@@ -130,7 +130,7 @@ const QuizNew = ({ title }) => {
 
             // Store formData in local storage
             localStorage.setItem("formData", JSON.stringify(formData));
-
+            toast.success("New Quiz Successfully Created!");
             // Reset the form
             setFile("");
             setInputValues({});

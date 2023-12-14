@@ -127,7 +127,7 @@ const QuestionNew = ({ title }) => {
 
             // Store formData in local storage
             localStorage.setItem("formData", JSON.stringify(formData));
-
+            toast.success("New Question successfully created!");
             // Reset the form
             setInputValues({});
             window.location.href = `/question/new?q=${qValue}`;

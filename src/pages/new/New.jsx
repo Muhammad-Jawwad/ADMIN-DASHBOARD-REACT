@@ -70,7 +70,7 @@ const New = ({ title }) => {
       
       const data = await response.json();
       console.log("Response from API", data);
-
+      toast.success("New Category successfully created!");
       // Reset the form
       setFile("");
       setInputValues({});

@@ -71,7 +71,7 @@ const UserNew = ({ title }) => {
                     window.location.href = "/notFound";
                 }
             }
-
+            toast.success("New User Successfully Created!");
             // console.log("Response from API", data);
 
             // Reset the form
