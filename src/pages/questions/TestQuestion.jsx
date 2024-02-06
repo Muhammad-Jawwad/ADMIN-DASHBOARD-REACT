@@ -20,6 +20,8 @@ const TestQuestion = () => {
     const [questionsOrder, setQuestionsOrder] = useState([apiQuestions]);
     const [count, setCount] = useState(0);
     const [beforePreviousQuestion, setBeforePreviousQuestion] = useState(apiQuestions);
+    const [type] = useState(localStorage.getItem("type"));
+    const [selectedCategory] = useState(localStorage.getItem("selectedCategory"));
 
     const time = localStorage.getItem("duration");
 
@@ -275,6 +277,11 @@ const TestQuestion = () => {
         [apiQuestions]
     );
 
+    const handleGoToHome = () => {
+        window.location.href = `/quiz?q=${type}&&id=${selectedCategory}`;
+    };
+
+
     return (
         <>
             {!token && redirectToLogin()}
@@ -285,6 +292,9 @@ const TestQuestion = () => {
                         {apiQuestions.length === 0 ? (
                             <div className="card">
                                 <h2 className="no-question-message">No question found</h2>
+                                <button className="beginButton" onClick={handleGoToHome}>
+                                    Go To Home
+                                </button>
                             </div>
                         ) : (
                             <div className="card">

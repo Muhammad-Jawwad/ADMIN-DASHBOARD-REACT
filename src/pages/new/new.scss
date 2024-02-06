@@ -66,16 +66,36 @@
             }
           }
 
-          button {
-            width: 150px;
-            padding: 10px;
-            border: none;
-            background-color: teal;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
+          .formSubmit {
+            width: 100%;
+            text-align: right;
+
+            button {
+              width: 150px;
+              padding: 10px 20px;
+              background-color: #7451f8;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background-color: #4d30b6;
+              }
+            }
           }
+
+          // button {
+          //   width: 150px;
+          //   padding: 10px;
+          //   border: none;
+          //   background-color: teal;
+          //   color: white;
+          //   font-weight: bold;
+          //   cursor: pointer;
+          //   margin-top: 10px;
+          // }
         }
       }
     }

@@ -196,7 +196,6 @@ const QuestionUpdate = ({ title }) => {
                                                     value={inputValues[input.fieldName] || ''}
                                                     required
                                                 >
-                                                    <option value="">Select</option>
                                                     {quizOptions.map((option) => (
                                                         <option key={option.quiz_id} value={option.quiz_id}>
                                                             {option.quiz_name}
