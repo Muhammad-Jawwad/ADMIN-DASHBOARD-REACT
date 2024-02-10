@@ -1,0 +1,56 @@
+.cellWithStatus {
+    padding: 5px;
+    border-radius: 5px;
+
+    &.active {
+        background-color: rgba(0, 128, 0, 0.05);
+        color: green;
+    }
+
+    &.pending {
+        background-color: rgba(255, 217, 0, 0.05);
+        color: goldenrod;
+    }
+
+    &.passive {
+        background-color: rgba(255, 0, 0, 0.05);
+        color: crimson;
+    }
+}
+
+.noImagePlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #999;
+    /* Placeholder text color */
+    font-style: italic;
+    /* Italicize the placeholder text */
+}
+
+.noTextPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #999;
+    /* Placeholder text color */
+    font-style: italic;
+    /* Italicize the placeholder text */
+}
+
+.cellWithText {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cellWithText span {
+    margin: 0;
+    padding: 0;
+}
+
+/* Adjust other styles as per your requirement */

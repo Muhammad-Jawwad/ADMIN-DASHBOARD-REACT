@@ -16,6 +16,7 @@ const QuestionSingle = () => {
     const qValue = queryParams.get("q");
 
     const [question, setQuestion] = useState(null);
+    // const [images, setImages] = useState({});
     let [token] = useState(localStorage.getItem("token"));
 
     const redirectToLogin = () => {
@@ -51,6 +52,32 @@ const QuestionSingle = () => {
         if (questionId) {
             fetchQuestion();
         }
+        // if (question) {
+        //     const imageURLs = [
+        //         'image_question',
+        //         'image_option_1',
+        //         'image_option_2',
+        //         'image_option_3',
+        //         'image_option_4',
+        //         'image_correct_option',
+        //     ];
+
+        //     setImages({}); // Clear images initially
+
+        //     imageURLs.forEach((imageURL) => {
+        //         const img = new Image();
+        //         img.src = question.data[0][imageURL]; // Assuming image URLs are within question data
+        //         img.onload = () => {
+        //             setImages({ ...images, [imageURL]: img }); // Store loaded images
+        //         };
+        //         img.onerror = () => {
+        //             console.error(`Error loading image: ${imageURL}`);
+        //             // Handle errors gracefully, e.g., display a placeholder image
+        //         };
+        //     });
+        // }
+        // console.log("images",images)
+
     }, [questionId]);
 
     return (
@@ -99,16 +126,12 @@ const QuestionSingle = () => {
                                             <span className="itemValue">{question?.data[0].correct_option}</span>
                                         </div>
                                         <div className="detailItem">
-                                            <span className="itemKey">Id:</span>
-                                            <span className="itemValue">{question?.data[0].id}</span>
-                                        </div>
-                                        <div className="detailItem">
                                             <span className="itemKey">Quiz:</span>
                                             <span className="itemValue">{question?.data[0].quiz_name}</span>
                                         </div>
                                         <div className="detailItem">
                                             <span className="itemKey">Status:</span>
-                                            <span className="itemValue">{question?.data[0].status}</span>
+                                            <span className="itemValue">{question?.data[0].status === 1 ? 'Active' : 'Inactive'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +146,7 @@ const QuestionSingle = () => {
                 </div> */}
                     </div >
                 </div>
-                )
+            )
             }
         </>
     );

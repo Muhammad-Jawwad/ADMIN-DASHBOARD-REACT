@@ -1,5 +1,6 @@
 import axios from "axios";
 import { serverURL } from "./temp";
+import "./style/datatablesource.scss";
 
 //#region :  USERS DATATABLE SOURCE
 
@@ -42,9 +43,10 @@ export const userColumns = [
     headerName: "Status",
     width: 160,
     renderCell: (params) => {
+      const statusText = params.row.status === 1 ? "Active" : "Inactive";
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className={`cellWithStatus ${params.row.status === 1 ? 'active' : 'inactive'}`}>
+          {statusText}
         </div>
       );
     },
@@ -128,9 +130,10 @@ export const categoryColumns = [
     headerName: "Status",
     width: 160,
     renderCell: (params) => {
+      const statusText = params.row.status === 1 ? "Active" : "Inactive";
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className={`cellWithStatus ${params.row.status === 1 ? 'active' : 'inactive'}`}>
+          {statusText}
         </div>
       );
     },
@@ -228,9 +231,10 @@ export const quizColumns = [
     headerName: "Status",
     width: 160,
     renderCell: (params) => {
+      const statusText = params.row.status === 1 ? "Active" : "Inactive";
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className={`cellWithStatus ${params.row.status === 1 ? 'active' : 'inactive'}`}>
+          {statusText}
         </div>
       );
     },
@@ -294,41 +298,204 @@ export const questionColumns = [
   {
     field: "question",
     headerName: "Question",
+    width: 350,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_question",
+    headerName: "Question Image",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "option_1",
     headerName: "Option 1",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_option_1",
+    headerName: "Image Option 1",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "option_2",
     headerName: "Option 2",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_option_2",
+    headerName: "Image Option 2",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "option_3",
     headerName: "Option 3",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_option_3",
+    headerName: "Image Option 3",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "option_4",
     headerName: "Option 4",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_option_4",
+    headerName: "Image Option 4",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "correct_option",
     headerName: "Correct Option",
     width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithText">
+          {params.value ? (
+            <span>{params.value}</span>
+          ) : (
+            <div className="noTextPlaceholder">No Text</div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    field: "image_correct_option",
+    headerName: "Image Correct Option",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+        {params.value ? (
+          <img src={params.value} alt="" className="cellImg" />
+        ) : (
+          <div className="noImagePlaceholder">No Image</div>
+        )}
+      </div>
+      );
+    },
   },
   {
     field: "status",
     headerName: "Status",
     width: 160,
     renderCell: (params) => {
+      const statusText = params.row.status === 1 ? "Active" : "Inactive";
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className={`cellWithStatus ${params.row.status === 1 ? 'active' : 'inactive'}`}>
+          {statusText}
         </div>
       );
     },

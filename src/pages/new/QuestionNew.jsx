@@ -9,6 +9,7 @@ import { serverURL } from "../../temp";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+
 const QuestionNew = ({ title }) => {
     // const [file, setFile] = useState("");
     const [inputValues, setInputValues] = useState({});
@@ -125,10 +126,10 @@ const QuestionNew = ({ title }) => {
                     //     return;
                     // }
 
-                    if (img.width/img.height < 4) {
-                        toast.error("Image dimensions should be 25x25");
-                        return;
-                    }
+                    // if (img.width / img.height < 4) {
+                    //     toast.error("Image dimensions should be less then 4:1 (width:height)");
+                    //     return;
+                    // }
 
                     // Set the input values
                     setInputValues({
@@ -150,22 +151,22 @@ const QuestionNew = ({ title }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (inputValues.question === undefined && inputValues.image_question === undefined){
+        if (inputValues.question === undefined && inputValues.image_question === undefined) {
             toast.error("Both question and image_question can not be empty");
         }
-        else if (inputValues.option_1 === undefined && inputValues.image_option_1 === undefined){
+        else if (inputValues.option_1 === undefined && inputValues.image_option_1 === undefined) {
             toast.error("Both option_1 and image_option_1 can not be empty");
         }
-        else if (inputValues.option_2 === undefined && inputValues.image_option_2 === undefined){
+        else if (inputValues.option_2 === undefined && inputValues.image_option_2 === undefined) {
             toast.error("Both option_2 and image_option_2 can not be empty");
         }
-        else if (inputValues.option_3 === undefined && inputValues.image_option_3 === undefined){
+        else if (inputValues.option_3 === undefined && inputValues.image_option_3 === undefined) {
             toast.error("Both option_3 and image_option_3 can not be empty");
         }
-        else if (inputValues.option_4 === undefined && inputValues.image_option_4 === undefined){
+        else if (inputValues.option_4 === undefined && inputValues.image_option_4 === undefined) {
             toast.error("Both option_4 and image_option_4 can not be empty");
         }
-        else if (inputValues.correct_option === undefined && inputValues.image_correct_option === undefined){
+        else if (inputValues.correct_option === undefined && inputValues.image_correct_option === undefined) {
             toast.error("Both correct_option and image_correct_option can not be empty");
         }
 
@@ -173,7 +174,7 @@ const QuestionNew = ({ title }) => {
 
         const formData = {
             quiz_id: parseInt(inputValues.quiz_id),
-            question: inputValues.question, 
+            question: inputValues.question,
             option_1: inputValues.option_1,
             option_2: inputValues.option_2,
             option_3: inputValues.option_3,
@@ -194,7 +195,7 @@ const QuestionNew = ({ title }) => {
             const response = await axios.post(`${serverURL}/api/admin/addquestion`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
+                    'Content-Type': 'multipart/form-data', // Important for image uploads
                 }
             });
 
@@ -213,7 +214,6 @@ const QuestionNew = ({ title }) => {
             // Reset the form
             setInputValues({});
             window.location.href = `/question/new?q=${qValue}`;
-
         } catch (error) {
             if (error.response.data.errors.length !== 0) {
                 toast.error(error.response.data.errors[0].msg);
@@ -234,16 +234,6 @@ const QuestionNew = ({ title }) => {
                             <h1>{title}</h1>
                         </div>
                         <div className="bottom">
-                            {/* <div className="left">
-                                <img
-                                    src={
-                                        file
-                                            ? URL.createObjectURL(file)
-                                            : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-                                    }
-                                    alt=""
-                                />
-                            </div> */}
                             <div className="right">
                                 <form onSubmit={handleSubmit} className="form">
                                     {questionInputs
@@ -267,33 +257,33 @@ const QuestionNew = ({ title }) => {
                                                             ))}
                                                         </select>
                                                     ) : (
-                                                            <div className="inputContainer">
-                                                                <div className="labelContainer">
-                                                                    <label htmlFor={`image_${input.fieldName}`}>
-                                                                        <DriveFolderUploadOutlinedIcon className="icon" />
-                                                                    </label>
-                                                                </div>
-                                                                <input
-                                                                    type="file"
-                                                                    id={`image_${input.fieldName}`}
-                                                                    onChange={handleImageChange}
-                                                                    name={`image_${input.fieldName}`}
-                                                                    accept="image/jpeg, image/png"
-                                                                />
-                                                                {inputValues[`image_${input.fieldName}`] && inputValues[`image_${input.fieldName}`] instanceof File && (
-                                                                    <img
-                                                                        src={URL.createObjectURL(inputValues[`image_${input.fieldName}`])}
-                                                                        alt=""
-                                                                        style={{ maxWidth: '100px', maxHeight: '100px' }}
-                                                                    />
-                                                                )}
-                                                                <input
-                                                                    type={input.type}
-                                                                    placeholder={input.placeholder}
-                                                                    name={input.fieldName}
-                                                                    onChange={handleInputChange}
-                                                                />
+                                                        <div className="inputContainer">
+                                                            <div className="labelContainer">
+                                                                <label htmlFor={`image_${input.fieldName}`}>
+                                                                    <DriveFolderUploadOutlinedIcon className="icon" />
+                                                                </label>
                                                             </div>
+                                                            <input
+                                                                type="file"
+                                                                id={`image_${input.fieldName}`}
+                                                                onChange={handleImageChange}
+                                                                name={`image_${input.fieldName}`}
+                                                                accept="image/jpeg, image/png"
+                                                            />
+                                                            {inputValues[`image_${input.fieldName}`] && inputValues[`image_${input.fieldName}`] instanceof File && (
+                                                                <img
+                                                                    src={URL.createObjectURL(inputValues[`image_${input.fieldName}`])}
+                                                                    alt=""
+                                                                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                                                                />
+                                                            )}
+                                                            <input
+                                                                type={input.type}
+                                                                placeholder={input.placeholder}
+                                                                name={input.fieldName}
+                                                                onChange={handleInputChange}
+                                                            />
+                                                        </div>
 
 
                                                         // <>

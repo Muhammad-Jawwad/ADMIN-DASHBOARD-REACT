@@ -117,15 +117,14 @@ const QuizDatatable = () => {
         {
             field: "action",
             headerName: "Action",
-            width: 200,
+            width: 280,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
                         <Link to={`/quizList/${params.row.id}?q=${qValue}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">View</div>
                         </Link>
-                        <div style={{ textDecoration: "none", color: "green" }}
-                            className="deleteButton"
+                        <div className="resultButton"
                             onClick={() => handleResult(params.row.id)}
                         >
                             Result
