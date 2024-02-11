@@ -1,0 +1,307 @@
+.questionSingle {
+  display: flex;
+  width: 100%;
+
+  .singleContainer {
+    flex: 6;
+
+    .top {
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+
+      .left {
+        flex: 1;
+        position: relative;
+        padding: 20px;
+        box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+
+        .icon {
+          color: #7451f8;
+        }
+
+        .editButton {
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 5px;
+          font-size: 12px;
+          color: #7451f8;
+          font-weight: bold;
+          background-color: #f7f6f918;
+          cursor: pointer;
+          border-radius: 0px 0px 0px 5px;
+          border: 1px dotted #7451f8;
+
+          &:hover {
+            background-color: rgb(181, 181, 250);
+            color: #fff;
+          }
+        }
+
+        .item {
+          .details {
+            .quiz {
+              margin-bottom: 10px;
+
+              .quizStatus {
+                font-size: 18px;
+                font-weight: normal;
+                color: #333;
+
+                &.active {
+                  color: green;
+                }
+              }
+            }
+
+            .status {
+              margin-bottom: 10px;
+              font-weight: bold;
+              p {
+                font-size: 18px;
+                font-weight: normal;
+                color: #333;
+              }
+            }
+
+            .itemTitle {
+              margin-bottom: 10px;
+              color: #555;
+            }
+
+            .questionImage {
+              max-width: auto;
+              height: auto;
+              margin-bottom: 10px;
+              margin-top: 10px;
+            }
+
+            .options {
+              .option {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                justify-content: space-between;
+
+                .optionImage {
+                  align-items: flex-end;
+                  width: auto;
+                  height: auto;
+                  margin-left: 10px;
+                }
+              }
+            }
+
+            .correctImage {
+              max-width: auto;
+              height: auto;
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// .questionSingle {
+//   display: flex;
+//   width: 100%;
+// }
+
+// .singleContainer {
+//   flex: 6;
+
+//   .formContainer {
+//     padding: 20px;
+
+//     .formHeader {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+//       margin-bottom: 20px;
+
+//       .formTitle {
+//         font-size: 24px;
+//         color: #333;
+//       }
+
+//       .editLink {
+//         color: #7451f8;
+//         text-decoration: none;
+//         cursor: pointer;
+
+//         &:hover {
+//           color: #5f3dc4;
+//         }
+//       }
+//     }
+
+//     .formContent {
+//       .questionCard {
+//         background-color: #fff;
+//         border-radius: 8px;
+//         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+//         padding: 20px;
+//         margin-bottom: 20px;
+//         display: flex;
+
+//         .questionImage {
+//           width: 200px;
+//           height: auto;
+//           border-radius: 5px;
+//         }
+
+//         .questionDetails {
+//           flex: 1;
+//           padding-left: 20px;
+
+//           .questionTitle {
+//             font-size: 18px;
+//             color: #333;
+//             margin-bottom: 10px;
+//           }
+
+//           .quizStatus {
+//             display: flex;
+//             margin-bottom: 10px;
+
+//             .infoLabel {
+//               font-weight: bold;
+//               color: #555;
+//               margin-right: 5px;
+//             }
+
+//             .infoValue {
+//               color: #777;
+//             }
+//           }
+
+//           .optionsContainer {
+//             display: flex;
+//             flex-wrap: wrap;
+//             gap: 20px;
+
+//             .option {
+//               flex: 1 0 calc(50% - 20px);
+//               display: flex;
+//               flex-direction: column;
+//               align-items: center;
+//               padding: 10px;
+//               border: 1px solid #ddd;
+//               border-radius: 5px;
+
+//               .optionImage {
+//                 width: auto;
+//                 height: auto;
+//                 object-fit: cover;
+//               }
+
+//               .optionText {
+//                 margin-top: 10px;
+//                 text-align: center;
+//                 color: #333;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .questionSingle {
+//   display: flex;
+//   width: 100%;
+
+//   .singleContainer {
+//     flex: 6;
+
+//     .top {
+//       padding: 20px;
+//       display: flex;
+//       gap: 20px;
+
+//       .left {
+//         flex: 1;
+//         position: relative;
+//         padding: 20px;
+//         box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+
+//         .icon {
+//           color: #7451f8;
+//         }
+
+//         .editButton {
+//           position: absolute;
+//           top: 0;
+//           right: 0;
+//           padding: 5px;
+//           font-size: 12px;
+//           color: #7451f8;
+//           font-weight: bold;
+//           background-color: #f7f6f918;
+//           cursor: pointer;
+//           border-radius: 0px 0px 0px 5px;
+//           border: 1px dotted #7451f8;
+
+//           &:hover {
+//             background-color: rgb(181, 181, 250);
+//             color: #fff;
+//           }
+//         }
+
+//         .item {
+//           display: flex;
+//           gap: 20px;
+
+//           .itemImg {
+//             width: 100px;
+//             height: 100px;
+//             border-radius: 50%;
+//             object-fit: cover;
+//           }
+
+//           .details {
+//             .itemTitle {
+//               margin-bottom: 10px;
+//               color: #555;
+//             }
+
+//             .detailItem {
+//               margin-bottom: 10px;
+//               font-size: 14px;
+
+//               .itemKey {
+//                 font-weight: bold;
+//                 color: gray;
+//                 margin-right: 5px;
+//               }
+
+//               .itemValue {
+//                 font-weight: normal;
+//               }
+//             }
+//           }
+//         }
+//       }
+
+//       .right {
+//         flex: 2;
+//       }
+//     }
+
+//     .bottom {
+//       margin: 10px 20px;
+//       padding: 20px;
+//       box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+//     }
+
+//     .title {
+//       font-size: 16px;
+//       color: gray;
+//       margin-bottom: 20px;
+//     }
+//   }
+// }
