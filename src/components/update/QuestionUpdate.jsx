@@ -21,7 +21,7 @@ const QuestionUpdate = ({ title }) => {
     let [token] = useState(localStorage.getItem("token"));
 
     // Initializing state
-    const [inputValues, setInputValues] = useState("");
+    const [inputValues, setInputValues] = useState([]);
     const [quizOptions, setQuizOptions] = useState([]);
 
     const navigate = useNavigate();
@@ -153,6 +153,7 @@ const QuestionUpdate = ({ title }) => {
         });
         console.log(inputValues);
     };
+
 
     const handleImageChange = (e) => {
         const file = e.target.files[0]; // Get the uploaded file
@@ -357,18 +358,11 @@ const QuestionUpdate = ({ title }) => {
                                                                 />
                                                                 {inputValues[`image_${input.fieldName}`] && (
                                                                     <img
-                                                                        // defaultValue={URL.createObjectURL(inputValues[`image_${input.fieldName}`]) || ''}
                                                                         src={inputValues[`image_${input.fieldName}`]}
                                                                         alt=""
                                                                         style={{ maxWidth: '100px', maxHeight: '100px' }}
                                                                     />
-                                                                )}
-                                                                {inputValues[`image_${input.fieldName}`] && inputValues[`image_${input.fieldName}`] instanceof File && (
-                                                                    <img
-                                                                        src={URL.createObjectURL(inputValues[`image_${input.fieldName}`])}
-                                                                        alt=""
-                                                                        style={{ maxWidth: '100px', maxHeight: '100px' }}
-                                                                    />
+
                                                                 )}
                                                                 <input
                                                                     type={input.type}
@@ -382,7 +376,8 @@ const QuestionUpdate = ({ title }) => {
                                                     )}
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))
+                                    }
                                     <div className="formUpdate">
                                         <button
                                             style={{ float: "right" }}
@@ -404,70 +399,6 @@ const QuestionUpdate = ({ title }) => {
                                     </div>
                                 </form>
                             </div>
-                            {/* <div className="right">
-                                <form onSubmit={handleUpdate}>
-                                    {questionInputs.map((input) => (
-                                        <div className="formInput" key={input.id}>
-                                            <label>{input.label}</label>
-                                            {input.fieldName === "quiz_id" ? (
-                                                <select
-                                                    name={input.fieldName}
-                                                    onChange={handleInputChange}
-                                                    value={inputValues[input.fieldName] || ''}
-                                                    required
-                                                >
-                                                    {quizOptions.map((option) => (
-                                                        <option key={option.quiz_id} value={option.quiz_id}>
-                                                            {option.quiz_name}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            ) : (
-                                                input.type === "dropdown" ? (
-                                                    <select
-                                                        name={input.fieldName}
-                                                        value={inputValues[input.fieldName] || ''}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    >
-                                                        {input.options.map((option) => (
-                                                            <option key={option} value={option}>
-                                                                {option}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                ) : (
-                                                    <input
-                                                        type={input.type}
-                                                        placeholder={input.placeholder}
-                                                        value={inputValues[input.fieldName] || ''}
-                                                        name={input.label.toLowerCase().split(" ").join("")}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-                                    ))}        
-                                    <div style={{ clear: "both" }} className="formUpdate">
-                                        <button
-                                            style={{ float: "right" }}
-                                        // onClick={() => navigate(`/categories/${questionId}`)}
-                                        >
-                                            Update
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button
-                                            type="button"
-                                            style={{ float: "right" }}
-                                            onClick={() => navigate(`/question/${questionId}`)}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </form>
-                            </div> */}
                         </div>
                     </div>
                 </div>
