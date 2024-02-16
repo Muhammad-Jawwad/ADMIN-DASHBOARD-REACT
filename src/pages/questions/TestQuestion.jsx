@@ -22,7 +22,6 @@ const TestQuestion = () => {
     const [beforePreviousQuestion, setBeforePreviousQuestion] = useState(apiQuestions);
     const [type] = useState(localStorage.getItem("type"));
     const [selectedCategory] = useState(localStorage.getItem("selectedCategory"));
-
     const time = localStorage.getItem("duration");
 
     const redirectToLogin = () => {
@@ -162,6 +161,7 @@ const TestQuestion = () => {
         const user_id = adminData.id;
 
         try {
+            console.log("next", userAnswer)
             const config = {
                 method: "POST",
                 headers: {
@@ -264,23 +264,33 @@ const TestQuestion = () => {
     };
 
     const handleOptionChange = (event) => {
+        console.log("handleOptionChange",event.target.value)
+        console.log("handleOptionChange",event.target)
         setSelectedOption(event.target.value);
     };
 
     const options = useMemo(
         () => [
-            apiQuestions.option_1,
-            apiQuestions.option_2,
-            apiQuestions.option_3,
-            apiQuestions.option_4,
+            "option_1",
+            "option_2",
+            "option_3",
+            "option_4",
         ],
         [apiQuestions]
     );
+    // const options = useMemo(
+    //     () => [
+    //         apiQuestions.option_1,
+    //         apiQuestions.option_2,
+    //         apiQuestions.option_3,
+    //         apiQuestions.option_4,
+    //     ],
+    //     [apiQuestions]
+    // );
 
     const handleGoToHome = () => {
         window.location.href = `/quiz?q=${type}&&id=${selectedCategory}`;
     };
-
 
     return (
         <>
@@ -312,25 +322,64 @@ const TestQuestion = () => {
                                     />
                                 </div>
                                 {loading ? (
-                                    // <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
-                                    <div className="loading-message">Loading...</div>
+                                    <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
+                                    // <div className="loading-message">Loading...</div>
                                 ) : (
                                     <div>
+                                        {apiQuestions.image_question && (
+                                            <img src={
+                                                apiQuestions.image_question
+                                            }
+                                                alt=""
+                                                className="itemImg"
+                                            />
+                                        )}
                                         <h2 className="question">{apiQuestions.question}</h2>
-                                        <div>
-                                            {options.map((option, index) => (
-                                                <div key={index} className="option">
-                                                    <input
-                                                        type="radio"
-                                                        id={`option-${index + 1}`}
-                                                        name="option"
-                                                        value={option}
-                                                        checked={selectedOption === option}
-                                                        onChange={handleOptionChange}
-                                                    />
-                                                    <label htmlFor={`option-${index + 1}`}>{option}</label>
-                                                </div>
-                                            ))}
+                                        <div className="options">
+                                            <div className="option-row">
+                                                {options.slice(0, 2).map((option, index) => (
+                                                    <div key={index} className="option">
+                                                        <div>
+                                                            <input
+                                                                type="radio"
+                                                                id={`option-${index + 1}`}
+                                                                name="option"
+                                                                value={apiQuestions[option]}
+                                                                checked={selectedOption === apiQuestions[option]}
+                                                                onChange={handleOptionChange}
+                                                            />
+                                                            <label htmlFor={`option-${index + 1}`}>{apiQuestions[option]}</label>
+                                                        </div>
+                                                        <div>
+                                                            {apiQuestions[`image_${option}`] && (
+                                                                <img src={apiQuestions[`image_${option}`]} alt="" className="optionImage" />
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="option-row">
+                                                {options.slice(2, 4).map((option, index) => (
+                                                    <div key={index} className="option">
+                                                        <div>
+                                                            <input
+                                                                type="radio"
+                                                                id={`option-${index + 3}`}
+                                                                name="option"
+                                                                value={apiQuestions[option]}
+                                                                checked={selectedOption === apiQuestions[option]}
+                                                                onChange={handleOptionChange}
+                                                            />
+                                                            <label htmlFor={`option-${index + 3}`}>{apiQuestions[option]}</label>
+                                                        </div>
+                                                        <div>
+                                                            {apiQuestions[`image_${option}`] && (
+                                                                <img src={apiQuestions[`image_${option}`]} alt="" className="optionImage" />
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 )}

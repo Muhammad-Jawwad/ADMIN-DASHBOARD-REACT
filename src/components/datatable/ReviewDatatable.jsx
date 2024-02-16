@@ -28,7 +28,7 @@ const ReviewDatatable = () => {
         {
             field: "action",
             headerName: "Action",
-            width: 70,
+            width: 80,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">

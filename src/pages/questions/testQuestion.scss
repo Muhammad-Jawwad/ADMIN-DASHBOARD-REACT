@@ -1,98 +1,133 @@
-$primary-color: #7451f8;
-$secondary-color: #5a38d4;
-$background-color: #f4f4f8;
-$card-bg-color: #fff;
-
+// testQuestion.scss
 .test-question-page {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
-    /* Set minimum height to full viewport height */
     background-color: #f0f2f5;
-    font-family: Arial, sans-serif;
-    color: #333;
-    overflow: auto;
+    font-family: 'Roboto', sans-serif;
+    color: #202124;
+    padding: 20px;
+    align-items: flex-start;
 }
 
 .card {
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 90%;
+    width: 100%;
     max-width: 600px;
     padding: 30px;
     background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 1px 2px rgba(60, 64, 67, 0.3);
 }
 
 .question {
-    font-size: 24px;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: left;
 }
 
+//
 .options {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 100%;
     margin-bottom: 20px;
 }
 
-.option {
+.option-row {
     display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    gap: 15px;
+}
+
+.option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .option:hover {
-    background-color: #f7f7f7;
+    background-color: #f8f9fa;
     transform: translateY(-2px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .option input[type="radio"] {
     margin-right: 10px;
     color: #7451f8;
+    margin: 10px;
+}
+
+.optionImage {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    margin-left: 20px;
+}
+
+// .option {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 6px;
+//     cursor: pointer;
+//     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+//     &:hover {
+//         background-color: #f8f9fa;
+//         transform: translateY(-2px);
+//         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     }
+
+//     input[type="radio"] {
+//         margin-right: 10px;
+//         color: #7451f8;
+//     }
+// }
+
+// .optionImage {
+//     width: 250px;
+//     height: 250px;
+//     // max-height:350px;
+//     object-fit: contain;
+// }
+
+.itemImg {
+    width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    border-radius: 0px;
 }
 
 .buttons {
+    margin-top: 10px;
     display: flex;
-    flex-direction: column;
-    /* Change to column layout for better vertical stacking */
-    align-items: center;
-    /* Center buttons horizontally */
-    margin-top: 20px;
+    justify-content: space-between;
 }
 
 .previousButton,
 .nextButton {
-    flex: 1; // Make both buttons take equal space
-    margin-right: 10px; // Add a margin between the buttons
-    width: 100%;
-    /* Make buttons take full width */
-    margin-bottom: 10px;
+    flex: 1;
     padding: 10px 20px;
     background-color: #7451f8;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 4px;
+    margin: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s, opacity 0.3s, transform 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 
     &:disabled {
-        background-color: #ccc;
+        background-color: #ddd;
         cursor: not-allowed;
     }
 
@@ -100,36 +135,18 @@ $card-bg-color: #fff;
         background-color: #5a38d4;
         transform: scale(1.02);
     }
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.progress-div {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.progress-label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #555;
 }
 
 .progress {
     width: 100%;
     height: 10px;
     border-radius: 5px;
-    background-color: #e0e0e0;
+    background-color: #eee;
     overflow: hidden;
 }
 
 .progress::-webkit-progress-value {
-    background-color: #7451f8;
+    background-color: #5a38d4;
 }
 
 .timer {
@@ -137,23 +154,21 @@ $card-bg-color: #fff;
     font-size: 18px;
     font-weight: bold;
     color: #7451f8;
-    transition: color 0.3s;
 }
 
 .loading-message {
     text-align: center;
-    padding: 15%;
+    padding: 15% 0;
     font-size: 24px;
     color: #555;
 }
 
 .beginButton {
-    background-color: $primary-color;
+    background-color: #7451f8;
     border: none;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
-    font-family: "Roboto", sans-serif;
     font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 1.5rem;
@@ -161,6 +176,6 @@ $card-bg-color: #fff;
     margin-top: 15px;
 
     &:hover {
-        background-color: $secondary-color;
+        background-color: #5a38d4;
     }
 }

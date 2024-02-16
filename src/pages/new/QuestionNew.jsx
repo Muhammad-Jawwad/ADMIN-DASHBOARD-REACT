@@ -69,7 +69,7 @@ const QuestionNew = ({ title }) => {
             const data = await callQuizByType();
             // Extract the category_name from the response data
             const options = data.map((quiz) => ({
-                quiz_name: quiz.quiz_name,
+                quiz_name: `${quiz.quiz_name} (${quiz.quiz_no})`,
                 quiz_id: quiz.id
             }));
             console.log("options", options)
@@ -150,25 +150,6 @@ const QuestionNew = ({ title }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (inputValues.question === undefined && inputValues.image_question === undefined) {
-            toast.error("Both question and image_question can not be empty");
-        }
-        else if (inputValues.option_1 === undefined && inputValues.image_option_1 === undefined) {
-            toast.error("Both option_1 and image_option_1 can not be empty");
-        }
-        else if (inputValues.option_2 === undefined && inputValues.image_option_2 === undefined) {
-            toast.error("Both option_2 and image_option_2 can not be empty");
-        }
-        else if (inputValues.option_3 === undefined && inputValues.image_option_3 === undefined) {
-            toast.error("Both option_3 and image_option_3 can not be empty");
-        }
-        else if (inputValues.option_4 === undefined && inputValues.image_option_4 === undefined) {
-            toast.error("Both option_4 and image_option_4 can not be empty");
-        }
-        else if (inputValues.correct_option === undefined && inputValues.image_correct_option === undefined) {
-            toast.error("Both correct_option and image_correct_option can not be empty");
-        }
 
         console.log("Input values in submit: ", inputValues);
 
@@ -282,47 +263,9 @@ const QuestionNew = ({ title }) => {
                                                                 placeholder={input.placeholder}
                                                                 name={input.fieldName}
                                                                 onChange={handleInputChange}
+                                                                required
                                                             />
                                                         </div>
-
-
-                                                        // <>
-                                                        //     <label htmlFor={`image_${input.fieldName}`}>
-                                                        //         <DriveFolderUploadOutlinedIcon className="icon" />
-                                                        //     </label>
-                                                        //     <input
-                                                        //         type="file"
-                                                        //         id={`image_${input.fieldName}`}
-                                                        //         onChange={handleInputChange}
-                                                        //         name={`image_${input.fieldName}`}
-                                                        //         style={{
-                                                        //             display: 'none'
-                                                        //         }}
-                                                        //     />
-                                                        //     {inputValues[`image_${input.fieldName}`]
-                                                        //         && (
-                                                        //             // <img
-                                                        //             //     src={
-                                                        //             //         inputValues[`image_${input.fieldName}`]
-                                                        //             //             ? URL.createObjectURL(inputValues[`image_${input.fieldName}`])
-                                                        //             //             : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-                                                        //             //     }
-                                                        //             //     alt=""
-                                                        //             // />
-                                                        //             <img
-                                                        //                 src={inputValues[`image_${input.fieldName}`]}
-                                                        //                 alt=""
-                                                        //             />
-                                                        //         )
-                                                        //     }
-                                                        //     <input
-                                                        //         type={input.type}
-                                                        //         placeholder={input.placeholder}
-                                                        //         name={input.fieldName}
-                                                        //         onChange={handleInputChange}
-                                                        //         required
-                                                        //     />
-                                                        // </>
                                                     )}
                                                 </div>
                                             </div>

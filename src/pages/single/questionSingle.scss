@@ -101,6 +101,8 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-top: 5px;
+                flex-direction: row;
+                padding: 20px;
 
                 .optionImage {
                   width: 250px;
@@ -109,6 +111,7 @@
                 }
               }
             }
+
 
             .correctImage {
               max-width: auto;

@@ -44,6 +44,7 @@ const ReviewQuestion = () => {
             },
                 config,
             );
+            console.log("response.data", response.data.data)
             setProgressValue(response.data.progressValue[0].progress)
             setApiQuestions(response.data.data);
         } catch (error) {
@@ -137,10 +138,10 @@ const ReviewQuestion = () => {
 
     const options = useMemo(
         () => [
-            apiQuestions.option_1,
-            apiQuestions.option_2,
-            apiQuestions.option_3,
-            apiQuestions.option_4,
+            "option_1",
+            "option_2",
+            "option_3",
+            "option_4",
         ],
         [apiQuestions]
     );
@@ -170,32 +171,64 @@ const ReviewQuestion = () => {
                                 <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1>
                             ) : (
                                 <div>
+                                    {apiQuestions.image_question && (
+                                        <img src={
+                                            apiQuestions.image_question
+                                        }
+                                            alt=""
+                                            className="itemImg"
+                                        />
+                                    )}
                                     <h2 className="question">{apiQuestions.question}</h2>
-                                    <div>
-                                        {options.map((option, index) => (
-                                            <div key={index} className="option">
-                                                <input
-                                                    type="radio"
-                                                    id={`option-${index + 1}`}
-                                                    name="option"
-                                                    value={option}
-                                                    checked={selectedOption === option}
-                                                    onChange={handleOptionChange}
-                                                />
-                                                <label htmlFor={`option-${index + 1}`}>{option}</label>
-                                            </div>
-                                        ))}
+                                    <div className="options">
+                                        <div className="option-row">
+                                            {options.slice(0, 2).map((option, index) => (
+                                                <div key={index} className="option">
+                                                    <div>
+                                                        <input
+                                                            type="radio"
+                                                            id={`option-${index + 1}`}
+                                                            name="option"
+                                                            value={apiQuestions[option]}
+                                                            checked={selectedOption === apiQuestions[option]}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor={`option-${index + 1}`}>{apiQuestions[option]}</label>
+                                                    </div>
+                                                    <div>
+                                                        {apiQuestions[`image_${option}`] && (
+                                                            <img src={apiQuestions[`image_${option}`]} alt="" className="optionImage" />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="option-row">
+                                            {options.slice(2, 4).map((option, index) => (
+                                                <div key={index} className="option">
+                                                    <div>
+                                                        <input
+                                                            type="radio"
+                                                            id={`option-${index + 3}`}
+                                                            name="option"
+                                                            value={apiQuestions[option]}
+                                                            checked={selectedOption === apiQuestions[option]}
+                                                            onChange={handleOptionChange}
+                                                        />
+                                                        <label htmlFor={`option-${index + 3}`}>{apiQuestions[option]}</label>
+                                                    </div>
+                                                    <div>
+                                                        {apiQuestions[`image_${option}`] && (
+                                                            <img src={apiQuestions[`image_${option}`]} alt="" className="optionImage" />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
                             <div className="buttons">
-                                {/* <button
-                                    className="previousButton"
-                                    onClick={handlePrevious}
-                                    disabled={currentQuestion === 0}
-                                >
-                                    Previous
-                                </button> */}
                                 <button
                                     className="nextButton"
                                     onClick={handleNext}

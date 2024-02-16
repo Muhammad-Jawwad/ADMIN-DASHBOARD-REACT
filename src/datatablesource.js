@@ -553,7 +553,7 @@ export const reviewColumns = [
   {
     field: "question",
     headerName: "Question",
-    width: 1060,
+    width: 1040,
   },
 ];
 

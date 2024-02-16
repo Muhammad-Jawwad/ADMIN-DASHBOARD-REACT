@@ -76,7 +76,7 @@ const QuestionUpdate = ({ title }) => {
             const data = await callQuizByType();
             // Extract the category_name from the response data
             const options = data.map((quiz) => ({
-                quiz_name: quiz.quiz_name,
+                quiz_name: `${quiz.quiz_name} (${quiz.quiz_no})`,
                 quiz_id: quiz.id
             }));
             setQuizOptions(options);
@@ -154,7 +154,6 @@ const QuestionUpdate = ({ title }) => {
         console.log(inputValues);
     };
 
-
     const handleImageChange = (e) => {
         const file = e.target.files[0]; // Get the uploaded file
         const fileName = e.target.value; // Get the name of the file
@@ -227,25 +226,6 @@ const QuestionUpdate = ({ title }) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        if (inputValues.question === undefined && inputValues.image_question === undefined) {
-            toast.error("Both question and image_question can not be empty");
-        }
-        else if (inputValues.option_1 === undefined && inputValues.image_option_1 === undefined) {
-            toast.error("Both option_1 and image_option_1 can not be empty");
-        }
-        else if (inputValues.option_2 === undefined && inputValues.image_option_2 === undefined) {
-            toast.error("Both option_2 and image_option_2 can not be empty");
-        }
-        else if (inputValues.option_3 === undefined && inputValues.image_option_3 === undefined) {
-            toast.error("Both option_3 and image_option_3 can not be empty");
-        }
-        else if (inputValues.option_4 === undefined && inputValues.image_option_4 === undefined) {
-            toast.error("Both option_4 and image_option_4 can not be empty");
-        }
-        else if (inputValues.correct_option === undefined && inputValues.image_correct_option === undefined) {
-            toast.error("Both correct_option and image_correct_option can not be empty");
-        }
-
         console.log("Input values in submit: ", inputValues);
 
         const formData = {
@@ -291,7 +271,6 @@ const QuestionUpdate = ({ title }) => {
             }
             console.log(error);
         }
-
     };
 
     return (
@@ -356,6 +335,14 @@ const QuestionUpdate = ({ title }) => {
                                                                     name={`image_${input.fieldName}`}
                                                                     accept="image/jpeg, image/png"
                                                                 />
+                                                                {inputValues[`image_${input.fieldName}`] && inputValues[`image_${input.fieldName}`] instanceof File && (
+                                                                    <img
+                                                                        src={URL.createObjectURL(inputValues[`image_${input.fieldName}`])}
+                                                                        alt=""
+                                                                        style={{ maxWidth: '100px', maxHeight: '100px' }}
+                                                                    />
+                                                                )}
+
                                                                 {inputValues[`image_${input.fieldName}`] && (
                                                                     <img
                                                                         src={inputValues[`image_${input.fieldName}`]}
@@ -370,6 +357,7 @@ const QuestionUpdate = ({ title }) => {
                                                                     name={input.fieldName}
                                                                     value={inputValues[input.fieldName] || ''}
                                                                     onChange={handleInputChange}
+                                                                    required
                                                                 />
                                                             </div>
                                                         )
