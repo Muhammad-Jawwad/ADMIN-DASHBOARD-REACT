@@ -32,11 +32,19 @@ import QuizUpdate from "./components/update/QuizUpdate";
 import QuestionUpdate from "./components/update/QuestionUpdate";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { quizInputs, categoryInputs, questionInputs, userInputs } from "./formSource";
+import { quizInputs, categoryInputs, questionInputs, userInputs, registrationInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import ToastContainer from "./components/toast/ToastContainer";
+
+import RegistrationHome from "./pages/home/RegistrationHome";
+import RegistrationList from "./pages/list/RegistrationList";
+import RegistrationNew from "./pages/new/RegistrationNew";
+import RegistrationUpdate from "./components/update/RegistrationUpdate";
+import AdmitCard from "./components/admitCard/AdmitCard";
+import RegistrationSlip from "./components/registrationSlip/RegistrationSlip";
+
 
 function App() {
   localStorage.setItem("selectedOption", localStorage.getItem("type"));
@@ -50,6 +58,18 @@ function App() {
             <Route index element={<Login />} />
             <Route path="quizLogin" element={<TestLogin />} />
             <Route path="home" element={<Home />} />
+            
+            <Route path="dashboard" element={<RegistrationHome />} />
+            <Route path="registration">
+              <Route index element={<RegistrationList />} />
+              <Route path="update/:registrationId" element={<RegistrationUpdate inputs={registrationInputs} title="Update Registered Student" />} />
+              <Route
+                path="new"
+                element={<RegistrationNew inputs={registrationInputs} title="Add New Registration" />}
+              />
+            </Route>
+              <Route path="/admit-card/:registrationId" element={<AdmitCard />} />
+              <Route path="/registration-slip/:registrationId" element={<RegistrationSlip />} />
 
             <Route path="quiz">
               <Route index element={<TestHome />} />

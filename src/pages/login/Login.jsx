@@ -67,6 +67,9 @@ const Login = () => {
           if (type === 'ADMIN') {
             localStorage.setItem("type", "ALL");
             navigate(`/home?q=ALL`);
+          } else if (type === 'REGISTRAR'){
+            localStorage.setItem("type", "ALL");
+            navigate(`/dashboard?q=ALL`);
           } else {
             localStorage.setItem("type", type);
             navigate(`/home?q=${type}`);

@@ -1,0 +1,73 @@
+.registrationWidget {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f8f8;
+    // background-color: #ffffff;
+    /* Change background color to white */
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    width: 215px;
+    height: 60px;
+
+    &:hover {
+        transform: translateY(-5px);
+        background-color: #ffffff;
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .title {
+            font-weight: bold;
+            font-size: 18px;
+            /* Increase font size for title */
+            color: #333333;
+            /* Darker text color for better contrast */
+            margin-bottom: 5px;
+        }
+
+        .counter {
+            font-size: 24px;
+            color: #7451f8;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .link {
+            font-size: 12px;
+            color: #777777;
+            /* Darker color for better readability */
+            border-bottom: 1px solid #cccccc;
+            /* Lighter border color */
+            padding-bottom: 2px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            /* Add cursor pointer for link */
+        }
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+
+        .icon {
+            font-size: 36px;
+            /* Increase icon size for better visibility */
+            padding: 10px;
+            /* Increase padding */
+            border-radius: 50%;
+            background-color: #7451f8;
+            /* Change background color to match counter */
+            color: #ffffff;
+            margin-left: 15px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            /* Add shadow for depth */
+        }
+    }
+}

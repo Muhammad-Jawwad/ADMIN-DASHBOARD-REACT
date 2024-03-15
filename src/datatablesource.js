@@ -629,3 +629,96 @@ export const fetchReviewRows = async () => {
 export const reviewRows = [];
 
 //#endregion
+
+//#region :  REGISTRATION DATATABLE SOURCE
+
+export const registrationColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "full_name", headerName: "Full Name", width: 320 },
+  {
+    field: "profile_picture",
+    headerName: "Picture",
+    width: 70,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+          <img src={params.value} alt="Profile" className="cellImg" />
+        </div>
+      );
+    },
+  },
+  // 
+  // 
+  { field: "b_form", headerName: "CNIC/B-Form Number", width: 170 },
+  { field: "father_name", headerName: "Father's Name", width: 320 },
+  { field: "father_status", headerName: "Father's Status", width: 120 },
+  { field: "mother_name", headerName: "Mother's Name", width: 320 },
+  { field: "student_contact", headerName: "Student Contact", width: 140 },
+  { field: "group_name", headerName: "Group Name", width: 170 },
+  { field: "class", headerName: "Class", width: 50 },
+  { field: "area", headerName: "Area", width: 170 },
+  { field: "address", headerName: "Address", width: 230 },
+  { field: "last_school_attended", headerName: "Last School Attended", width: 230 },
+  { field: "percentage_last_class", headerName: "% in Last Class", width: 130 },
+  { field: "earning_siblings", headerName: "Earning Siblings", width: 130 },
+  { field: "medical_illness", headerName: "Medical Illness", width: 130 },
+  { field: "father_contact", headerName: "Father's Contact", width: 140 },
+  { field: "father_designation", headerName: "Father's Designation", width: 170 },
+  { field: "father_workplace", headerName: "Father's Workplace", width: 170 },
+  { field: "father_income", headerName: "Father's Income", width: 130 },
+  { field: "mother_designation", headerName: "Mother's Designation", width: 170 },
+  { field: "mother_workplace", headerName: "Mother's Workplace", width: 170 },
+  { field: "mother_income", headerName: "Mother's Income", width: 130 },
+  { field: "domicile", headerName: "Domicile", width: 150 },
+  { field: "previous_education_board", headerName: "Previous Education Board", width: 200 },
+  { field: "percentage_preliminary_examination", headerName: "% in Preliminary Examination", width: 220 },
+  { field: "siblings_count", headerName: "Siblings Count", width: 130 },
+  { field: "current_residence", headerName: "Current Residence", width: 230 },
+  { field: "reference_name", headerName: "Reference Name", width: 230 },
+  { field: "reference_contact", headerName: "Reference Contact", width: 140 },
+  { field: "reference_relation", headerName: "Reference Relation", width: 230 },
+  { field: "year", headerName: "Year", width: 60 },
+  {
+    field: "status", headerName: "Status", width: 100,
+    renderCell: (params) => {
+      const statusText = params.value.toUpperCase() === "ACTIVE" ? "Active" : "Inactive";
+      return (
+        <div className={`cellWithStatus ${params.value.toUpperCase() === "ACTIVE" ? 'active' : 'inactive'}`}>
+          {statusText}
+        </div>
+      );
+    },
+  },
+];
+
+export const fetchRegistrationRows = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${serverURL}/api/admin/getRegistrations`,
+      config
+    );
+    const data = response.data;
+    console.log("data", data);
+    if (data.code === 401 || data.code === 498) {
+      window.location.href = "/notFound";
+    }
+    return data;
+
+  } catch (error) {
+    console.error(error);
+    if (error.response && (error.response.status === 401 || error.response.status === 498)) {
+      console.error("Unauthorized: Please log in");
+      window.location.href = "/notFound";
+    }
+  }
+};
+
+export const registrationRows = [];
+
+//#endregion
+
