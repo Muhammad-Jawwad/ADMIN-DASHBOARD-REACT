@@ -469,4 +469,11 @@ export const registrationInputs = [
     type: "number",
     placeholder: "E.g: 2024",
   },
+  {
+    fieldName: "description",
+    id: 33,
+    label: "Description",
+    type: "text",
+    placeholder: "E.g: Note about student",
+  },
 ];

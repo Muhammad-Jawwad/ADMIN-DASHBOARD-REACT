@@ -12,6 +12,15 @@
         color: goldenrod;
     }
 
+    &.inactive {
+        background-color: rgba(255, 0, 0, 0.05);
+        color: crimson;
+    }
+
+    &.blocked {
+        background-color: rgba(255, 0, 0, 0.05);
+        color: crimson;
+    }
     &.Inactive {
         background-color: rgba(255, 0, 0, 0.05);
         color: crimson;

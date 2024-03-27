@@ -3,6 +3,7 @@ import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
 import Person2TwoToneIcon from '@mui/icons-material/Person2TwoTone';
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import PersonAddTwoToneIcon from '@mui/icons-material/PersonAddTwoTone';
+import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
 import { Link, useLocation } from "react-router-dom";
 
 const RegistrationSidebar = () => {
@@ -40,6 +41,13 @@ const RegistrationSidebar = () => {
                         <li>
                             <PersonAddTwoToneIcon className="icon" />
                             <span>New Registration</span>
+                        </li>
+                    </Link>
+
+                    <Link to="/blockedStudents?q=ALL" style={{ textDecoration: "none" }}>
+                        <li>
+                            <BlockTwoToneIcon className="icon" />
+                            <span>Blocked Students</span>
                         </li>
                     </Link>
 

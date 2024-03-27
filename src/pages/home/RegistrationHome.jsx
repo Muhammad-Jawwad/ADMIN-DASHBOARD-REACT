@@ -12,6 +12,7 @@ import RegistrationWidget from "../../components/widget/RegistrationWidget";
 
 const RegistrationHome = () => {
     const [token] = useState(localStorage.getItem("token"));
+    const [adminData] = useState(JSON.parse(localStorage.getItem("adminData")));
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const qValue = queryParams.get("q");
@@ -78,28 +79,36 @@ const RegistrationHome = () => {
                                     <RegistrationWidget type="Total" input={homeStats.ninthClass} />
                                     <RegistrationWidget type="Science" input={homeStats.ninthScienceStudents} />
                                     <RegistrationWidget type="Medical" input={homeStats.ninthMedicalStudents} />
+                                    {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.ninthBlocked} />
+                                    ) : undefined}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>10th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.matricClass} />
                                     <RegistrationWidget type="Science" input={homeStats.metricScienceStudents} />
                                     <RegistrationWidget type="Medical" input={homeStats.metricMedicalStudents} />
+                                    {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.matricBlocked} />
+                                    ) : undefined}  
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>11th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.firstYearClass} />
                                     <RegistrationWidget type="Pre-Engineering" input={homeStats.firstYearpreEngineeringStudents} />
                                     <RegistrationWidget type="Pre-Medical" input={homeStats.firstYearPreMedicalStudents} />
+                                    {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.firstYearBlocked} />
+                                    ) : undefined}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>12th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.secondYearClass} />
                                     <RegistrationWidget type="Pre-Engineering" input={homeStats.secondYearpreEngineeringStudents} />
                                     <RegistrationWidget type="Pre-Medical" input={homeStats.secondYearPreMedicalStudents} />
+                                    {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.secondYearBlocked} />
+                                    ) : undefined}
                                 </div>
                                 {/* <div className="charts">
                                     {/* <Featured /> 

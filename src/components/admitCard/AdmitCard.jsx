@@ -5,6 +5,7 @@ import { serverURL } from '../../temp';
 const AdmitCard = () => {
 
     const [user, setUser] = useState({});
+    const [credentials, setCredentials] = useState({});
     const time = "4:00 pm"
     const venue = "Jinnah"
 
@@ -38,6 +39,7 @@ const AdmitCard = () => {
             const data = await response.json();
             console.log(data);
             setUser(data.data[0]);
+            setCredentials(data.credentials[0]);
 
         } catch (error) {
             console.error(error);
@@ -199,6 +201,16 @@ const AdmitCard = () => {
                                                     </td>
                                                     <td style={{ fontSize: 22 }}>
                                                         <b>Date: </b> 6<sup>th </sup>August,&nbsp;2023
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{ fontSize: 22 }}>
+                                                        <b>Email:</b> {credentials.email}
+                                                        <span style={{ fontSize: 22 }} id="email" />
+                                                    </td>
+                                                    <td style={{ fontSize: 22 }}>
+                                                        <b>Password:</b> {credentials.password}
+                                                        <span style={{ fontSize: 22 }} id="password" />
                                                     </td>
                                                 </tr>
                                             </tbody>

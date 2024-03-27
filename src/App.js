@@ -44,6 +44,8 @@ import RegistrationNew from "./pages/new/RegistrationNew";
 import RegistrationUpdate from "./components/update/RegistrationUpdate";
 import AdmitCard from "./components/admitCard/AdmitCard";
 import RegistrationSlip from "./components/registrationSlip/RegistrationSlip";
+import BlockedStudentList from "./pages/list/BlockedStudentList";
+import BlockedStudentUpdate from "./components/update/BlockedStudentUpdate";
 
 
 function App() {
@@ -68,8 +70,12 @@ function App() {
                 element={<RegistrationNew inputs={registrationInputs} title="Add New Registration" />}
               />
             </Route>
-              <Route path="/admit-card/:registrationId" element={<AdmitCard />} />
-              <Route path="/registration-slip/:registrationId" element={<RegistrationSlip />} />
+            <Route path="blockedStudents">
+              <Route index element={<BlockedStudentList />} />
+              <Route path="update/:registrationId" element={<BlockedStudentUpdate inputs={registrationInputs} title="Update Blocked Student" />} />
+            </Route>
+            <Route path="/admit-card/:registrationId" element={<AdmitCard />} />
+            <Route path="/registration-slip/:registrationId" element={<RegistrationSlip />} />
 
             <Route path="quiz">
               <Route index element={<TestHome />} />
