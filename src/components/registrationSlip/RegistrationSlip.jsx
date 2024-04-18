@@ -56,7 +56,7 @@ const RegistrationSlip = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{margin: 0, padding: 0}}>
             <>
                 {/* Required meta tags */}
                 <meta charSet="utf-8" />
@@ -124,27 +124,26 @@ const RegistrationSlip = () => {
                             <h1
                                 style={{
                                     textAlign: "center",
-                                    fontSize: 38,
+                                    fontSize: 28,
                                     textDecoration: "underline",
-                                    fontWeight: 800
+                                    fontWeight: 700
                                 }}
                             >
                                 THE EDUCATION LINK
                             </h1>
                         </div>
-                        <h3 style={{ textAlign: "center", fontSize: 20 }}>
+                        <h3 style={{ textAlign: "center", fontSize: 15 }}>
                             EDULINK/JC/RF/24-25
                         </h3>
                     </div>
-                    <br />
                     <br />
                     <br />{" "}
                     <div>
                         <h3
                             style={{
                                 textAlign: "center",
-                                fontSize: 31,
-                                fontWeight: 700,
+                                fontSize: 25,
+                                fontWeight: 600,
                                 fontFamily: "math"
                             }}
                         >
@@ -162,94 +161,93 @@ const RegistrationSlip = () => {
                             height: 150,
                             border: "2px solid black",
                             float: "right",
-                            marginTop: "-180px"
+                            marginTop: "-160px"
                         }}
                     />
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Roll Number : </label>
                         <span style={{ marginTop: 6 }} id="id" > TEL- {user.id}</span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Student's Name: </label>
                         <span id="student_full_name"> {user.full_name} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Student's Class: </label>
                         <span id="student_class" > {user.class} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Venue: </label>
                         <span id="venue" > {venue} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Time: </label>
                         <span id="time" > {time} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Father's Name: </label>
                         <span id="fathers_name" > {user.father_name} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Address: </label>
                         <span id="residential_address" > {user.address} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Last School: </label>
                         <span id="last_school_attended"> {user.last_school_attended} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Group:</label>
                         <span id="student_group" > {user.group_name} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Previous Percentage: </label>
                         <span id="percentage_in_IX_class" > {user.percentage_last_class} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Board:</label>
                         <span id="previous_board_of_education" > {user.previous_education_board} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Reference Name: </label>
                         <span id="refrence_name" > {user.reference_name || "-"} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Reference Contact :</label>
                         <span id="refrence_contact_no" > {user.reference_contact || "-"} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Father's Company:</label>
                         <span id="father's_workplace" > {user.father_workplace} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Father's Income :</label>
                         <span id="father's_income" > {user.father_income} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Mother's Company:</label>
                         <span id="mother_s_workplace" > {user.mother_workplace || "-"} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Mother's Designation:</label>
                         <span id="mother_s_designation" > {user.mother_designation || "-"} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Mother's Income:</label>
                         <span id="mother_s_income" > {user.mother_income || "-"} </span>
                     </div>
-                    {/* <div style={{ marginBottom: 25 }} className="field">
+                    {/* <div style={{ marginBottom: 7 }} className="field">
                         <label>Phone (Residence):</label>
                         <span id="2nd_number" />
                     </div> */}
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div style={{ marginBottom: 7 }} className="field">
                         <label>Student's Cell:</label>
                         <span id="student_contact_number" > {user.student_contact} </span>
                     </div>
-                    <div style={{ marginBottom: 25 }} className="field">
+                    <div className="field">
                         <label>Father's Cell:</label>
                         <span id="father's_contact_number" > {user.father_contact} </span>
                     </div>
-                    {/* Add more fields as needed */}
                 </div>
             </>
         </div>
