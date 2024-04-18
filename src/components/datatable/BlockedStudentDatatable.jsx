@@ -18,6 +18,8 @@ import { fetchBlockedStudentRows, blockedStudentColumns, blockedStudentRows } fr
 import { serverURL } from "../../temp";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu, MenuItem } from "@mui/material";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function CustomToolbar() {
     return (
@@ -44,32 +46,91 @@ const BlockedStudentDatatable = () => {
     const [loading, setLoading] = useState(false);
     const [resultAlert, setResultAlert] = useState(false);
     const [successAlert, setSuccessAlert] = useState(false);
+    const [appeared, setAppeared] = useState(false);
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const qValue = queryParams.get("q");
+    let [token] = useState(localStorage.getItem("token"));
 
-    useEffect(() => {
+    // useEffect(async () => {
+    //     const getData = async () => {
+    //         setLoading(true);
+    //         const rows = await fetchBlockedStudentRows();
+    //         setLoading(false);
+    //         setData(Array.from(rows.data));
+    //     };
+    //     await getData();
+    //     console.log("adminData", adminData.id)
+        
+    // }, []);
+
+    useEffect(async () => {
         const getData = async () => {
             setLoading(true);
             const rows = await fetchBlockedStudentRows();
             setLoading(false);
             setData(Array.from(rows.data));
+
+            // Check if the appeared value is 0 for any row
+            const appearedValueZero = rows.data.some(row => row.appeared === 0);
+            setAppeared(appearedValueZero); // Set appeared state
         };
-        getData();
+        await getData();
         console.log("adminData", adminData.id)
     }, []);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedRowId, setSelectedRowId] = useState(null);
 
-    const handleMenuOpen = (event, id) => {
+    const handleMenuOpen = (event, id) => { 
         setSelectedRowId(id);
         setAnchorEl(event.currentTarget);
+
     };
 
     const handleMenuClose = () => {
         setSelectedRowId(null);
         setAnchorEl(null);
+    };
+
+    const handleAppeared = async (id) => {
+        setSelectedRowId(null);
+        setAnchorEl(null);
+
+        try {
+            const formData = {
+                registration_id: id,
+                appeared: 1
+            }
+            console.log("formData", formData);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+            const response = await axios.patch(`${serverURL}/api/admin/appearedBlockedRegistration`, formData, config);
+            console.log("Response from API", response);
+            const data = response.data;
+            console.log("Data from API", data);
+
+            if (response.status === 200) {
+                // Handle success
+                setAppeared(false)
+                toast.success("Appeared status is set successfully!");
+
+            } else {
+                // Handle error
+                if (data.code === 401 || data.code === 498) {
+                    console.error("Unauthorized: Please log in");
+                    window.location.href = "/notFound";
+                }
+            }
+        } catch (error) {
+            // Handle error
+            console.error("Error:", error);
+            toast.error("An error occurred while setting appeared status.");
+        }
     };
 
     const actionColumn = [
@@ -102,10 +163,15 @@ const BlockedStudentDatatable = () => {
                             }}
                         >
                             <MenuItem onClick={() => handleMenuClose()}>
-                                <Link to={`/blockedStudents/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none" }}>
+                                <Link to={`/blockedStudents/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none", color:"#7451f8" }}>
                                     <div>Edit</div>
                                 </Link>
                             </MenuItem>
+                            {appeared && params.row.appeared === 0 && // Conditionally render based on appeared state and appeared value
+                                <MenuItem onClick={() => handleAppeared(params.row.id)}>
+                                    <div style={{ textDecoration: "none", color: "#7451f8" }}>Appeared</div>
+                                </MenuItem>
+                            }
                             {/* <MenuItem onClick={() => handleMenuClose()}>
                                 <a href={`/admit-card/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
                                     Admit Card

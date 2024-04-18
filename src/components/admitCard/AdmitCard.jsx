@@ -57,7 +57,7 @@ const AdmitCard = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{margin: 0, padding: 0 }}>
             <>
                 {/* Required meta tags */}
                 <meta charSet="utf-8" />
@@ -112,7 +112,7 @@ const AdmitCard = () => {
                     rel="stylesheet"
                     href="https://register.brenfo.com/public/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css"
                 />
-                <section style={{ border: "5px solid black", padding: 20 }}>
+                <section style={{ border: "4px solid black", padding: 16, margin: 0 }}>
                     <div className="container">
                         <div className="admit-card">
                             <div className="BoxA border- padding mar-bot">
@@ -120,27 +120,26 @@ const AdmitCard = () => {
                                     <h1
                                         style={{
                                             textAlign: "center",
-                                            fontSize: 45,
+                                            fontSize: 35,
                                             textDecoration: "underline",
-                                            fontWeight: 800
+                                            fontWeight: 650
                                         }}
                                     >
                                         THE EDUCATION LINK
                                     </h1>
                                 </div>
-                                <h1 style={{ textAlign: "center", fontSize: 20 }}>
+                                <h1 style={{ textAlign: "center", fontSize: 15 }}>
                                     EDULINK/JC/RF/24-25
                                 </h1>
                             </div>
-                            <br />
                             <br />
                             <br />{" "}
                             <div>
                                 <h3
                                     style={{
                                         textAlign: "center",
-                                        fontSize: 38,
-                                        fontWeight: 700,
+                                        fontSize: 28,
+                                        fontWeight: 550,
                                         fontFamily: "math"
                                     }}
                                 >
@@ -151,66 +150,66 @@ const AdmitCard = () => {
                             <div>
                                 {/* <h3 style="text-align:center;font-size: 25px;">Admission Test</h3></div> */}
                             </div>
-                            <div className="BoxC border- padding mar-bot"></div>
                             <div className="BoxD border- padding mar-bot">
                                 <div className="row">
                                     <div className="col-sm-10">
                                         <table
-                                            style={{ width: "123.5%" }}
-                                            className="table table-bordered"
+                                            style={{ width: "103%", borderCollapse: "collapse", marginLeft: "-10px" }}
+                                            // style={{ width: "123.5%" }}
+                                            // className="table table-bordered"
                                         >
                                             <tbody>
                                                 <tr>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Roll Number : </b> TEL- {user.id}
                                                         <span
-                                                            style={{ fontSize: 22, fontWeight: "bold" }}
+                                                            style={{ fontSize: 18, fontWeight: "bold" }}
                                                             id="id"
                                                         />
                                                     </td>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Group: </b> {user.group_name}{" "}
-                                                        <span style={{ fontSize: 22 }} id="student_group" />
+                                                        <span style={{ fontSize: 18 }} id="student_group" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Student's Name: </b> {user.full_name}
-                                                        <span style={{ fontSize: 22 }} id="student_full_name" />
+                                                        <span style={{ fontSize: 18 }} id="student_full_name" />
                                                     </td>
                                                     {/*  <p><label>Name:</label><span id="name"></span></p> */}
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Class:</b> {user.class}
                                                         <span id="student_class" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Father's Name: </b> {user.father_name}
-                                                        <span style={{ fontSize: 22 }} id="fathers_name" />
+                                                        <span style={{ fontSize: 18 }} id="fathers_name" />
                                                     </td>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Time: </b> {time}
-                                                        <span style={{ fontSize: 22 }} id="time" />
+                                                        <span style={{ fontSize: 18 }} id="time" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Venue:</b> {venue}
-                                                        <span style={{ fontSize: 22 }} id="venue" />
+                                                        <span style={{ fontSize: 18 }} id="venue" />
                                                     </td>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Date: </b> 6<sup>th </sup>August,&nbsp;2023
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Email:</b> {credentials.email}
-                                                        <span style={{ fontSize: 22 }} id="email" />
+                                                        <span style={{ fontSize: 18 }} id="email" />
                                                     </td>
-                                                    <td style={{ fontSize: 22 }}>
+                                                    <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Password:</b> {credentials.password}
-                                                        <span style={{ fontSize: 22 }} id="password" />
+                                                        <span style={{ fontSize: 18 }} id="password" />
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -218,17 +217,17 @@ const AdmitCard = () => {
                                         <div>
                                             <hr
                                                 style={{
-                                                    marginTop: 131,
+                                                    marginTop: 80,
                                                     border: "1px solid black",
-                                                    marginRight: "-170px",
-                                                    marginLeft: 700
+                                                    marginRight: 0,
+                                                    marginLeft: 400
                                                 }}
                                             />
                                             <h1
                                                 style={{
                                                     textAlign: "right",
-                                                    marginRight: "-109px" /* marginTop: 0, */,
-                                                    fontSize: 22,
+                                                    marginRight: 69, /* marginTop: 0, */
+                                                    fontSize: 20,
                                                     fontWeight: 500
                                                 }}
                                             >
@@ -239,13 +238,12 @@ const AdmitCard = () => {
                                     <div className="col-sm-2 txt-center">
                                         <div
                                             style={{
-                                                width: 203,
-                                                height: 196,
+                                                width: 140,
+                                                height: 143,
                                                 border: "1px solid black",
                                                 float: "right",
-                                                marginRight: "-26px",
-                                                marginBottom: "-3px",
-                                                marginTop: "-211px"
+                                                marginRight: -10,
+                                                marginTop: -495
                                             }}
                                         />
                                         <table className="table table-bordered">
@@ -260,47 +258,47 @@ const AdmitCard = () => {
                         </div>
                     </div>
                 </section>
-                <h2 style={{ textDecoration: "underline", marginTop: 60 }}>
+                <h3 style={{ textDecoration: "underline", marginTop: 10 }}>
                     The Participants Must:
-                </h2>
+                </h3>
                 <ul
                     style={{
                         listStyleType: "disc",
-                        fontSize: "1.3em",
-                        marginTop: 26,
-                        marginLeft: 9,
+                        fontSize: "1.1em",
+                        marginTop: 8,
+                        marginLeft: 0,
                         textAlign: "justify"
                     }}
                 >
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Arrive at the test center at least 15 minutes before the scheduled time.
                         No additional time shall be given to Participant arriving late
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Come in formal attire; anyone wearing shorts, pyjamas, etc. will not be
                         allowed to take the exam
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Bring your admit card, the required stationery and a clip board along.
                         Lending/borrowing of pen, pencil, ruler, calculator, etc. is strictly
                         prohibited in the examination room. <b>Calculator is not allowed</b>
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Not leave his seat during the exam without getting permission from the
                         invigilator
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Maintain complete silence in the examination room. If a participant has
                         any kind of query, he should raise his hand and wait for the invigilator
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Mark his attendance on the attendance sheet during the examinations. In
                         case, his name is not listed, report to an invigilator immediately
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         Not bring mobile phones and any other unauthorized electronic gadgets
                     </li>
-                    <li style={{ marginBottom: 6 }}>
+                    <li style={{ marginBottom: 3 }}>
                         <b>Note: </b>Any participant found cheating, chatting, gesturing, or
                         misbehaving in the examination room, shall be dealt strictly and his paper
                         will be cancelled.
@@ -309,12 +307,11 @@ const AdmitCard = () => {
                 </ul>
                 {/* <p style="font-size: 1.3em;">We wish you the very best of luck with all your examinations</p> */}
                 <br />
-                <p style={{ fontSize: "1.3em" }}>Regards,</p>
-                <p style={{ fontSize: "1.4em", fontWeight: 600, marginTop: 20 }}>
+                <p style={{ fontSize: "1.1em" , marginTop: 2}}>Regards,</p>
+                <p style={{ fontSize: "1.2em", fontWeight: 600, marginTop: 6 }}>
                     TEL Administration
                 </p>
             </>
-
         </div>
     );
 }

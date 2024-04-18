@@ -1,3 +1,9 @@
+.registrationWidgetWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 15px;
+}
+
 .registrationWidget {
     display: flex;
     justify-content: space-between;
@@ -9,7 +15,9 @@
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
-    width: 215px;
+    // width: 215px;
+    // height: 60px;
+    width: 100%;
     height: 60px;
 
     &:hover {
@@ -25,22 +33,23 @@
 
         .title {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             /* Increase font size for title */
             color: #333333;
             /* Darker text color for better contrast */
+            margin-top: 5px;
             margin-bottom: 5px;
         }
 
         .counter {
-            font-size: 24px;
+            font-size: 20px;
             color: #7451f8;
             margin-bottom: 5px;
             font-weight: bold;
         }
 
         .link {
-            font-size: 12px;
+            font-size: 10px;
             color: #777777;
             /* Darker color for better readability */
             border-bottom: 1px solid #cccccc;
@@ -57,7 +66,7 @@
         align-items: center;
 
         .icon {
-            font-size: 36px;
+            font-size: 30px;
             /* Increase icon size for better visibility */
             padding: 10px;
             /* Increase padding */

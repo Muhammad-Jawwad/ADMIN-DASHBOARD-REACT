@@ -102,17 +102,17 @@ const RegistrationDatatable = () => {
                             }}
                         >
                             <MenuItem onClick={() => handleMenuClose()}>
-                                <Link to={`/registration/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none" }}>
+                                <Link to={`/registration/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none", color: "#7451f8" }}>
                                     <div>Edit</div>
                                 </Link>
                             </MenuItem>
                             <MenuItem onClick={() => handleMenuClose()}>
-                                <a href={`/admit-card/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                                <a href={`/admit-card/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color:"#7451f8" }}>
                                     Admit Card
                                 </a>
                             </MenuItem>
                             <MenuItem onClick={() => handleMenuClose()}>
-                                <a href={`/registration-slip/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                                <a href={`/registration-slip/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color:"#7451f8" }}>
                                     Registration Slip
                                 </a>
                             </MenuItem>

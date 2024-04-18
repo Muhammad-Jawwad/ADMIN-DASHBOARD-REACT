@@ -82,6 +82,9 @@ const RegistrationHome = () => {
                                     {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.ninthBlocked} />
                                     ) : undefined}
+                                    {(adminData.id === 9) ? (
+                                        <RegistrationWidget type="Blocked-Appeared" input={homeStats.ninthAppeared} />
+                                    ) : undefined}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>10th Class</h3>
                                 <div className="widgets">
@@ -91,6 +94,9 @@ const RegistrationHome = () => {
                                     {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.matricBlocked} />
                                     ) : undefined}  
+                                    {(adminData.id === 9) ? (
+                                        <RegistrationWidget type="Blocked-Appeared" input={homeStats.matricAppeared} />
+                                    ) : undefined}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>11th Class</h3>
                                 <div className="widgets">
@@ -100,6 +106,9 @@ const RegistrationHome = () => {
                                     {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.firstYearBlocked} />
                                     ) : undefined}
+                                    {(adminData.id === 9) ? (
+                                        <RegistrationWidget type="Blocked-Appeared" input={homeStats.firstYearAppeared} />
+                                    ) : undefined}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>12th Class</h3>
                                 <div className="widgets">
@@ -108,6 +117,9 @@ const RegistrationHome = () => {
                                     <RegistrationWidget type="Pre-Medical" input={homeStats.secondYearPreMedicalStudents} />
                                     {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.secondYearBlocked} />
+                                    ) : undefined}
+                                    {(adminData.id === 9) ? (
+                                        <RegistrationWidget type="Blocked-Appeared" input={homeStats.secondYearAppeared} />
                                     ) : undefined}
                                 </div>
                                 {/* <div className="charts">

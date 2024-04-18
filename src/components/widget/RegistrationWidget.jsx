@@ -105,6 +105,21 @@ const RegistrationWidget = ({ type, input }) => {
             };
             break;
 
+        case "Blocked-Appeared":
+            data = {
+                title: "Blocked Appeared",
+                icon: (
+                    <BlockOutlinedIcon
+                        className="icon"
+                        style={{
+                            backgroundColor: "rgba(255, 0, 0, 0.2)",
+                            color: "red",
+                        }}
+                    />
+                ),
+            };
+            break;
+
 
         case "Matric Students":
             data = {
