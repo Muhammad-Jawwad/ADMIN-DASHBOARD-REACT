@@ -1,4 +1,4 @@
-import { classEnums, collegeEnums, currentResidenceEnums, domicileEnums, fatherStatusEnums, groupNameEnums, medicalIllnessEnums, schoolEnums, statusEnums } from "./temp";
+import { boardEnums, classEnums, collegeEnums, currentResidenceEnums, domicileEnums, fatherStatusEnums, groupNameEnums, medicalIllnessEnums, motherOccupationEnums, referenceRelationEnums, salaryEnums, schoolEnums, statusEnums } from "./temp";
 
 export const userInputs = [
   {
@@ -235,6 +235,237 @@ export const questionInputs = [
   },
 ];
 
+//new
+export const personalInformationInputs = [
+  {
+    fieldName: "full_name",
+    id: 1,
+    label: "Student's Full Name",
+    type: "text",
+    placeholder: "E.g: Jawwad",
+  },
+  {
+    fieldName: "b_form",
+    id: 2,
+    label: "CNIC/ B-Form Number",
+    type: "text",
+    placeholder: "E.g: 4250125517883",
+  },
+  {
+    fieldName: "class",
+    id: 3,
+    label: "Class",
+    type: "dropdown",
+    options: classEnums,
+    placeholder: "E.g: 'IX', 'X','XI','XII'",
+  },
+  {
+    fieldName: "student_contact",
+    id: 14,
+    label: "Student's Contact Number",
+    type: "text",
+    placeholder: "E.g: +923XXXXXXXXX",
+  },
+  {
+    fieldName: "address",
+    id: 4,
+    label: "Residential Address",
+    type: "text",
+    placeholder: "E.g: A-114 S#XXXXXX",
+  },
+  {
+    fieldName: "domicile",
+    id: 5,
+    label: "Domicile (State/Province)",
+    type: "dropdown",
+    options: domicileEnums,
+    placeholder: "E.g: Manager",
+  },
+  {
+    fieldName: "medical_illness",
+    id: 6,
+    label: "Any Medical Illness",
+    type: "dropdown",
+    options: medicalIllnessEnums,
+    placeholder: "E.g: Allergic",
+  },
+];
+
+export const educationalInformationInputs = [
+  {
+    fieldName: "last_school_attended",
+    id: 7,
+    label: "Last School attended",
+    type: "dropdown",
+    options: schoolEnums,
+    placeholder: "E.g: Qamar e Bani Hashim",
+  },
+  {
+    fieldName: "last_school_attended",
+    id: 8,
+    label: "Last College attended",
+    type: "dropdown",
+    options: collegeEnums,
+    placeholder: "E.g: Adamjee College",
+  },
+  {
+    fieldName: "previous_education_board",
+    id: 9,
+    label: "Previous Board of Education",
+    type: "dropdown",
+    options: boardEnums,
+    placeholder: "E.g: Karachi Board",
+  },
+  {
+    fieldName: "percentage_last_class",
+    id: 10,
+    label: "Percentage in last class (Board Of Secondary Education)",
+    type: "number",
+    placeholder: "E.g: 90",
+  },
+  {
+    fieldName: "percentage_preliminary_examination",
+    id: 11,
+    label: "Percentage in Preliminary Examinations (If Conducted)",
+    type: "number",
+    placeholder: "E.g: 96",
+  },
+  {
+    fieldName: "group_name",
+    id: 12,
+    label: "Group you want to select",
+    type: "dropdown",
+    options: groupNameEnums,
+    placeholder: "E.g: SCIENCE,MEDICAL,PRE-ENGINEERING,PRE-MEDICAL",
+  },
+];
+
+export const familyInformationInputs = [
+  {
+    fieldName: "father_name",
+    id: 13,
+    label: "Father's Name",
+    type: "text",
+    placeholder: "E.g: Jawwad",
+  },
+  {
+    fieldName: "father_status",
+    id: 14,
+    label: "Father's Status",
+    type: "dropdown",
+    options: fatherStatusEnums,
+    placeholder: "E.g: ALIVE",
+  },
+  {
+    fieldName: "father_contact",
+    id: 15,
+    label: "Father's/Guardian's Contact",
+    type: "text",
+    placeholder: "E.g: +923XXXXXXXXX",
+  },
+  {
+    fieldName: "father_workplace",
+    id: 16,
+    label: "Father's Workplace (Company/Organizations/Institute etc)",
+    type: "text",
+    placeholder: "E.g: Texla",
+  },
+  {
+    fieldName: "father_designation",
+    id: 17,
+    label: "Father's Designation in Company/Organisation/Institute",
+    type: "text",
+    placeholder: "E.g: Manager",
+  },
+  {
+    fieldName: "mother_name",
+    id: 18,
+    label: "Mother's Name",
+    type: "text",
+    placeholder: "E.g: Zehra",
+  },
+  {
+    fieldName: "mother_occupation",
+    id: 19,
+    label: "Mother's Occupation",
+    type: "dropdown",
+    options: motherOccupationEnums,
+    placeholder: "E.g: House Wife",
+  },
+  {
+    fieldName: "family_income",
+    id: 20,
+    label: "Family's Income in Rupees",
+    type: "dropdown",
+    options: salaryEnums,
+    placeholder: "E.g: 40,000 - 50,000",
+  },
+  {
+    fieldName: "siblings_count",
+    id: 21,
+    label: "Number of Siblings (Excluding the Candidate)",
+    type: "number",
+    placeholder: "E.g: 5",
+  },
+  {
+    fieldName: "current_residence",
+    id: 22,
+    label: "Current Residence",
+    type: "dropdown",
+    options: currentResidenceEnums,
+    placeholder: "E.g: Qamar e Bani Hashim",
+  },
+  {
+    fieldName: "reference_name",
+    id: 23,
+    label: "Reference Name (With appropriate details of his/her reference to or batch of the Campus)",
+    type: "text",
+    placeholder: "E.g: Ali (E-12)",
+  },
+  {
+    fieldName: "reference_contact",
+    id: 24,
+    label: "Reference Contact Number",
+    type: "text",
+    placeholder: "E.g: +923XXXXXXXXX",
+  },
+  {
+    fieldName: "reference_relation",
+    id: 25,
+    label: "Relation with Reference",
+    type: "dropdown",
+    options: referenceRelationEnums,
+    placeholder: "E.g: Ali (E-12)",
+  },
+  {
+    fieldName: "status",
+    id: 26,
+    label: "Status",
+    type: "dropdown",
+    options: statusEnums,
+    placeholder: "E.g: ACTIVE, INACTIVE, BLOCKED",
+  },
+  {
+    fieldName: "year",
+    id: 27,
+    label: "Registration Year",
+    type: "number",
+    placeholder: "E.g: 2024",
+  },
+  {
+    fieldName: "description",
+    id: 28,
+    label: "Note (Any)",
+    type: "text",
+    placeholder: "E.g: Note about student",
+  },
+];
+
+// export const educationalDetailsInputs = [
+ 
+// ];
+
+//pervious
 export const registrationInputs = [
   {
     fieldName: "full_name",

@@ -133,61 +133,61 @@ const BlockedStudentDatatable = () => {
         }
     };
 
-    const actionColumn = [
-        {
-            field: "action",
-            headerName: "Action",
-            width: 80,
-            renderCell: (params) => {
-                const rowId = params.row.id;
-                return (
-                    <div className="cellAction">
-                        {/* <Link to={`/registration/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none" }}>
-                            <div className="editButton">Edit</div>
-                        </Link> */}
-                        <div onClick={(event) => handleMenuOpen(event, rowId)}>
-                            <MoreVertIcon />
-                        </div>
-                        <Menu
-                            id="action-menu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl && selectedRowId === rowId)}
-                            onClose={handleMenuClose}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                        >
-                            <MenuItem onClick={() => handleMenuClose()}>
-                                <Link to={`/blockedStudents/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none", color:"#7451f8" }}>
-                                    <div>Edit</div>
-                                </Link>
-                            </MenuItem>
-                            {appeared && params.row.appeared === 0 && // Conditionally render based on appeared state and appeared value
-                                <MenuItem onClick={() => handleAppeared(params.row.id)}>
-                                    <div style={{ textDecoration: "none", color: "#7451f8" }}>Appeared</div>
-                                </MenuItem>
-                            }
-                            {/* <MenuItem onClick={() => handleMenuClose()}>
-                                <a href={`/admit-card/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                                    Admit Card
-                                </a>
-                            </MenuItem>
-                            <MenuItem onClick={() => handleMenuClose()}>
-                                <a href={`/registration-slip/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                                    Registration Slip
-                                </a>
-                            </MenuItem> */}
-                        </Menu>
-                    </div>
-                );
-            },
-        },
-    ];
+    // const actionColumn = [
+    //     {
+    //         field: "action",
+    //         headerName: "Action",
+    //         width: 80,
+    //         renderCell: (params) => {
+    //             const rowId = params.row.id;
+    //             return (
+    //                 <div className="cellAction">
+    //                     {/* <Link to={`/registration/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none" }}>
+    //                         <div className="editButton">Edit</div>
+    //                     </Link> */}
+    //                     <div onClick={(event) => handleMenuOpen(event, rowId)}>
+    //                         <MoreVertIcon />
+    //                     </div>
+    //                     <Menu
+    //                         id="action-menu"
+    //                         anchorEl={anchorEl}
+    //                         open={Boolean(anchorEl && selectedRowId === rowId)}
+    //                         onClose={handleMenuClose}
+    //                         anchorOrigin={{
+    //                             vertical: 'bottom',
+    //                             horizontal: 'left',
+    //                         }}
+    //                         transformOrigin={{
+    //                             vertical: 'top',
+    //                             horizontal: 'left',
+    //                         }}
+    //                     >
+    //                         <MenuItem onClick={() => handleMenuClose()}>
+    //                             <Link to={`/blockedStudents/update/${params.row.id}?q=ALL`} style={{ textDecoration: "none", color:"#7451f8" }}>
+    //                                 <div>Edit</div>
+    //                             </Link>
+    //                         </MenuItem>
+    //                         {appeared && params.row.appeared === 0 && // Conditionally render based on appeared state and appeared value
+    //                             <MenuItem onClick={() => handleAppeared(params.row.id)}>
+    //                                 <div style={{ textDecoration: "none", color: "#7451f8" }}>Appeared</div>
+    //                             </MenuItem>
+    //                         }
+    //                         {/* <MenuItem onClick={() => handleMenuClose()}>
+    //                             <a href={`/admit-card/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+    //                                 Admit Card
+    //                             </a>
+    //                         </MenuItem>
+    //                         <MenuItem onClick={() => handleMenuClose()}>
+    //                             <a href={`/registration-slip/${params.row.id}?q=ALL`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+    //                                 Registration Slip
+    //                             </a>
+    //                         </MenuItem> */}
+    //                     </Menu>
+    //                 </div>
+    //             );
+    //         },
+    //     },
+    // ];
 
 
     return (
@@ -210,7 +210,9 @@ const BlockedStudentDatatable = () => {
                 <DataGrid
                     className="datagrid"
                     rows={data}
-                    columns={actionColumn.concat(blockedStudentColumns)}
+                    columns={blockedStudentColumns}
+                    pinnedColumns={"status"}
+                    // columns={actionColumn.concat(blockedStudentColumns)}
                     pageSize={8}
                     rowsPerPageOptions={[9]}
                     components={{

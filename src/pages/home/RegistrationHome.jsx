@@ -79,48 +79,48 @@ const RegistrationHome = () => {
                                     <RegistrationWidget type="Total" input={homeStats.ninthClass} />
                                     <RegistrationWidget type="Science" input={homeStats.ninthScienceStudents} />
                                     <RegistrationWidget type="Medical" input={homeStats.ninthMedicalStudents} />
-                                    {(adminData.id === 9) ? (
+                                    {/* {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.ninthBlocked} />
-                                    ) : undefined}
-                                    {(adminData.id === 9) ? (
+                                    ) : undefined} */}
+                                    {/* {(adminData.id === 9) ? (
                                         <RegistrationWidget type="Blocked-Appeared" input={homeStats.ninthAppeared} />
-                                    ) : undefined}
+                                    ) : undefined} */}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>10th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.matricClass} />
                                     <RegistrationWidget type="Science" input={homeStats.metricScienceStudents} />
                                     <RegistrationWidget type="Medical" input={homeStats.metricMedicalStudents} />
-                                    {(adminData.id === 9) ? (
+                                    {/* {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.matricBlocked} />
-                                    ) : undefined}  
-                                    {(adminData.id === 9) ? (
+                                    ) : undefined}   */}
+                                    {/* {(adminData.id === 9) ? (
                                         <RegistrationWidget type="Blocked-Appeared" input={homeStats.matricAppeared} />
-                                    ) : undefined}
+                                    ) : undefined} */}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>11th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.firstYearClass} />
                                     <RegistrationWidget type="Pre-Engineering" input={homeStats.firstYearpreEngineeringStudents} />
                                     <RegistrationWidget type="Pre-Medical" input={homeStats.firstYearPreMedicalStudents} />
-                                    {(adminData.id === 9) ? (
+                                    {/* {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.firstYearBlocked} />
-                                    ) : undefined}
-                                    {(adminData.id === 9) ? (
+                                    ) : undefined} */}
+                                    {/* {(adminData.id === 9) ? (
                                         <RegistrationWidget type="Blocked-Appeared" input={homeStats.firstYearAppeared} />
-                                    ) : undefined}
+                                    ) : undefined} */}
                                 </div>
                                 <h3 style={{ paddingLeft: "20px", paddingTop: "15px" }}>12th Class</h3>
                                 <div className="widgets">
                                     <RegistrationWidget type="Total" input={homeStats.secondYearClass} />
                                     <RegistrationWidget type="Pre-Engineering" input={homeStats.secondYearpreEngineeringStudents} />
                                     <RegistrationWidget type="Pre-Medical" input={homeStats.secondYearPreMedicalStudents} />
-                                    {(adminData.id === 9) ? (
+                                    {/* {(adminData.id === 9) ? (
                                     <RegistrationWidget type="Blocked" input={homeStats.secondYearBlocked} />
-                                    ) : undefined}
-                                    {(adminData.id === 9) ? (
+                                    ) : undefined} */}
+                                    {/* {(adminData.id === 9) ? (
                                         <RegistrationWidget type="Blocked-Appeared" input={homeStats.secondYearAppeared} />
-                                    ) : undefined}
+                                    ) : undefined} */}
                                 </div>
                                 {/* <div className="charts">
                                     {/* <Featured /> 

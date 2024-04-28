@@ -221,21 +221,21 @@ const RegistrationSlip = () => {
                         <span id="father's_workplace" > {user.father_workplace} </span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
-                        <label>Father's Income :</label>
-                        <span id="father's_income" > {user.father_income} </span>
+                        <label>Family Income :</label>
+                        <span id="family_income" > {user.family_income} </span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
-                        <label>Mother's Company:</label>
-                        <span id="mother_s_workplace" > {user.mother_workplace || "-"} </span>
+                        <label>Mother's Occupation:</label>
+                        <span id="mother_s_occupation" > {user.mother_occupation || "-"} </span>
                     </div>
-                    <div style={{ marginBottom: 7 }} className="field">
+                    {/* <div style={{ marginBottom: 7 }} className="field">
                         <label>Mother's Designation:</label>
                         <span id="mother_s_designation" > {user.mother_designation || "-"} </span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Mother's Income:</label>
                         <span id="mother_s_income" > {user.mother_income || "-"} </span>
-                    </div>
+                    </div> */}
                     {/* <div style={{ marginBottom: 7 }} className="field">
                         <label>Phone (Residence):</label>
                         <span id="2nd_number" />

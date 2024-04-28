@@ -1,104 +1,141 @@
+// Define color variables for reusability
+$primary-color: #410ff5;
+$secondary-color: #7451f8;
+$text-color: #4e4d4d;
+
+// Mixin for box-shadow
+@mixin box-shadow($x, $y, $blur, $spread, $color: rgba(0, 0, 0, 0.1)) {
+    box-shadow: $x $y $blur $spread $color;
+}
+// @mixin box-shadow($x, $y, $blur, $spread, $color: rgba(0, 0, 0, 0.1)) {
+//     box-shadow: $x $y $blur $spread $color;
+// }
+
+// Main registration styling
 .registrationNew {
-    width: 100%;
+    font-family: 'Open Sans', sans-serif;
     display: flex;
+    justify-content: center;
 
     .newContainer {
-        flex: 6;
+        max-width: 1050px;
+        width: 100%;
 
-        .top,
-        .bottom {
-            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-            padding: 10px;
-            margin: 20px;
-            display: flex;
+        .top {
+            width: 95%;
+            background-color: #7451f8d4;
+            margin: 30px;
+            margin-bottom: 20px;
+            text-align: center;
 
             h1 {
-                color: #7451f8;
-                font-size: 20px;
+                margin-bottom: 40px;
+                font-size: 30px;
+                font-weight: 700;
+                background: #fff; // Gradient from #4e4d4d to #7451f8
+                // background: #7451f8; // Gradient from #4e4d4d to #7451f8
+                -webkit-background-clip: text; // Apply gradient to text
+                -webkit-text-fill-color: transparent; // Hide original text color
+                // font-family: 'Open Sans', sans-serif;
+            }
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: center;
+            width: 95%;
+            margin: 30px;
+
+            // Apply box-shadow using mixin
+            @include box-shadow(2px, 4px, 10px, 1px);
+
+            .formContainer {
+                background-color: #fff;
+                // background-color: #fff;
+                border-radius: 8px;
+                // Use mixin for box-shadow
+                @include box-shadow(0, 0, 20px, 1px);
+                padding: 40px;
             }
 
-            .left {
-                flex: 1;
-                text-align: center;
+            .sectionHeading {
+                margin-bottom: 20px;
+                margin-top: 20px;
+                font-size: 25px;
+                color: $secondary-color;
+                font-family: 'Roboto', sans-serif;
+            }
 
-                img {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 50%;
-                    object-fit: cover;
+            .section {
+                margin-bottom: 40px;
+                display: flex;
+                flex-direction: column;
+
+                .formInput {
+                    margin-bottom: 20px;
+                    flex-basis: 50%;
+                    align-items: center;
+
+                    label {
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        color: $text-color;
+                        position: relative;
+
+                        &:after {
+                            content: "*";
+                            color: red; // Adjust color as needed
+                            margin-left: 5px;
+                        }
+                    }
+
+                    input,
+                    select {
+                        width: 100%;
+                        padding: 12px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        transition: border-color 0.3s ease;
+                        box-sizing: border-box;
+                        margin-right: 10px;
+
+                        &:focus {
+                            border-color: $primary-color;
+                            outline: none;
+                        }
+                    }
                 }
             }
 
-            .right {
-                flex: 2;
+            .formSubmit {
+                width: 100%;
+                text-align: right;
 
-                form {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 50px;
-                    justify-content: space-around;
-                    // justify-content: flex-start;
+                button {
+                    width: 150px;
+                    padding: 10px 20px;
+                    background-color: #7451f8;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
 
+                    &:hover {
+                        background-color: #4d30b6;
+                    }
+                }
+            }
+
+            // Responsive design
+            @media (max-width: 768px) {
+                .section {
                     .formInput {
-                        // width: auto; 
-                        width: 45%;
-                        
-
-                        label {
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-
-                            .icon {
-                                cursor: pointer;
-                            }
-                        }
-
-                        select,
-                        input {
-                            width: 100%;
-                            padding: 5px;
-                            border: none;
-                            border-bottom: 1px solid gray;
-
-                            &:not(select) {
-                                appearance: none;
-                                background: transparent;
-                                font-size: inherit;
-                            }
-                        }
+                        flex-basis: 100%;
                     }
-
-                    .formSubmit {
-                        width: 100%;
-                        text-align: right;
-
-                        button {
-                            width: 150px;
-                            padding: 10px 20px;
-                            background-color: #7451f8;
-                            color: white;
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            transition: background-color 0.3s ease;
-
-                            &:hover {
-                                background-color: #4d30b6;
-                            }
-                        }
-                    }
-
-                    // button {
-                    //   width: 150px;
-                    //   padding: 10px;
-                    //   border: none;
-                    //   background-color: teal;
-                    //   color: white;
-                    //   font-weight: bold;
-                    //   cursor: pointer;
-                    //   margin-top: 10px;
-                    // }
                 }
             }
         }
