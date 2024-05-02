@@ -161,7 +161,7 @@ const AdmitCard = () => {
                                             <tbody>
                                                 <tr>
                                                     <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
-                                                        <b>Roll Number : </b> TEL- {user.id}
+                                                        <b>Roll Number : </b> {user.roll_number}
                                                         <span
                                                             style={{ fontSize: 18, fontWeight: "bold" }}
                                                             id="id"
@@ -189,17 +189,19 @@ const AdmitCard = () => {
                                                         <span style={{ fontSize: 18 }} id="fathers_name" />
                                                     </td>
                                                     <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
-                                                        <b>Time: </b> {time}
+                                                        <b>Time: </b> {user.test_time}
                                                         <span style={{ fontSize: 18 }} id="time" />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
-                                                        <b>Venue:</b> {venue}
+                                                        <b>Venue:</b> {user.test_center}
                                                         <span style={{ fontSize: 18 }} id="venue" />
                                                     </td>
                                                     <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
-                                                        <b>Date: </b> 6<sup>th </sup>August,&nbsp;2023
+                                                        {/* <b>Date: </b> 6<sup>th </sup>August,&nbsp;2023 */}
+                                                        <b>Date:</b> {user.test_date}
+                                                        <span style={{ fontSize: 18 }} id="date" />
                                                     </td>
                                                 </tr>
                                                 <tr>

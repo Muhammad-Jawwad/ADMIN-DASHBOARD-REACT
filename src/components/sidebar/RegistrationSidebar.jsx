@@ -4,6 +4,7 @@ import Person2TwoToneIcon from '@mui/icons-material/Person2TwoTone';
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import PersonAddTwoToneIcon from '@mui/icons-material/PersonAddTwoTone';
 import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
+import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
 import { Link, useLocation } from "react-router-dom";
 
 const RegistrationSidebar = () => {
@@ -48,6 +49,13 @@ const RegistrationSidebar = () => {
                         <li>
                             <BlockTwoToneIcon className="icon" />
                             <span>Blocked Students</span>
+                        </li>
+                    </Link>
+
+                    <Link to="/promotedStudents?q=ALL" style={{ textDecoration: "none" }}>
+                        <li>
+                            <HowToRegTwoToneIcon className="icon" />
+                            <span>Promoted Students</span>
                         </li>
                     </Link>
 

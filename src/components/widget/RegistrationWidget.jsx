@@ -36,7 +36,7 @@ const RegistrationWidget = ({ type, input }) => {
             break;
         case "Science":
             data = {
-                title: "Science",
+                title: "Computer-Science",
                 icon: (
                     <ScienceOutlinedIcon
                         className="icon"
@@ -50,7 +50,7 @@ const RegistrationWidget = ({ type, input }) => {
             break;
         case "Medical":
             data = {
-                title: "Medical",
+                title: "Medical-Science",
                 icon: (
                     <MedicalServicesOutlinedIcon
                         className="icon"

@@ -23,7 +23,8 @@ const RegistrationHome = () => {
 
     const redirectToLogin = () => {
         // alert("Please Login first, then you can access this page...");
-        window.location.href = "/notFound"; // Replace "/login" with the actual login page path
+        // window.location.href = "/notFound"; // Replace "/login" with the actual login page path
+        console.log("error occured");
     };
 
     const fetchHomeStats = async (qValue) => {

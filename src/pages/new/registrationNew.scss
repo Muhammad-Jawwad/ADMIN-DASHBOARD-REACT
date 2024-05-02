@@ -7,6 +7,7 @@ $text-color: #4e4d4d;
 @mixin box-shadow($x, $y, $blur, $spread, $color: rgba(0, 0, 0, 0.1)) {
     box-shadow: $x $y $blur $spread $color;
 }
+
 // @mixin box-shadow($x, $y, $blur, $spread, $color: rgba(0, 0, 0, 0.1)) {
 //     box-shadow: $x $y $blur $spread $color;
 // }
@@ -127,6 +128,11 @@ $text-color: #4e4d4d;
                     &:hover {
                         background-color: #4d30b6;
                     }
+
+                }
+                
+                button:disabled {
+                    cursor: not-allowed;
                 }
             }
 

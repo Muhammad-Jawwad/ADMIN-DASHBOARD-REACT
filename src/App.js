@@ -46,6 +46,7 @@ import AdmitCard from "./components/admitCard/AdmitCard";
 import RegistrationSlip from "./components/registrationSlip/RegistrationSlip";
 import BlockedStudentList from "./pages/list/BlockedStudentList";
 import BlockedStudentUpdate from "./components/update/BlockedStudentUpdate";
+import PromotedStudentList from "./pages/list/PromotedStudentsList";
 
 
 function App() {
@@ -69,6 +70,9 @@ function App() {
                 path="new"
                 element={<RegistrationNew inputs={registrationInputs} title="Add New Registration" />}
               />
+            </Route>
+            <Route path="promotedStudents">
+              <Route index element={<PromotedStudentList />} />
             </Route>
             <Route path="blockedStudents">
               <Route index element={<BlockedStudentList />} />

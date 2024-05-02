@@ -166,7 +166,7 @@ const RegistrationSlip = () => {
                     />
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Roll Number : </label>
-                        <span style={{ marginTop: 6 }} id="id" > TEL- {user.id}</span>
+                        <span style={{ marginTop: 6 }} id="id" > {user.roll_number}</span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Student's Name: </label>
@@ -178,11 +178,11 @@ const RegistrationSlip = () => {
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Venue: </label>
-                        <span id="venue" > {venue} </span>
+                        <span id="venue" > {user.test_center} </span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Time: </label>
-                        <span id="time" > {time} </span>
+                        <span id="time" > {user.test_time} </span>
                     </div>
                     <div style={{ marginBottom: 7 }} className="field">
                         <label>Father's Name: </label>

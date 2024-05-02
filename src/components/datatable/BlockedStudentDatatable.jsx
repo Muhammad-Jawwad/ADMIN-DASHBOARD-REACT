@@ -194,9 +194,9 @@ const BlockedStudentDatatable = () => {
         <div className="registrationDatatable">
             <div className="datatableTitle">
                 <span>Blocked Students</span>
-                <Link to={`/registration/new?q=ALL`} className="link">Add New</Link>
+                {/* <Link to={`/registration/new?q=ALL`} className="link">Add New</Link> */}
             </div>
-            {resultAlert && (
+            {/* {resultAlert && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="error">Error: This Quiz didn't attempt by any user yet</Alert>
                 </Stack>
@@ -205,7 +205,7 @@ const BlockedStudentDatatable = () => {
                 <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="success">The quiz result exported successfully</Alert>
                 </Stack>
-            )}
+            )} */}
             {loading ? <h1 style={{ textAlign: "center", paddingTop: "20%" }}>loading...</h1> :
                 <DataGrid
                     className="datagrid"

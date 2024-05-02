@@ -57,7 +57,6 @@ const RegistrationUpdate = ({ title }) => {
             setOther(true)
         }
 
-
     }, [inputValues]);
 
     useEffect(() => {
@@ -508,7 +507,7 @@ const RegistrationUpdate = ({ title }) => {
                                                         <input
                                                             type="text"
                                                             placeholder="Please specify"
-                                                            // value={inputValues[input.fieldName] || ''}
+                                                            value={inputValues[input.fieldName] || ''}
                                                             name="ref_relation"
                                                             onChange={handleInputChange}
                                                             required
@@ -518,7 +517,7 @@ const RegistrationUpdate = ({ title }) => {
                                                         <input
                                                             type="text"
                                                             placeholder="Please specify"
-                                                            // value={inputValues[input.fieldName] || ''}
+                                                            value={inputValues[input.fieldName] || ''}
                                                             name="working_women"
                                                             onChange={handleInputChange}
                                                             required
