@@ -204,7 +204,7 @@ const AdmitCard = () => {
                                                         <span style={{ fontSize: 18 }} id="date" />
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {/* <tr>
                                                     <td style={{ border: '1px solid black', padding: '8px', fontSize: 18 }}>
                                                         <b>Email:</b> {credentials.email}
                                                         <span style={{ fontSize: 18 }} id="email" />
@@ -213,7 +213,7 @@ const AdmitCard = () => {
                                                         <b>Password:</b> {credentials.password}
                                                         <span style={{ fontSize: 18 }} id="password" />
                                                     </td>
-                                                </tr>
+                                                </tr> */}
                                             </tbody>
                                         </table>
                                         <div>
@@ -245,7 +245,7 @@ const AdmitCard = () => {
                                                 border: "1px solid black",
                                                 float: "right",
                                                 marginRight: -10,
-                                                marginTop: -495
+                                                marginTop: -452
                                             }}
                                         />
                                         <table className="table table-bordered">

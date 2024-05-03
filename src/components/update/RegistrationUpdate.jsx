@@ -1,12 +1,9 @@
 import "./registrationUpdate.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { categoryInputs, educationalInformationInputs, familyInformationInputs, personalInformationInputs, registrationInputs, userInputs } from "../../formSource";
-import { collegeEnums, groupNameEnums, schoolEnums, serverURL } from "../../temp";
-import ResponsiveDrawer from "../Drawer/Drawer";
+import { educationalInformationInputs, familyInformationInputs, personalInformationInputs } from "../../formSource";
+import { collegeEnums, groupNameEnums, motherOccupationEnums, referenceRelationEnums, schoolEnums, serverURL } from "../../temp";
 import RegistrationSidebar from "../sidebar/RegistrationSidebar";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -21,7 +18,7 @@ const RegistrationUpdate = ({ title }) => {
     const queryParams = new URLSearchParams(search);
     const qValue = queryParams.get("q");
 
-    
+
     const [other, setOther] = useState(false);
     const [schoolField, setSchoolField] = useState(false);
     const [refRelationField, setRefRelationField] = useState(false);
@@ -48,13 +45,15 @@ const RegistrationUpdate = ({ title }) => {
         if ((inputValues.class === 'IX' || inputValues.class === 'X' || inputValues.class === 'XI') && !schoolEnums.includes(inputValues.last_school_attended)) {
             setOther(true)
             setSchoolField(true);
+            setInputValues(prevState => ({ ...prevState, school_attended: inputValues.last_school_attended, last_school_attended: "Other" }))
         }
-        if (inputValues.class === 'XII'){
+        if (inputValues.class === 'XII') {
             setSchoolCollegeFilter(true)
         }
         if (inputValues.class === 'XII' && !collegeEnums.includes(inputValues.last_school_attended)) {
             setSchoolField(true);
             setOther(true)
+            setInputValues(prevState => ({ ...prevState, school_attended: inputValues.last_school_attended, last_school_attended: "Other" }))
         }
 
     }, [inputValues]);
@@ -82,7 +81,24 @@ const RegistrationUpdate = ({ title }) => {
 
                 const data = await response.json();
                 console.log("reg", data.data[0])
-                setInputValues(data.data[0]);
+                const cloneObject = { ...data.data[0] }
+                const flag = referenceRelationEnums.includes(cloneObject.reference_relation)
+                const flag2 = motherOccupationEnums.includes(cloneObject.mother_occupation)
+                
+                if (flag) {
+                    setInputValues(data.data[0]);
+                } else {
+                    setRefRelationField(true)
+                    const changedObject = { ...data.data[0], reference_relation: "Other", ref_relation: cloneObject.reference_relation }
+                    setInputValues(changedObject);
+                }
+                if (flag2) {
+                    // setInputValues(data.data[0]);
+                } else {
+                    setMotherOccupationField(true);
+                    setInputValues(prevState => ({ ...prevState, working_women: cloneObject.mother_occupation, mother_occupation: "Working Women" }))
+                }
+
                 localStorage.setItem("userData", JSON.stringify(data));
 
             } catch (error) {
@@ -175,9 +191,6 @@ const RegistrationUpdate = ({ title }) => {
             if (e.target.name === 'reference_relation' && e.target.value !== 'Other' && refRelationField) {
                 setRefRelationField(false);
             }
-
-
-
             setInputValues({
                 ...inputValues,
                 [e.target.name]: e.target.value
@@ -185,66 +198,6 @@ const RegistrationUpdate = ({ title }) => {
         }
         console.log("inputValues", inputValues)
     };
-
-    // const handleInputChange = (e) => {
-    //     console.log(e.target.name);
-    //     if (e.target.name === 'class' && (e.target.value === 'XII' || e.target.value === 'XI')) {
-    //         setGroupField(true)
-    //         // inputValues.group_name = 
-    //     }
-    //     if (e.target.name === 'class' && (e.target.value !== 'XII' && e.target.value !== 'XI')) {
-    //         setGroupField(false)
-    //     }
-    //     if (e.target.name === 'class' && e.target.value === 'XII') {
-    //         setSchoolCollegeFilter(true)
-    //         setSchoolField(false);
-    //     }
-    //     if (e.target.name === 'class' && e.target.value !== 'XII') {
-    //         setSchoolCollegeFilter(false)
-    //         setSchoolField(false);
-    //     }
-    //     if (e.target.name === 'reference_relation' && e.target.value === 'Other') {
-    //         setRefRelationField(true);
-    //     }
-
-    //     if (e.target.name === 'reference_relation' && refRelationField) {
-    //         setInputValues({
-    //             ...inputValues,
-    //             ['reference_relation']: e.target.value
-    //         });
-    //     }
-    //     if (e.target.name === 'mother_occupation' && e.target.value === 'Working Women') {
-    //         setMotherOccupationField(true);
-    //     }
-
-    //     if (e.target.name === 'mother_occupation' && motherOccupationField) {
-    //         setInputValues({
-    //             ...inputValues,
-    //             ['mother_occupation']: e.target.value
-    //         });
-    //     }
-    //     if (e.target.name === 'last_school_attended' && e.target.value === 'Other') {
-    //         setSchoolField(true);
-    //         setOther(true)
-    //         inputValues.last_school_attended = null
-    //     } else if (e.target.name === 'school_attended' && schoolField) {
-    //         setInputValues({
-    //             ...inputValues,
-    //             ['last_school_attended']: e.target.value
-    //         });
-    //     }
-    //     else {
-    //         if (e.target.name === 'last_school_attended' && e.target.value !== 'Other' && schoolField) {
-    //             setSchoolField(false);
-    //             setOther(false)
-    //         }
-    //         setInputValues({
-    //             ...inputValues,
-    //             [e.target.name]: e.target.value
-    //         });
-    //     }
-    //     console.log("inputValues", inputValues)
-    // };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -259,9 +212,9 @@ const RegistrationUpdate = ({ title }) => {
                 father_name: inputValues.father_name,
                 father_designation: inputValues.father_designation,
                 mother_name: inputValues.mother_name,
-                mother_occupation: inputValues.mother_occupation,
+                mother_occupation: motherOccupationField ? inputValues.working_women : inputValues.mother_occupation,
                 student_contact: inputValues.student_contact,
-                last_school_attended: inputValues.last_school_attended,
+                last_school_attended: schoolField ? inputValues.school_attended: inputValues.last_school_attended,
                 percentage_last_class: isNaN(parseInt(inputValues.percentage_last_class)) ? null : parseInt(inputValues.percentage_last_class),
                 group_name: inputValues.group_name,
                 reference_contact: inputValues.reference_contact,
@@ -277,7 +230,7 @@ const RegistrationUpdate = ({ title }) => {
                 siblings_count: isNaN(parseInt(inputValues.siblings_count)) ? null : parseInt(inputValues.siblings_count),
                 current_residence: inputValues.current_residence,
                 reference_name: inputValues.reference_name,
-                reference_relation: inputValues.reference_relation,
+                reference_relation: refRelationField ? inputValues.ref_relation : inputValues.reference_relation,
                 year: parseInt(inputValues.year),
                 status: inputValues.status,
                 b_form: formattedBForm,
@@ -416,20 +369,38 @@ const RegistrationUpdate = ({ title }) => {
                                                                     ))}
                                                             </select>
                                                         ) : (
-                                                            <div>
-                                                                <select
-                                                                    name={input.fieldName}
-                                                                    value={inputValues[input.fieldName] || ''}
-                                                                    onChange={handleInputChange}
-                                                                    required
-                                                                >
-                                                                    {input.options.map((option) => (
-                                                                        <option key={option} value={option}>
-                                                                            {option}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>
+                                                            input.fieldName === "last_school_attended" ? (
+                                                                <div>
+                                                                    <select
+                                                                        name={input.fieldName}
+                                                                        value={inputValues[input.fieldName] || ''}
+                                                                        onChange={handleInputChange}
+                                                                        required
+                                                                    >
+                                                                        {input.options.map((option) => (
+                                                                            <option key={option} value={option}>
+                                                                                {option}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <select
+                                                                        name={input.fieldName}
+                                                                        value={inputValues[input.fieldName] || ''}
+                                                                        onChange={handleInputChange}
+                                                                        required
+                                                                    >
+                                                                        {input.options.map((option) => (
+                                                                            <option key={option} value={option}>
+                                                                                {option}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            )
+
                                                         )
                                                     ) : (
                                                         <input
@@ -454,7 +425,7 @@ const RegistrationUpdate = ({ title }) => {
                                                             type="text"
                                                             placeholder="Please specify"
                                                             name="school_attended"
-                                                            value={inputValues[input.fieldName] || ''}
+                                                            value={inputValues['school_attended'] || ''}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
@@ -507,7 +478,7 @@ const RegistrationUpdate = ({ title }) => {
                                                         <input
                                                             type="text"
                                                             placeholder="Please specify"
-                                                            value={inputValues[input.fieldName] || ''}
+                                                            value={inputValues['ref_relation'] || ''}
                                                             name="ref_relation"
                                                             onChange={handleInputChange}
                                                             required
@@ -517,7 +488,7 @@ const RegistrationUpdate = ({ title }) => {
                                                         <input
                                                             type="text"
                                                             placeholder="Please specify"
-                                                            value={inputValues[input.fieldName] || ''}
+                                                            value={inputValues['working_women'] || ''}
                                                             name="working_women"
                                                             onChange={handleInputChange}
                                                             required
@@ -527,79 +498,6 @@ const RegistrationUpdate = ({ title }) => {
                                             ))
                                         }
                                     </div>
-                                    {/* {registrationInputs
-                                        .filter((input) => (schoolCollegeFilter ? input.id !== 18 : input.id !== 19))
-                                        .filter((input) => adminData.id === 9 ? input.fieldName !== '' : input.fieldName !== 'status')
-                                        .map((input) => (
-                                            <div className="formInput" key={input.id}>
-                                                <label>{input.label}</label>
-                                                {input.type === "dropdown" ? (
-                                                    input.fieldName === "group_name" ? (
-                                                        <select
-                                                            name={input.fieldName}
-                                                            value={inputValues[input.fieldName] || ''}
-                                                            onChange={handleInputChange}
-                                                            required
-                                                        >
-                                                            {groupField ?
-                                                                input.options.slice(2, 4).map((option) => (
-                                                                    <option key={option} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                )) :
-                                                                input.options.slice(0, 2).map((option) => (
-                                                                    <option key={option} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                ))}
-                                                        </select>
-                                                    ) : (
-                                                        <div>
-                                                            <select
-                                                                name={input.fieldName}
-                                                                    value={(input.fieldName === "last_school_attended" && other) ? schoolEnums[schoolEnums.length-1] : inputValues[input.fieldName] || ''}
-                                                                onChange={handleInputChange}
-                                                                required
-                                                            >
-                                                                {input.options.map((option) => (
-                                                                    <option key={option} value={option}>
-                                                                        {option}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    )
-                                                ) : (
-                                                    <input
-                                                        type={input.type}
-                                                        placeholder={input.placeholder}
-                                                        name={input.fieldName}
-                                                        value={inputValues[input.fieldName] || ''}
-                                                        onChange={handleInputChange}
-                                                        maxLength={
-                                                            (
-                                                                input.fieldName === 'b_form' ||
-                                                                input.fieldName === 'father_contact' ||
-                                                                input.fieldName === 'student_contact' ||
-                                                                input.fieldName === 'reference_contact'
-                                                            ) ? 13 : undefined}
-                                                        required={input.fieldName === 'b_form'}
-                                                        min={input.type === 'number' ? 0 : undefined}
-                                                    />
-                                                )}
-                                                {input.fieldName === "last_school_attended" && schoolField && (
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Please specify"
-                                                        name="school_attended"
-                                                        value={inputValues[input.fieldName] || ''}
-                                                        onChange={handleInputChange}
-                                                        required
-                                                    />
-                                                )}
-                                            </div>
-                                        ))
-                                    } */}
                                     <div style={{ clear: "both" }} className="formUpdate">
                                         <button
                                             style={{ float: "right" }}
@@ -619,9 +517,9 @@ const RegistrationUpdate = ({ title }) => {
 
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div >
+                    </div >
+                </div >
             )
             }
         </>
